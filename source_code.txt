@@ -1,0 +1,1084 @@
+CREATE DATABASE 12_to_Twelve;
+
+
+CREATE TABLE PRODUCTS_TAB (
+
+    prod_product_id_pk            NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+    prod_product_name             VARCHAR2(50) NOT NULL,
+    prod_company_name             VARCHAR2(40) NOT NULL,
+    prod_product_type_fk          VARCHAR2(5) NOT NULL,
+    prod_selling_price            FLOAT NOT NULL,
+    prod_purchase_price           FLOAT NOT NULL,
+    prod_tax_rate_pct             INT NOT NULL,
+    prod_quantity                 FLOAT NOT NULL,
+    prod_unit                     VARCHAR2(15),
+    prod_packaging                VARCHAR2(20) NOT NULL,
+    prod_refrigerated_yn          NUMBER(1, 0) NOT NULL,
+    prod_frozen_yn                NUMBER(1, 0) NOT NULL,
+    prod_id_promo_fk              INT,
+    prod_other_details			  VARCHAR2(500)
+
+);
+
+
+CREATE TABLE PRODUCT_TYPES_TAB (
+
+	prty_product_type_pk		VARCHAR2(5) PRIMARY KEY,
+	prty_full_name				VARCHAR2(50) NOT NULL,
+	prty_shelf_life				VARCHAR2(10) NOT NULL
+
+);
+
+
+ALTER TABLE PRODUCTS_TAB
+ADD FOREIGN KEY (prod_product_type_fk) REFERENCES PRODUCT_TYPES_TAB(prty_product_type_pk);
+
+
+CREATE TABLE CUSTOMERS_TAB (
+
+	cust_customer_id_pk			NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	cust_first_name				VARCHAR2(50) NOT NULL,
+	cust_last_name				VARCHAR2(50) NOT NULL,
+	cust_nin_code				NUMBER CHECK (LENGTH(cust_nin_code) = 11),
+	cust_discount_pct			INT NOT NULL,
+	cust_customer_club_yn		NUMBER(1, 0) NOT NULL,
+	cust_date_joining			DATE
+	cust_phone_number			INT,
+	cust_email					VARCHAR2(40) NOT NULL,
+	cust_company_number			NUMBER CHECK (LENGTH(cust_company_number) = 10)
+);
+
+
+CREATE TABLE EMPLOYEES_TAB (	
+
+	empl_employee_id_pk			NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	empl_first_name				VARCHAR2(50)  NOT NULL,
+	empl_last_name				VARCHAR2(50)  NOT NULL,
+	empl_nin_code				number CHECK (LENGTH(empl_nin_code) = 11),
+	empl_gender_enum			VARCHAR2(6) CHECK( empl_gender IN  ('Male', 'Female', 'Other')),
+	empl_birth_date				DATE NOT NULL,
+	empl_phone_number			INT NOT NULL,
+	empl_job_title				VARCHAR2(30) NOT NULL,
+	empl_department_code_fk		VARCHAR2(5),
+	empl_salary					FLOAT NOT NULL,
+	empl_privilege_level_enum	VARCHAR2(2) CHECK( empl_privilege_level IN  ('1', '2', '3', '4', '5')),
+	empl_bonus_pct				INT NOT NULL,
+	empl_status_enum			VARCHAR2(8) CHECK( empl_status IN ('Active', 'Inactive')),
+	empl_employment_date		DATE
+	
+);
+
+
+CREATE TABLE DEPARTMENTS_TAB (	
+
+	depa_department_code_pk		VARCHAR2(5) PRIMARY KEY,
+	depa_department_name		VARCHAR2(50)  NOT NULL,
+	depa_department_type_enum	VARCHAR2(6) CHECK( depa_departMENT_TYPE_enum IN ('Store', 'Office')),
+	depa_manager_id_fk			INT NOT NULL,
+	depa_area_m2				FLOAT NOT NULL
+
+);
+
+
+ALTER TABLE EMPLOYEES_TAB
+ADD FOREIGN KEY (empl_department_code_fk) REFERENCES DEPARTMENTS_TAB(depa_departMENT_CODE_pk);
+
+
+ALTER TABLE DEPARTMENTS_TAB
+ADD FOREIGN KEY (depa_manager_id_fk) REFERENCES EMPLOYEES_TAB(empl_employee_id_pk);
+
+
+CREATE TABLE DEPARTMENT_EQUIPMENTS_TAB (	
+
+	deeq_equipment_id_pk		NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	deeq_department_code_fk		VARCHAR2(5),
+	deeq_name					VARCHAR2(50)  NOT NULL,
+	deeq_type					VARCHAR2(50),
+	deeq_quantity				INT NOT NULL,
+	deeq_date_purchase			DATE NOT NULL,
+	deeq_description			VARCHAR2(500)
+
+);
+
+
+ALTER TABLE DEPARTMENT_EQUIPMENTS_TAB
+ADD FOREIGN KEY (deeq_department_code_fk) REFERENCES DEPARTMENTS_TAB(depa_department_code_pk);
+
+
+CREATE TABLE EMPLOYEE_ABSENCES_TAB (	
+
+	emab_absence_id_pk		NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	emab_employee_id_fk		INT NOT NULL,
+	emab_date_from			DATE NOT NULL,
+	emab_date_to			DATE NOT NULL,
+	emab_reason				VARCHAR2(50) NOT NULL,
+	emab_description		VARCHAR2(500)
+
+);
+
+ALTER TABLE EMPLOYEE_ABSENCES_TAB
+ADD FOREIGN KEY (emab_employee_id_fk) REFERENCES EMPLOYEES_TAB(empl_employee_id_pk);
+
+
+CREATE TABLE ADDRESSES_TAB ( 	
+
+	addr_address_id_pk		NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	addr_street				VARCHAR2(50),
+	addr_number				VARCHAR2(10),
+	addr_area_locality		VARCHAR2(100),
+	addr_postal_code		VARCHAR2(10) NOT NULL,
+	addr_town_city			VARCHAR2(50) NOT NULL,
+	addr_state_province		VARCHAR2(50) NOT NULL,
+	addr_country			VARCHAR2(50) NOT NULL,
+	addr_continent			VARCHAR2(20) NOT NULL
+
+);
+
+
+CREATE TABLE TRANSPORT_TYPES_TAB ( 	
+
+	trty_transport_type_code_pk	VARCHAR2(3) PRIMARY KEY,
+	trty_full_name				VARCHAR2(30)  NOT NULL,
+	trty_min_length_m			FLOAT NOT NULL,
+	trty_max_length_m			FLOAT NOT NULL,
+	trty_min_weight_t			FLOAT NOT NULL,
+	trty_max_weight_t			FLOAT NOT NULL,
+	trty_load_capacity_t		FLOAT NOT NULL
+
+);
+
+
+CREATE TABLE SUPPLIERS_TAB ( 			
+	
+	supr_supplier_id_pk				NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	supr_supplier_name				VARCHAR2(50) NOT NULL,
+	supr_transport_type_code_fk		VARCHAR2(3) NOT NULL,
+	supr_phone_number				INT NOT NULL
+
+);
+
+
+ALTER TABLE SUPPLIERS_TAB
+ADD FOREIGN KEY (supr_transport_type_code_fk) REFERENCES TRANSPORT_TYPES_TAB(trty_transport_type_code_pk);
+
+
+CREATE TABLE PROMOTIONAL_CAMPAIGNS_TAB ( 	
+	
+	prmo_promo_id_pk				NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	prmo_title						VARCHAR2(50)  NOT NULL,
+	prmo_department_code_fk			VARCHAR2(5),
+	prmo_begin_date					DATE, 
+	prmo_finish_date				DATE,
+	prmo_status_enum				VARCHAR2(8) CHECK (prmo_status_enum IN ('Planned', 'Pending' ,'Canceled', 'Finished')) NOT NULL,
+	prmo_description				VARCHAR2(500)
+
+);
+
+
+ALTER TABLE PROMOTIONAL_CAMPAIGNS_TAB
+ADD FOREIGN KEY (prmo_department_code_fk) REFERENCES departMENTS_TAB(depa_department_code_pk);
+
+
+CREATE TABLE AUDITS_TAB ( 	
+	
+	audt_audit_id_pk				NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	audt_title						VARCHAR2(50) NOT NULL,
+	audt_department_code_fk			VARCHAR2(5),
+	audt_date_begin					DATE NOT NULL,
+	audt_date_finish				DATE,
+	audt_status_enum				VARCHAR2(8) CHECK( audt_status_enum IN ('Planned', 'Pending' ,'Canceled', 'Finished')),
+	audt_description				VARCHAR2(500),
+	audt_inspector_code				VARCHAR2(10)
+
+);
+
+
+ALTER TABLE AUDITS_TAB
+ADD FOREIGN KEY (audt_department_code_fk) REFERENCES departMENTS_TAB(depa_department_code_pk);
+
+
+CREATE TABLE MAINTENANCES_TAB ( 
+	
+	main_maintenance_id_pk			NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	main_title						VARCHAR2(50) NOT NULL,
+	main_department_code_fk			VARCHAR2(5),
+	main_contractor					VARCHAR2(50),
+	main_date_begin					DATE, 
+	main_date_finish				DATE,
+	main_status_enum				VARCHAR2(8) CHECK( main_status_enum IN ('Planned', 'Pending' ,'Canceled', 'Finished')),
+	main_description				VARCHAR2(500)
+
+);
+
+
+ALTER TABLE MAINTENANCES_TAB
+ADD FOREIGN KEY (main_department_code_fk) REFERENCES departMENTS_TAB(depa_department_code_pk);
+
+
+CREATE TABLE INVOICES_TAB ( 
+	
+	invo_invoice_id_pk					NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	invo_customer_id_fk					INT,
+	invo_date							DATE NOT NULL,
+	invo_net_value						FLOAT NOT NULL,
+	invo_gross_value					FLOAT NOT NULL,
+	invo_tax_rate_pct					INT NOT NULL,
+	invo_currency_code					VARCHAR2(5),
+	invo_details						VARCHAR2(500)
+
+);
+
+ALTER TABLE INVOICES_TAB
+ADD FOREIGN KEY (invo_customer_id_fk) REFERENCES CUSTOMERS_TAB(cust_customer_id_pk);
+
+
+CREATE TABLE COMPLAINTS_TAB ( 
+	
+	comp_complaint_id_pk				NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	comp_type							VARCHAR2(50),
+	comp_description					VARCHAR2(500),
+	comp_status_enum					VARCHAR2(8) CHECK( comp_status_enum IN ( 'Active' , 'Finished')),
+	comp_decision						VARCHAR2(500)
+
+);
+
+
+CREATE TABLE PURCHASES_TAB ( 
+	
+	purc_purchase_id_pk					NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	purc_customer_id_fk					INT,
+	purc_invoice_yn						NUMBER (1, 0) NOT NULL,
+	purc_invoice_id_fk					INT,
+	purc_date_purchase					DATE NOT NULL,
+	purc_gross_value					FLOAT NOT NULL,
+	purc_complaint_yn					NUMBER(1, 0) NOT NULL,
+	purc_complaint_id_fk				INT,
+	purc_department_code_fk				VARCHAR2(5)
+	
+);
+
+
+ALTER TABLE PURCHASES_TAB
+ADD FOREIGN KEY (purc_customer_id_fk) REFERENCES CUSTOMERS_TAB(cust_customer_id_pk);
+
+
+ALTER TABLE PURCHASES_TAB
+ADD FOREIGN KEY (purc_invoice_id_fk) REFERENCES INVOICES_TAB(invo_invoice_id_pk);
+
+
+ALTER TABLE PURCHASES_TAB
+ADD FOREIGN KEY (purc_COMPLAINT_id_fk) REFERENCES COMPLAINTS_TAB(comp_complaint_id_pk);
+
+ALTER TABLE PURCHASES_TAB
+ADD FOREIGN KEY (purc_department_code_fk) REFERENCES DEPARTMENTS_TAB(depa_department_code_pk);
+
+
+CREATE TABLE SUPPLIES_TAB ( 
+	
+	supl_supply_id_pk						NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	supl_supplier_id_fk						INT,
+	supl_product_id_fk						INT,
+	supl_required_concession				VARCHAR2(50),
+	supl_weight_sum_kg						FLOAT NOT NULL,
+	supl_product_quantity					FLOAT NOT NULL,
+	supl_date								DATE NOT NULL,
+	supl_department_code_fk					VARCHAR2(5),
+	supl_status_enum						VARCHAR2(8) CHECK( supl_status_enum IN ('Planned', 'Canceled', 'Finished'))
+
+);
+
+
+ALTER TABLE SUPPLIES_TAB
+ADD FOREIGN KEY (supl_supplier_id_fk) REFERENCES SUPPLIERS_TAB(supr_supplier_id_pk);
+
+
+ALTER TABLE SUPPLIES_TAB
+ADD FOREIGN KEY (supl_product_id_fk) REFERENCES PRODUCTS_TAB(prod_product_id_pk);
+
+
+ALTER TABLE SUPPLIES_TAB
+ADD FOREIGN KEY (supl_department_code_fk) REFERENCES departMENTS_TAB(depa_department_code_pk);
+
+
+CREATE TABLE PURCHASED_ITEMS_TAB ( 
+	
+	puit_purchase_id_fk						INT,
+	puit_product_id_fk						INT,
+	puit_quantity							INT NOT NULL
+	
+);
+
+
+ALTER TABLE PURCHASED_ITEMS_TAB
+ADD FOREIGN KEY (puit_purchase_id_fk) REFERENCES PURCHASES_TAB(purc_purchase_id_pk);
+
+
+ALTER TABLE PURCHASED_ITEMS_TAB
+ADD FOREIGN KEY (puit_product_id_fk) REFERENCES PRODUCTS_TAB(prod_product_id_pk);
+
+
+CREATE TABLE EMPLOYEE_ADDRESSES_TAB ( 
+	
+	emad_employee_id_fk				INT,
+	emad_address_id_fk				INT,
+	emad_date_address_from			DATE NOT NULL,
+	emad_date_address_to			DATE
+
+);
+
+
+ALTER TABLE EMPLOYEE_ADDRESSES_TAB
+ADD FOREIGN KEY (emad_employee_id_fk) REFERENCES EMPLOYEES_TAB(empl_employee_id_pk);
+
+
+ALTER TABLE EMPLOYEE_ADDRESSES_TAB
+ADD FOREIGN KEY (emad_address_id_fk) REFERENCES ADDRESSES_TAB(addr_address_id_pk);
+
+
+CREATE TABLE DEPARTMENT_ADDRESSES_TAB ( 
+	
+	dead_department_code_fk			VARCHAR2(5),
+	dead_address_id_fk				INT,
+	dead_date_address_from			DATE NOT NULL,
+	dead_date_address_to			DATE
+
+);
+
+
+ALTER TABLE DEPARTMENT_ADDRESSES_TAB
+ADD FOREIGN KEY (dead_department_code_fk) REFERENCES departMENTS_TAB(depa_department_code_pk);
+
+
+ALTER TABLE DEPARTMENT_ADDRESSES_TAB
+ADD FOREIGN KEY (dead_address_id_fk) REFERENCES ADDRESSES_TAB(addr_address_id_pk);
+
+
+CREATE TABLE CUSTOMER_ADDRESSES_TAB ( 	
+
+	cuad_customer_id_fk			INT,
+	cuad_address_id_fk			INT,
+	cuad_date_address_from		DATE NOT NULL,
+	cuad_date_address_to		DATE
+
+);
+
+
+ALTER TABLE CUSTOMER_ADDRESSES_TAB
+ADD FOREIGN KEY (cuad_customer_id_fk) REFERENCES CUSTOMERS_TAB(cust_customer_id_pk);
+
+
+ALTER TABLE CUSTOMER_ADDRESSES_TAB
+ADD FOREIGN KEY (cuad_address_id_fk) REFERENCES ADDRESSES_TAB(addr_address_id_pk);
+
+
+CREATE TABLE SUPPLIER_ADDRESSES_TAB ( 	
+	
+	suad_supplier_id_fk			INT,
+	suad_address_id_fk			INT,
+	suad_date_address_from		DATE NOT NULL,
+	suad_date_address_to		DATE
+
+);
+
+
+ALTER TABLE SUPPLIER_ADDRESSES_TAB
+ADD FOREIGN KEY (suad_supplier_id_fk) REFERENCES SUPPLIERS_TAB(supr_supplier_id_pk);
+
+
+ALTER TABLE SUPPLIER_ADDRESSES_TAB
+ADD FOREIGN KEY (suad_address_id_fk) REFERENCES ADDRESSES_TAB(addr_address_id_pk);
+
+
+CREATE TABLE PRODUCT_STOCK_TAB ( 
+		
+	prst_product_id_fk			INT NOT NULL,
+	prst_department_code_fk		VARCHAR2(5) NOT NULL,
+	prst_number					INT NOT NULL
+
+);
+
+ALTER TABLE PRODUCT_STOCK_TAB
+ADD FOREIGN KEY (prst_product_id_fk) REFERENCES PRODUCTS_TAB(prod_product_id_pk);
+
+ALTER TABLE PRODUCT_STOCK_TAB
+ADD FOREIGN KEY (prst_department_code_fk) REFERENCES DEPARTMENTS_TAB(depa_department_code_pk);
+
+
+CREATE TABLE ONLINE_PURCHASES_TAB ( 
+	
+	onpu_online_purchase_id_pk				NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+    onpu_customer_id_fk                		INT NOT NULL,
+    onpu_invoice_id_fk                 		INT NOT NULL,
+	onpu_date_purchase						DATE NOT NULL,
+	onpu_status_enum						VARCHAR2(9) CHECK( onpu_status_enum IN ('Unpaid', 'Paid', 'Cancelled')),
+	onpu_complaint_yn						NUMBER(1, 0) NOT NULL,
+	onpu_complaint_id_fk					INT,
+	
+	CONSTRAINT onpu_fk_cust_customer_id_pk		FOREIGN KEY (onpu_customer_id_fk) REFERENCES CUSTOMERS_TAB(cust_customer_id_pk),
+	CONSTRAINT onpu_fk_onpu_invoice_id_fk		FOREIGN KEY (onpu_invoice_id_fk) REFERENCES INVOICES_TAB(invo_invoice_id_pk),
+	CONSTRAINT onpu_fk_onpu_complaint_id_fk		FOREIGN KEY (onpu_complaint_id_fk) REFERENCES COMPLAINTS_TAB(comp_complaint_id_pk)
+);
+
+
+CREATE TABLE DELIVERIES_TAB (  	
+
+	deli_delivery_id_pk									NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	deli_online_purchase_id_fk							INT NOT NULL,
+	deli_employee_id_fk									INT NOT NULL,
+	deli_transport_type_code_fk							VARCHAR2(5) NOT NULL,
+	deli_date											DATE NOT NULL,
+	deli_time_window									VARCHAR2(20) NOT NULL,
+	deli_status_enum									VARCHAR2(9) CHECK( deli_status_enum IN ('Planned', 'Pending', 'Delivered', 'Cancelled')),
+	deli_other_details									VARCHAR2(500),
+	
+	CONSTRAINT deli_fk_onpu_online_purchase_id_pk		FOREIGN KEY (deli_online_purchase_id_fk) REFERENCES ONLINE_PURCHASES_TAB(onpu_online_purchase_id_pk),
+	CONSTRAINT deli_fk_empl_employee_id_pk				FOREIGN KEY (deli_employee_id_fk) REFERENCES EMPLOYEES_TAB(empl_employee_id_pk),
+	CONSTRAINT deli_fk_trty_transport_type_code_pk		FOREIGN KEY (deli_transport_type_code_fk) REFERENCES TRANSPORT_TYPES_TAB(trty_transport_type_code_pk)
+
+);
+
+
+CREATE TABLE ONLINE_PURCHASED_ITEMS_TAB (  
+	
+	opit_online_purchase_id_fk							INT NOT NULL,
+	opit_product_id_fk									INT NOT NULL,
+	opit_quantity										INT NOT NULL,
+	
+	CONSTRAINT opit_fk_onpu_online_purchase_id_pk		FOREIGN KEY (opit_online_purchase_id_fk) REFERENCES ONLINE_PURCHASES_TAB(onpu_online_purchase_id_pk),
+	CONSTRAINT opit_fk_prod_product_id_pk				FOREIGN KEY (opit_product_id_fk) REFERENCES PRODUCTS_TAB(prod_product_id_pk)
+
+);
+
+
+
+CREATE TABLE ARCHIVE_PRODUCTS_TAB (
+
+	prod_event_date			  		DATE,							
+    prod_event_type 				VARCHAR2(6),
+    prod_user_name			 		VARCHAR2(30),
+	
+    old_prod_product_id_pk         	INT,
+    old_prod_product_name          	VARCHAR2(50),
+    old_prod_company_name          	VARCHAR2(40),
+    old_prod_product_type_fk       	VARCHAR2(5),
+    old_prod_net_price         		FLOAT,
+    old_prod_purchase_price        	FLOAT,
+    old_prod_tax_rate_pct          	INT,
+    old_prod_quantity              	FLOAT,
+    old_prod_unit                  	VARCHAR2(15),
+    old_prod_packaging             	VARCHAR2(20),
+    old_prod_refrigerated_yn       	NUMBER(1, 0),
+    old_prod_frozen_yn             	NUMBER(1, 0),
+    old_prod_id_promo_fk           	INT,
+    old_prod_other_details		  	VARCHAR2(500),
+		
+	new_prod_product_id_pk         	INT,
+    new_prod_product_name          	VARCHAR2(50),
+    new_prod_company_name          	VARCHAR2(40),
+    new_prod_product_type_fk       	VARCHAR2(5),
+    new_prod_net_price         		FLOAT,
+    new_prod_purchase_price        	FLOAT,
+    new_prod_tax_rate_pct          	INT,
+    new_prod_quantity              	FLOAT,
+    new_prod_unit                  	VARCHAR2(15),
+    new_prod_packaging             	VARCHAR2(20),
+    new_prod_refrigerated_yn       	NUMBER(1, 0),
+    new_prod_frozen_yn             	NUMBER(1, 0),
+    new_prod_id_promo_fk           	INT,
+    new_prod_other_details		  	VARCHAR2(500)
+
+);
+
+
+CREATE TABLE ARCHIVE_PRODUCT_TYPES_TAB (
+
+	prty_event_date			  		DATE,		
+	prty_event_type 				VARCHAR2(6),
+	prty_user_name			 		VARCHAR2(30),
+	
+	old_prty_product_type_pk		VARCHAR2(5),
+	old_prty_full_name				VARCHAR2(50),
+	old_prty_shelf_life				VARCHAR2(10),
+	
+	new_prty_product_type_pk		VARCHAR2(5),
+	new_prty_full_name				VARCHAR2(50),
+	new_prty_shelf_life				VARCHAR2(10) 
+
+);
+
+
+CREATE TABLE ARCHIVE_CUSTOMERS_TAB (
+
+
+	cust_event_date			  			DATE,		
+	cust_event_type 					VARCHAR2(6),
+	cust_user_name			 			VARCHAR2(30),
+
+	old_cust_customer_id_pk			INT,
+	old_cust_first_name				VARCHAR2(50),
+	old_cust_last_name				VARCHAR2(50),
+	old_cust_nin_code				NUMBER,
+	old_cust_discount_pct			INT,
+	old_cust_customer_club_yn		NUMBER(1, 0),
+	old_cust_date_joining			DATE,
+	old_cust_phone_number			INT,
+	old_cust_email					VARCHAR2(40),
+	old_cust_company_number			NUMBER,
+
+	new_cust_customer_id_pk			INT,
+	new_cust_first_name				VARCHAR2(50),
+	new_cust_last_name				VARCHAR2(50),
+	new_cust_nin_code				NUMBER,
+	new_cust_discount_pct			INT,
+	new_cust_customer_club_yn		NUMBER(1, 0),
+	new_cust_date_joining			DATE,
+	new_cust_phone_number			INT,
+	new_cust_email					VARCHAR2(40),
+	new_cust_company_number			NUMBER	
+	
+);
+
+
+CREATE TABLE ARCHIVE_EMPLOYEES_TAB (	
+
+	empl_event_date			  			DATE,		
+	empl_event_type 					VARCHAR2(6),
+	empl_user_name			 			VARCHAR2(30),
+	
+	old_empl_employee_id_pk			INT,
+	old_empl_first_name				VARCHAR2(50),
+	old_empl_last_name				VARCHAR2(50),
+	old_empl_nin_code				NUMBER,
+	old_empl_gender_enum			VARCHAR2(6),
+	old_empl_birth_date				DATE,
+	old_empl_phone_number			INT,
+	old_empl_job_title				VARCHAR2(30),
+	old_empl_department_code_fk		VARCHAR2(5),
+	old_empl_salary					FLOAT,
+	old_empl_privilege_level_enum	VARCHAR2(2),
+	old_empl_bonus_pct				INT,
+	old_empl_status_enum			VARCHAR2(8),
+	old_empl_employment_date		DATE,
+	
+	new_empl_employee_id_pk			INT,
+	new_empl_first_name				VARCHAR2(50),
+	new_empl_last_name				VARCHAR2(50),
+	new_empl_nin_code				NUMBER,
+	new_empl_gender_enum			VARCHAR2(6),
+	new_empl_birth_date				DATE,
+	new_empl_phone_number			INT,
+	new_empl_job_title				VARCHAR2(30),
+	new_empl_department_code_fk		VARCHAR2(5),
+	new_empl_salary					FLOAT,
+	new_empl_privilege_level_enum	VARCHAR2(2),
+	new_empl_bonus_pct				INT,
+	new_empl_status_enum			VARCHAR2(8),
+	new_empl_employment_date		DATE
+
+);
+
+
+CREATE TABLE ARCHIVE_DEPARTMENTS_TAB (	
+
+	depa_event_date			  			DATE,		
+	depa_event_type 					VARCHAR2(6),
+	depa_user_name			 			VARCHAR2(30),
+	
+	old_depa_department_code_pk		VARCHAR2(5),
+	old_depa_department_name		VARCHAR2(50),
+	old_depa_department_type_enum	VARCHAR2(6),
+	old_depa_manager_id_fk			INT,
+	old_depa_area_m2				FLOAT, 
+	
+	new_depa_department_code_pk		VARCHAR2(5),
+	new_depa_department_name		VARCHAR2(50),
+	new_depa_department_type_enum	VARCHAR2(6),
+	new_depa_manager_id_fk			INT,
+	new_depa_area_m2				FLOAT 
+
+);
+
+
+CREATE TABLE ARCHIVE_DEPARTMENT_EQUIPMENTS_TAB (	
+
+	deeq_event_date			  			DATE,		
+	deeq_event_type 					VARCHAR2(6),
+	deeq_user_name			 			VARCHAR2(30),
+
+	old_deeq_equipment_id_pk		INT,
+	old_deeq_department_code_fk		VARCHAR2(5),
+	old_deeq_name					VARCHAR2(50),
+	old_deeq_type					VARCHAR2(50),
+	old_deeq_quantity				INT,
+	old_deeq_date_purchase			DATE,
+	old_deeq_description			VARCHAR2(500),
+	
+	new_deeq_equipment_id_pk		INT,
+	new_deeq_department_code_fk		VARCHAR2(5),
+	new_deeq_name					VARCHAR2(50),
+	new_deeq_type					VARCHAR2(50),
+	new_deeq_quantity				INT,
+	new_deeq_date_purchase			DATE,
+	new_deeq_description			VARCHAR2(500)
+
+);
+
+
+CREATE TABLE ARCHIVE_EMPLOYEE_ABSENCES_TAB (	
+
+	emab_event_date			  			DATE,		
+	emab_event_type 					VARCHAR2(6),
+	emab_user_name			 			VARCHAR2(30),
+	
+	old_emab_absence_id_pk		INT,
+	old_emab_employee_id_fk		INT,
+	old_emab_date_from			DATE,
+	old_emab_date_to			DATE,
+	old_emab_reason				VARCHAR2(50),
+	old_emab_description		VARCHAR2(500)
+	
+	new_emab_absence_id_pk		INT,
+	new_emab_employee_id_fk		INT,
+	new_emab_date_from			DATE,
+	new_emab_date_to			DATE,
+	new_emab_reason				VARCHAR2(50),
+	new_emab_description		VARCHAR2(500)
+
+);
+
+
+CREATE TABLE ARCHIVE_ADDRESSES_TAB ( 	
+
+	addr_event_date			  			DATE,		
+	addr_event_type 					VARCHAR2(6),
+	addr_user_name			 			VARCHAR2(30),
+	
+	old_addr_address_id_pk		INT,
+	old_addr_street				VARCHAR2(50),
+	old_addr_number				VARCHAR2(10),
+	old_addr_area_locality		VARCHAR2(100),
+	old_addr_postal_code		VARCHAR2(10),
+	old_addr_town_city			VARCHAR2(50),
+	old_addr_state_province		VARCHAR2(50),
+	old_addr_country			VARCHAR2(50),
+	old_addr_continent			VARCHAR2(20),
+
+	new_addr_address_id_pk		INT,
+	new_addr_street				VARCHAR2(50),
+	new_addr_number				VARCHAR2(10),
+	new_addr_area_locality		VARCHAR2(100),
+	new_addr_postal_code		VARCHAR2(10),
+	new_addr_town_city			VARCHAR2(50),
+	new_addr_state_province		VARCHAR2(50),
+	new_addr_country			VARCHAR2(50),
+	new_addr_continent			VARCHAR2(20) 	
+
+);
+
+
+CREATE TABLE ARCHIVE_TRANSPORT_TYPES_TAB ( 	
+
+	trty_event_date			  			DATE,		
+	trty_event_type 					VARCHAR2(6),
+	trty_user_name			 			VARCHAR2(30),
+	
+	old_trty_transport_type_code_pk	VARCHAR2(3),
+	old_trty_full_name				VARCHAR2(30),
+	old_trty_min_length_m			FLOAT,
+	old_trty_max_length_m			FLOAT,
+	old_trty_min_weight_t			FLOAT,
+	old_trty_max_weight_t			FLOAT,
+	old_trty_load_capacity_t		FLOAT,
+
+	new_trty_transport_type_code_pk	VARCHAR2(3),
+	new_trty_full_name				VARCHAR2(30),
+	new_trty_min_length_m			FLOAT,
+	new_trty_max_length_m			FLOAT,
+	new_trty_min_weight_t			FLOAT,
+	new_trty_max_weight_t			FLOAT,
+	new_trty_load_capacity_t		FLOAT 	
+
+);
+
+
+CREATE TABLE ARCHIVE_SUPPLIERS_TAB ( 			
+	
+	supr_event_date			  			DATE,		
+	supr_event_type 					VARCHAR2(6),
+	supr_user_name			 			VARCHAR2(30),
+	
+	old_supr_supplier_id_pk				INT,
+	old_supr_supplier_name				VARCHAR2(50),
+	old_supr_transport_type_code_fk		VARCHAR2(3),
+	old_supr_phone_number				INT, 
+	
+	new_supr_supplier_id_pk				INT,
+	new_supr_supplier_name				VARCHAR2(50),
+	new_supr_transport_type_code_fk		VARCHAR2(3),
+	new_supr_phone_number				INT 
+
+);
+
+
+CREATE TABLE ARCHIVE_PROMOTIONAL_CAMPAIGNS_TAB ( 	
+	
+	prmo_event_date			  			DATE,		
+	prmo_event_type 					VARCHAR2(6),
+	prmo_user_name			 			VARCHAR2(30),	
+	
+	old_prmo_promo_id_pk				INT,
+	old_prmo_title						VARCHAR2(50),
+	old_prmo_department_code_fk			VARCHAR2(5),
+	old_prmo_begin_date					DATE, 
+	old_prmo_finish_date				DATE,
+	old_prmo_status_enum				VARCHAR2(8),
+	old_prmo_description				VARCHAR2(500),
+	
+	new_prmo_promo_id_pk				INT,
+	new_prmo_title						VARCHAR2(50),
+	new_prmo_department_code_fk			VARCHAR2(5),
+	new_prmo_begin_date					DATE, 
+	new_prmo_finish_date				DATE,
+	new_prmo_status_enum				VARCHAR2(8),
+	new_prmo_description				VARCHAR2(500)
+
+);
+
+
+CREATE TABLE ARCHIVE_AUDITS_TAB ( 	
+	
+	audt_event_date			  			DATE,		
+	audt_event_type 					VARCHAR2(6),
+	audt_user_name			 			VARCHAR2(30),
+	
+	old_audt_audit_id_pk				INT,
+	old_audt_title						VARCHAR2(50),
+	old_audt_department_code_fk			VARCHAR2(5),
+	old_audt_date_begin					DATE,
+	old_audt_date_finish				DATE,
+	old_audt_status_enum				VARCHAR2(8),
+	old_audt_description				VARCHAR2(500),
+	old_audt_inspector_code				VARCHAR2(10),
+	
+	new_audt_audit_id_pk				INT,
+	new_audt_title						VARCHAR2(50),
+	new_audt_department_code_fk			VARCHAR2(5),
+	new_audt_date_begin					DATE,
+	new_audt_date_finish				DATE,
+	new_audt_status_enum				VARCHAR2(8),
+	new_audt_description				VARCHAR2(500),
+	new_audt_inspector_code				VARCHAR2(10)
+	
+);
+
+
+CREATE TABLE ARCHIVE_MAINTENANCES_TAB ( 
+	
+	main_event_date			  			DATE,		
+	main_event_type 					VARCHAR2(6),
+	main_user_name			 			VARCHAR2(30),
+	
+	old_main_maintenance_id_pk			INT,
+	old_main_title						VARCHAR2(50),
+	old_main_department_code_fk			VARCHAR2(5),
+	old_main_contractor					VARCHAR2(50),
+	old_main_date_begin					DATE, 
+	old_main_date_finish				DATE,
+	old_main_status_enum				VARCHAR2(8),
+	old_main_description				VARCHAR2(500),
+	
+	new_main_maintenance_id_pk			INT,
+	new_main_title						VARCHAR2(50),
+	new_main_department_code_fk			VARCHAR2(5),
+	new_main_contractor					VARCHAR2(50),
+	new_main_date_begin					DATE, 
+	new_main_date_finish				DATE,
+	new_main_status_enum				VARCHAR2(8),
+	new_main_description				VARCHAR2(500)
+
+);
+
+
+CREATE TABLE ARCHIVE_INVOICES_TAB ( 
+	
+	invo_event_date			  			DATE,		
+	invo_event_type 					VARCHAR2(6),
+	invo_user_name			 			VARCHAR2(30),
+	
+	old_invo_invoice_id_pk					INT,
+	old_invo_customer_id_fk					INT,
+	old_invo_date							DATE,
+	old_invo_net_value						FLOAT,
+	old_invo_gross_value					FLOAT,
+	old_invo_tax_rate_pct					INT,
+	old_invo_currency_code					VARCHAR2(5),
+	old_invo_details						VARCHAR2(500),
+	
+	new_invo_invoice_id_pk					INT,
+	new_invo_customer_id_fk					INT,
+	new_invo_date							DATE,
+	new_invo_net_value						FLOAT,
+	new_invo_gross_value					FLOAT,
+	new_invo_tax_rate_pct					INT,
+	new_invo_currency_code					VARCHAR2(5),
+	new_invo_details						VARCHAR2(500)
+
+);
+
+
+CREATE TABLE ARCHIVE_COMPLAINTS_TAB ( 
+
+	comp_event_date			  			DATE,		
+	comp_event_type 					VARCHAR2(6),
+	comp_user_name			 			VARCHAR2(30),
+	
+	old_comp_complaint_id_pk				INT,
+	old_comp_type							VARCHAR2(50),
+	old_comp_description					VARCHAR2(500),
+	old_comp_status_enum					VARCHAR2(8),
+	old_comp_decision						VARCHAR2(500),
+	
+	new_comp_complaint_id_pk				INT,
+	new_comp_type							VARCHAR2(50),
+	new_comp_description					VARCHAR2(500),
+	new_comp_status_enum					VARCHAR2(8),
+	new_comp_decision						VARCHAR2(500)
+
+);
+
+
+CREATE TABLE ARCHIVE_PURCHASES_TAB ( 
+
+	purc_event_date			  			DATE,		
+	purc_event_type 					VARCHAR2(6),
+	purc_user_name			 			VARCHAR2(30),
+	
+	old_purc_purchase_id_pk					INT,
+	old_purc_customer_id_fk					INT,
+	old_purc_invoice_yn						NUMBER (1, 0),
+	old_purc_invoice_id_fk					INT,
+	old_purc_date_purchase					DATE,
+	old_purc_gross_value					FLOAT,
+	old_purc_complaint_yn					NUMBER(1, 0),
+	old_purc_complaint_id_fk				INT,
+	old_purc_department_code_fk				VARCHAR2(5),
+	
+	new_purc_purchase_id_pk					INT,
+	new_purc_customer_id_fk					INT,
+	new_purc_invoice_yn						NUMBER (1, 0),
+	new_purc_invoice_id_fk					INT,
+	new_purc_date_purchase					DATE,
+	new_purc_gross_value					FLOAT,
+	new_purc_complaint_yn					NUMBER(1, 0),
+	new_purc_complaint_id_fk				INT,
+	new_purc_department_code_fk				VARCHAR2(5)
+	
+);
+
+
+CREATE TABLE ARCHIVE_SUPPLIES_TAB ( 
+
+	supl_event_date			  			DATE,		
+	supl_event_type 					VARCHAR2(6),
+	supl_user_name			 			VARCHAR2(30),
+	
+	old_supl_supply_id_pk						INT,
+	old_supl_supplier_id_fk						INT,
+	old_supl_product_id_fk						INT,
+	old_supl_required_concession				VARCHAR2(50),
+	old_supl_weight_sum_kg						FLOAT,
+	old_supl_product_quantity					FLOAT,
+	old_supl_date								DATE,
+	old_supl_department_code_fk					VARCHAR2(5),
+	old_supl_status_enum						VARCHAR2(8),
+	
+	new_supl_supply_id_pk						INT,
+	new_supl_supplier_id_fk						INT,
+	new_supl_product_id_fk						INT,
+	new_supl_required_concession				VARCHAR2(50),
+	new_supl_weight_sum_kg						FLOAT,
+	new_supl_product_quantity					FLOAT,
+	new_supl_date								DATE,
+	new_supl_department_code_fk					VARCHAR2(5),
+	new_supl_status_enum						VARCHAR2(8)
+
+);
+
+
+CREATE TABLE ARCHIVE_PURCHASED_ITEMS_TAB ( 
+
+	puit_event_date			  			DATE,		
+	puit_event_type 					VARCHAR2(6),
+	puit_user_name			 			VARCHAR2(30),
+	
+	old_puit_purchase_id_fk						INT,
+	old_puit_product_id_fk						INT,
+	old_puit_quantity							INT,
+	
+	new_puit_purchase_id_fk						INT,
+	new_puit_product_id_fk						INT,
+	new_puit_quantity							INT
+	
+);
+
+
+CREATE TABLE ARCHIVE_EMPLOYEE_ADDRESSES_TAB ( 
+
+	emad_event_date			  			DATE,		
+	emad_event_type 					VARCHAR2(6),
+	emad_user_name			 			VARCHAR2(30),
+	
+	old_emad_employee_id_fk				INT,
+	old_emad_address_id_fk				INT,
+	old_emad_date_address_from			DATE,
+	old_emad_date_address_to			DATE,
+	
+	new_emad_employee_id_fk				INT,
+	new_emad_address_id_fk				INT,
+	new_emad_date_address_from			DATE,
+	new_emad_date_address_to			DATE
+
+);
+
+
+CREATE TABLE ARCHIVE_DEPARTMENT_ADDRESSES_TAB ( 
+
+	dead_event_date			  			DATE,		
+	dead_event_type 					VARCHAR2(6),
+	dead_user_name			 			VARCHAR2(30),
+	
+	old_dead_department_code_fk			VARCHAR2(5),
+	old_dead_address_id_fk				INT,
+	old_dead_date_address_from			DATE,
+	old_dead_date_address_to			DATE,
+	
+	new_dead_department_code_fk			VARCHAR2(5),
+	new_dead_address_id_fk				INT,
+	new_dead_date_address_from			DATE,
+	new_dead_date_address_to			DATE
+
+);
+
+
+CREATE TABLE ARCHIVE_CUSTOMER_ADDRESSES_TAB ( 	
+
+	cuad_event_date			  			DATE,		
+	cuad_event_type 					VARCHAR2(6),
+	cuad_user_name			 			VARCHAR2(30),
+	
+	old_cuad_customer_id_fk			INT,
+	old_cuad_address_id_fk			INT,
+	old_cuad_date_address_from		DATE,
+	old_cuad_date_address_to		DATE,
+	
+	new_cuad_customer_id_fk			INT,
+	new_cuad_address_id_fk			INT,
+	new_cuad_date_address_from		DATE,
+	new_cuad_date_address_to		DATE
+
+);
+
+
+CREATE TABLE ARCHIVE_SUPPLIER_ADDRESSES_TAB ( 	
+
+	suad_event_date			  			DATE,		
+	suad_event_type 					VARCHAR2(6),
+	suad_user_name			 			VARCHAR2(30),
+	
+	old_suad_supplier_id_fk			INT,
+	old_suad_address_id_fk			INT,
+	old_suad_date_address_from		DATE,
+	old_suad_date_address_to		DATE,
+	
+	new_suad_supplier_id_fk			INT,
+	new_suad_address_id_fk			INT,
+	new_suad_date_address_from		DATE,
+	new_suad_date_address_to		DATE
+
+);
+
+
+CREATE TABLE ARCHIVE_PRODUCT_STOCK_TAB ( 
+
+	prst_event_date			  			DATE,		
+	prst_event_type 					VARCHAR2(6),
+	prst_user_name			 			VARCHAR2(30),
+	
+	old_prst_product_id_fk			INT,
+	old_prst_department_code_fk		VARCHAR2(5),
+	old_prst_number					INT,
+
+	new_prst_product_id_fk			INT,
+	new_prst_department_code_fk		VARCHAR2(5),
+	new_prst_number					INT 	
+
+);
+
+
+CREATE TABLE ARCHIVE_ONLINE_PURCHASES_TAB ( 
+
+	onpu_event_date			  			DATE,		
+	onpu_event_type 					VARCHAR2(6),
+	onpu_user_name			 			VARCHAR2(30),
+	
+	old_onpu_online_purchase_id_pk				INT,
+    old_onpu_customer_id_fk                		INT,
+    old_onpu_invoice_id_fk                 		INT,
+	old_onpu_date_purchase						DATE,
+	old_onpu_status_enum						VARCHAR2(9),
+	old_onpu_complaint_yn						NUMBER(1, 0),
+	old_onpu_complaint_id_fk					INT,
+	
+	new_onpu_online_purchase_id_pk				INT,
+    new_onpu_customer_id_fk                		INT,
+    new_onpu_invoice_id_fk                 		INT,
+	new_onpu_date_purchase						DATE,
+	new_onpu_status_enum						VARCHAR2(9),
+	new_onpu_complaint_yn						NUMBER(1, 0),
+	new_onpu_complaint_id_fk					INT
+
+);
+
+
+CREATE TABLE ARCHIVE_DELIVERIES_TAB (  	
+
+	deli_event_date			  			DATE,		
+	deli_event_type 					VARCHAR2(6),
+	deli_user_name			 			VARCHAR2(30),
+	
+	old_deli_delivery_id_pk									INT,
+	old_deli_online_purchase_id_fk							INT,
+	old_deli_employee_id_fk									INT,
+	old_deli_transport_type_code_fk							VARCHAR2(5),
+	old_deli_date											DATE,
+	old_deli_time_window									VARCHAR2(20),
+	old_deli_status_enum									VARCHAR2(9),
+	old_deli_other_details									VARCHAR2(500),
+	
+	new_deli_delivery_id_pk									INT,
+	new_deli_online_purchase_id_fk							INT,
+	new_deli_employee_id_fk									INT,
+	new_deli_transport_type_code_fk							VARCHAR2(5),
+	new_deli_date											DATE,
+	new_deli_time_window									VARCHAR2(20),
+	new_deli_status_enum									VARCHAR2(9),
+	new_deli_other_details									VARCHAR2(500)
+
+);
+
+
+CREATE TABLE ARCHIVE_ONLINE_PURCHASED_ITEMS_TAB (  
+
+	opit_event_date			  			DATE,		
+	opit_event_type 					VARCHAR2(6),
+	opit_user_name			 			VARCHAR2(30),
+	
+	old_opit_online_purchase_id_fk							INT,
+	old_opit_product_id_fk									INT,
+	old_opit_quantity										INT,
+	
+	new_opit_online_purchase_id_fk							INT,
+	new_opit_product_id_fk									INT,
+	new_opit_quantity										INT
+
+);
