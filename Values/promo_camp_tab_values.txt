@@ -1,0 +1,7 @@
+prmo_title,prmo_department_code_fk,prmo_begin_date,prmo_finish_date,prmo_status_enum,prmo_description
+Back-to-School Sale,CS001,2023-08-01,2023-09-15,Planned,Get ready for the new school year with our exclusive discounts on school supplies.
+Summer Savings Extravaganza,SM001,2023-06-15,2023-08-15,Pending,Enjoy summer savings on a wide range of products throughout the store.
+Holiday Shopping Spectacular,SA002,2023-11-15,2023-12-25,Planned,Celebrate the holiday season with special discounts and festive promotions.
+Customer Appreciation Week,SC003,2023-09-01,2023-09-07,Pending,We're showing our appreciation with a week of exclusive deals for our loyal customers.
+Spring Cleaning Sale,CS001,2023-04-01,2023-04-30,Finished,Refresh your home this spring with discounted cleaning and organization essentials.
+Fall Fashion Preview,SM001,2023-08-20,2023-09-30,Canceled,Explore the latest fall fashion trends and enjoy early bird discounts (canceled due to unforeseen circumstances).

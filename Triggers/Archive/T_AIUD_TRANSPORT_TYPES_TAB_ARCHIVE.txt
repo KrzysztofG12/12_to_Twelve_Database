@@ -1,0 +1,153 @@
+CREATE OR REPLACE TRIGGER T_AIUD_TRANSPORT_TYPES_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON TRANSPORT_TYPES_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+
+
+	IF inserting THEN
+		INSERT INTO ARCHIVE_TRANSPORT_TYPES_TAB
+		(           
+							  trty_event_date			  			
+                            , trty_event_type 				
+                            , trty_user_name			 		
+							  
+                            , old_trty_transport_type_code_pk	
+                            , old_trty_full_name				
+                            , old_trty_min_length_m			
+                            , old_trty_max_length_m			
+                            , old_trty_min_weight_t			
+                            , old_trty_max_weight_t			
+                            , old_trty_load_capacity_t		
+                             
+							, new_trty_transport_type_code_pk	
+                            , new_trty_full_name				
+                            , new_trty_min_length_m			
+                            , new_trty_max_length_m			
+                            , new_trty_min_weight_t			
+                            , new_trty_max_weight_t			
+                            , new_trty_load_capacity_t		                            
+		)
+		VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+                            , NULL		
+                            , NULL
+                            , NULL		                    
+							
+							, :NEW.trty_transport_type_code_pk	
+							, :NEW.trty_full_name						
+							, :NEW.trty_min_length_m					
+							, :NEW.trty_max_length_m			
+							, :NEW.trty_min_weight_t					
+							, :NEW.trty_max_weight_t			
+							, :NEW.trty_load_capacity_t				
+							
+		)
+		;
+	ELSIF updating THEN
+		INSERT INTO ARCHIVE_TRANSPORT_TYPES_TAB
+        (           
+							  trty_event_date			  			
+                            , trty_event_type 				
+                            , trty_user_name			 		
+							  
+                            , old_trty_transport_type_code_pk	
+                            , old_trty_full_name				
+                            , old_trty_min_length_m			
+                            , old_trty_max_length_m			
+                            , old_trty_min_weight_t			
+                            , old_trty_max_weight_t			
+                            , old_trty_load_capacity_t		
+                             
+							, new_trty_transport_type_code_pk	
+                            , new_trty_full_name				
+                            , new_trty_min_length_m			
+                            , new_trty_max_length_m			
+                            , new_trty_min_weight_t			
+                            , new_trty_max_weight_t			
+                            , new_trty_load_capacity_t		   
+                            
+                            
+		)
+		VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.trty_transport_type_code_pk	
+                            , :OLD.trty_full_name					
+                            , :OLD.trty_min_length_m				
+                            , :OLD.trty_max_length_m			
+                            , :OLD.trty_min_weight_t				
+                            , :OLD.trty_max_weight_t			
+                            , :OLD.trty_load_capacity_t		
+							
+							, :NEW.trty_transport_type_code_pk	
+							, :NEW.trty_full_name					
+							, :NEW.trty_min_length_m				
+							, :NEW.trty_max_length_m			
+							, :NEW.trty_min_weight_t				
+							, :NEW.trty_max_weight_t			
+							, :NEW.trty_load_capacity_t								
+		)
+		;
+	ELSE
+		INSERT INTO ARCHIVE_TRANSPORT_TYPES_TAB
+		(           
+							  trty_event_date			  		
+                            , trty_event_type 				
+                            , trty_user_name			 		
+							  
+                            , old_trty_transport_type_code_pk	
+                            , old_trty_full_name				
+                            , old_trty_min_length_m			
+                            , old_trty_max_length_m			
+                            , old_trty_min_weight_t			
+                            , old_trty_max_weight_t			
+                            , old_trty_load_capacity_t		
+                             
+							, new_trty_transport_type_code_pk	
+                            , new_trty_full_name				
+                            , new_trty_min_length_m			
+                            , new_trty_max_length_m			
+                            , new_trty_min_weight_t			
+                            , new_trty_max_weight_t			
+                            , new_trty_load_capacity_t		                                                  
+		)
+		VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+                            , :OLD.trty_transport_type_code_pk	
+                            , :OLD.trty_full_name					
+                            , :OLD.trty_min_length_m				
+                            , :OLD.trty_max_length_m			
+                            , :OLD.trty_min_weight_t				
+                            , :OLD.trty_max_weight_t			
+                            , :OLD.trty_load_capacity_t		                         
+		
+							, NULL				
+							, NULL		
+							, NULL	
+							, NULL		
+							, NULL
+							, NULL		
+							, NULL
+		)
+		;
+	END IF;
+END;

@@ -1,0 +1,236 @@
+create or replace TRIGGER T_AIUD_EMPLOYEES_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON EMPLOYEES_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+
+
+  IF inserting THEN
+    INSERT INTO ARCHIVE_EMPLOYEES_TAB
+		(           
+							  empl_event_date	 				
+                            , empl_event_type  			
+                            , empl_user_name	
+
+                            , old_empl_employee_id_pk			
+                            , old_empl_first_name				
+                            , old_empl_last_name				
+                            , old_empl_nin_code				
+                            , old_empl_gender_enum			
+                            , old_empl_birth_date				
+                            , old_empl_phone_number			
+                            , old_empl_job_title				
+							, old_empl_department_code_fk		
+							, old_empl_salary					
+							, old_empl_privilege_level_enum	
+							, old_empl_bonus_pct				
+							, old_empl_status_enum
+                            , old_empl_employment_date
+
+                            , new_empl_employee_id_pk			
+                            , new_empl_first_name				
+                            , new_empl_last_name				
+                            , new_empl_nin_code				
+                            , new_empl_gender_enum			
+                            , new_empl_birth_date				
+                            , new_empl_phone_number			
+                            , new_empl_job_title				
+							, new_empl_department_code_fk		
+							, new_empl_salary					
+							, new_empl_privilege_level_enum	
+							, new_empl_bonus_pct				
+							, new_empl_status_enum	
+                            , new_empl_employment_date
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+                            , NULL		
+                            , NULL
+                            , NULL		
+                            , NULL
+							, NULL	
+                            , NULL		
+                            , NULL
+                            , NULL		
+                            , NULL
+                            , NULL
+
+							, :NEW.empl_employee_id_pk			
+							, :NEW.empl_first_name					
+							, :NEW.empl_last_name					
+							, :NEW.empl_nin_code				
+							, :NEW.empl_gender_enum				
+							, :NEW.empl_birth_date				
+							, :NEW.empl_phone_number			
+							, :NEW.empl_job_title				
+							, :NEW.empl_department_code_fk		
+							, :NEW.empl_salary					
+							, :NEW.empl_privilege_level_enum	
+							, :NEW.empl_bonus_pct				
+							, :NEW.empl_status_enum
+                            , :NEW.empl_employment_date
+		)
+		;
+ ELSIF updating THEN
+ INSERT INTO ARCHIVE_EMPLOYEES_TAB
+        (           
+							  empl_event_date	 					
+                            , empl_event_type  			
+                            , empl_user_name	
+
+                            , old_empl_employee_id_pk			
+                            , old_empl_first_name				
+                            , old_empl_last_name				
+                            , old_empl_nin_code				
+                            , old_empl_gender_enum			
+                            , old_empl_birth_date				
+                            , old_empl_phone_number			
+                            , old_empl_job_title				
+							, old_empl_department_code_fk		
+                            , old_empl_salary					
+                            , old_empl_privilege_level_enum	
+                            , old_empl_bonus_pct				
+                            , old_empl_status_enum	
+                             , old_empl_employment_date
+
+                            , new_empl_employee_id_pk			
+                            , new_empl_first_name				
+                            , new_empl_last_name				
+							, new_empl_nin_code				
+							, new_empl_gender_enum			
+							, new_empl_birth_date				
+							, new_empl_phone_number			
+							, new_empl_job_title				
+							, new_empl_department_code_fk		
+							, new_empl_salary					
+							, new_empl_privilege_level_enum	
+							, new_empl_bonus_pct				
+							, new_empl_status_enum	
+                             , new_empl_employment_date
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+
+                            , :OLD.empl_employee_id_pk			
+                            , :OLD.empl_first_name					
+                            , :OLD.empl_last_name					
+                            , :OLD.empl_nin_code				
+                            , :OLD.empl_gender_enum				
+                            , :OLD.empl_birth_date				
+                            , :OLD.empl_phone_number			
+                            , :OLD.empl_job_title				
+							, :OLD.empl_department_code_fk		
+							, :OLD.empl_salary					
+							, :OLD.empl_privilege_level_enum	
+							, :OLD.empl_bonus_pct				
+							, :OLD.empl_status_enum	
+                              , :OLD.empl_employment_date
+                            
+
+							, :NEW.empl_employee_id_pk			
+							, :NEW.empl_first_name					
+							, :NEW.empl_last_name					
+							, :NEW.empl_nin_code				
+							, :NEW.empl_gender_enum				
+							, :NEW.empl_birth_date				
+							, :NEW.empl_phone_number			
+							, :NEW.empl_job_title				
+							, :NEW.empl_department_code_fk		
+							, :NEW.empl_salary					
+							, :NEW.empl_privilege_level_enum	
+							, :NEW.empl_bonus_pct				
+							, :NEW.empl_status_enum	
+                              , :NEW.empl_employment_date
+
+		)
+		;
+ ELSE
+  INSERT INTO ARCHIVE_EMPLOYEES_TAB
+		(           
+							  empl_event_date	 					
+                            , empl_event_type  			
+                            , empl_user_name	
+
+                            , old_empl_employee_id_pk			
+                            , old_empl_first_name				
+                            , old_empl_last_name				
+                            , old_empl_nin_code				
+                            , old_empl_gender_enum			
+                            , old_empl_birth_date				
+                            , old_empl_phone_number			
+                            , old_empl_job_title				
+							, old_empl_department_code_fk		
+                            , old_empl_salary					
+                            , old_empl_privilege_level_enum	
+                            , old_empl_bonus_pct				
+                            , old_empl_status_enum
+                             , old_empl_employment_date
+
+                            , new_empl_employee_id_pk			
+                            , new_empl_first_name				
+                            , new_empl_last_name				
+							, new_empl_nin_code				
+							, new_empl_gender_enum			
+							, new_empl_birth_date				
+							, new_empl_phone_number			
+							, new_empl_job_title				
+							, new_empl_department_code_fk		
+							, new_empl_salary					
+							, new_empl_privilege_level_enum	
+							, new_empl_bonus_pct				
+							, new_empl_status_enum	
+                             , new_empl_employment_date
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+
+                            , :OLD.empl_employee_id_pk			
+                            , :OLD.empl_first_name					
+                            , :OLD.empl_last_name					
+                            , :OLD.empl_nin_code				
+                            , :OLD.empl_gender_enum					
+                            , :OLD.empl_birth_date				
+                            , :OLD.empl_phone_number			
+                            , :OLD.empl_job_title				
+							, :OLD.empl_department_code_fk		
+							, :OLD.empl_salary					
+							, :OLD.empl_privilege_level_enum	
+							, :OLD.empl_bonus_pct				
+							, :OLD.empl_status_enum	
+                              , :OLD.empl_employment_date
+
+							, NULL
+							, NULL
+							, NULL
+							, NULL
+							, NULL
+							, NULL		
+							, NULL				
+							, NULL		
+							, NULL	
+							, NULL		
+							, NULL
+							, NULL		
+							, NULL
+                            , NULL
+		)
+		;
+ END IF;
+END;

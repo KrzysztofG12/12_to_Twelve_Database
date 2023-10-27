@@ -1,0 +1,174 @@
+CREATE OR REPLACE TRIGGER T_AIUD_ADDRESSES_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON ADDRESSES_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+
+
+  IF inserting THEN
+    INSERT INTO ARCHIVE_ADDRESSES_TAB
+		(           
+							  addr_event_date	 				
+                            , addr_event_type  			
+                            , addr_user_name	
+							
+                            , old_addr_address_id_pk	
+                            , old_addr_street			
+                            , old_addr_number			
+                            , old_addr_area_locality	
+                            , old_addr_postal_code	
+                            , old_addr_town_city		
+                            , old_addr_state_province	
+                            , old_addr_country		
+							, old_addr_continent		
+							  
+                            , new_addr_address_id_pk	
+                            , new_addr_street			
+                            , new_addr_number			
+                            , new_addr_area_locality	
+                            , new_addr_postal_code	
+                            , new_addr_town_city		
+                            , new_addr_state_province	
+                            , new_addr_country		
+                            , new_addr_continent		
+		)                   
+    VALUES                  
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+                            , NULL		
+                            , NULL
+                            , NULL		
+                            , NULL
+							, NULL
+							
+							, :NEW.addr_address_id_pk	
+							, :NEW.addr_street			
+							, :NEW.addr_number			
+							, :NEW.addr_area_locality	
+							, :NEW.addr_postal_code	
+							, :NEW.addr_town_city		
+							, :NEW.addr_state_province	
+							, :NEW.addr_country		
+							, :NEW.addr_continent									
+		)
+		;
+ ELSIF updating THEN
+ INSERT INTO ARCHIVE_ADDRESSES_TAB
+        (           
+							  addr_event_date	 				
+                            , addr_event_type  			
+                            , addr_user_name	
+							
+                            , old_addr_address_id_pk	
+                            , old_addr_street			
+                            , old_addr_number			
+                            , old_addr_area_locality	
+                            , old_addr_postal_code	
+                            , old_addr_town_city		
+                            , old_addr_state_province	
+                            , old_addr_country		
+							, old_addr_continent		
+                              
+                            , new_addr_address_id_pk	
+                            , new_addr_street			
+                            , new_addr_number			
+                            , new_addr_area_locality	
+                            , new_addr_postal_code	
+                            , new_addr_town_city		
+                            , new_addr_state_province	
+                            , new_addr_country		
+                            , new_addr_continent		
+		)                   
+    VALUES                  
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.addr_address_id_pk	
+                            , :OLD.addr_street			
+                            , :OLD.addr_number			
+                            , :OLD.addr_area_locality	
+                            , :OLD.addr_postal_code	
+                            , :OLD.addr_town_city		
+                            , :OLD.addr_state_province	
+                            , :OLD.addr_country		
+							, :OLD.addr_continent		
+
+							, :NEW.addr_address_id_pk	
+							, :NEW.addr_street			
+							, :NEW.addr_number			
+							, :NEW.addr_area_locality	
+							, :NEW.addr_postal_code	
+							, :NEW.addr_town_city		
+							, :NEW.addr_state_province	
+							, :NEW.addr_country		
+							, :NEW.addr_continent									
+		)
+		;
+ ELSE
+  INSERT INTO ARCHIVE_ADDRESSES_TAB
+		(           
+							  addr_event_date	 			
+                            , addr_event_type  			
+                            , addr_user_name	
+							
+                            , old_addr_address_id_pk	
+                            , old_addr_street			
+                            , old_addr_number			
+                            , old_addr_area_locality	
+                            , old_addr_postal_code	
+                            , old_addr_town_city		
+                            , old_addr_state_province	
+                            , old_addr_country		
+							, old_addr_continent		
+                              
+                            , new_addr_address_id_pk	
+                            , new_addr_street			
+                            , new_addr_number			
+                            , new_addr_area_locality	
+                            , new_addr_postal_code	
+                            , new_addr_town_city		
+                            , new_addr_state_province	
+							, new_addr_country		
+							, new_addr_continent									
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+                            , :OLD.addr_address_id_pk	
+                            , :OLD.addr_street			
+                            , :OLD.addr_number			
+                            , :OLD.addr_area_locality	
+                            , :OLD.addr_postal_code	
+                            , :OLD.addr_town_city		
+                            , :OLD.addr_state_province	
+                            , :OLD.addr_country		
+							, :OLD.addr_continent		
+							
+							, NULL		
+							, NULL				
+							, NULL		
+							, NULL	
+							, NULL		
+							, NULL
+							, NULL		
+							, NULL
+							, NULL
+		)
+		;
+ END IF;
+END;

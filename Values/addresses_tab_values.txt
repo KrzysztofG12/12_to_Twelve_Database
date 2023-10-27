@@ -1,0 +1,125 @@
+addr_street,addr_number,addr_area_locality,addr_postal_code,addr_town_city,addr_state_province,addr_country,addr_continent
+Main Street,123,Westminster,W1A 1AA,London,England,United Kingdom,Europe
+High Street,456,Chelsea,SW3 1AB,London,England,United Kingdom,Europe
+Park Avenue,789,Kensington,W8 2CD,London,England,United Kingdom,Europe
+Baker Street,234,Marylebone,W1U 4ER,London,England,United Kingdom,Europe
+Oxford Road,567,Soho,W1D 1AN,London,England,United Kingdom,Europe
+Queensway,890,Bayswater,W2 3RY,London,England,United Kingdom,Europe
+Green Lane,111,Holborn,WC1V 7EH,London,England,United Kingdom,Europe
+Broadway,222,Covent Garden,WC2H 9JQ,London,England,United Kingdom,Europe
+Kingsway,333,Islington,EC1R 0LU,London,England,United Kingdom,Europe
+Regent Street,444,Mayfair,W1B 2QD,London,England,United Kingdom,Europe
+Canterbury Road,555,Sturry,CT2 0AA,Canterbury,England,United Kingdom,Europe
+St. George's Lane,666,Bridge,CT4 0AD,Canterbury,England,United Kingdom,Europe
+Highfield Avenue,777,Herne Bay,CT6 8UA,Canterbury,England,United Kingdom,Europe
+Station Road,888,Faversham,ME13 8PT,Canterbury,England,United Kingdom,Europe
+Church Street,999,Ashford,TN23 1QG,Canterbury,England,United Kingdom,Europe
+Maidstone Road,1010,Whitstable,CT5 1AB,Canterbury,England,United Kingdom,Europe
+High Street,1111,Chatham,ME4 4AB,Canterbury,England,United Kingdom,Europe
+Victoria Road,1212,Gillingham,ME7 5AA,Canterbury,England,United Kingdom,Europe
+Balmoral Gardens,1313,Dartford,DA1 1AD,Canterbury,England,United Kingdom,Europe
+Castle Street,1414,Rochester,ME1 1AB,Canterbury,England,United Kingdom,Europe
+Union Street,1515,Gravesend,DA11 0AA,Canterbury,England,United Kingdom,Europe
+Hempstead Lane,1616,Sevenoaks,TN13 3AB,Canterbury,England,United Kingdom,Europe
+Station Road,1717,Tonbridge,TN9 1AB,Canterbury,England,United Kingdom,Europe
+Vicarage Road,1818,Tunbridge Wells,TN1 1AB,Canterbury,England,United Kingdom,Europe
+High Street,123,Greenwich,SE10 8AA,London,England,United Kingdom,Europe
+Waterloo Road,456,Southwark,SE1 7AB,London,England,United Kingdom,Europe
+Kings Road,789,Chelsea,SW3 5CD,London,England,United Kingdom,Europe
+Holborn Viaduct,234,Blackfriars,EC1A 2FG,London,England,United Kingdom,Europe
+Bayswater Road,567,Paddington,W2 4ER,London,England,United Kingdom,Europe
+Fleet Street,890,City of London,EC4A 1AA,London,England,United Kingdom,Europe
+Charing Cross Road,111,Soho,W1D 3HZ,London,England,United Kingdom,Europe
+Borough High Street,222,Borough,SE1 9JH,London,England,United Kingdom,Europe
+Knightsbridge,333,Knightsbridge,SW1X 7LA,London,England,United Kingdom,Europe
+Fitzrovia,444,Fitzrovia,W1T 3AB,London,England,United Kingdom,Europe
+High Street,555,Canterbury,CT1 2AB,Canterbury,England,United Kingdom,Europe
+Mill Lane,666,Sturry,CT2 5AB,Canterbury,England,United Kingdom,Europe
+Brooks Road,777,Bridge,CT4 7AD,Canterbury,England,United Kingdom,Europe
+Chapel Street,888,Herne Bay,CT6 7UA,Canterbury,England,United Kingdom,Europe
+Railway Street,999,Faversham,ME13 9PT,Canterbury,England,United Kingdom,Europe
+Church Road,1010,Ashford,TN24 1QG,Canterbury,England,United Kingdom,Europe
+Harbour Street,1111,Whitstable,CT5 2AB,Canterbury,England,United Kingdom,Europe
+West Street,1212,Chatham,ME4 5AB,Canterbury,England,United Kingdom,Europe
+High Street,1313,Gillingham,ME7 6AA,Canterbury,England,United Kingdom,Europe
+London Road,1414,Dartford,DA1 5AB,Canterbury,England,United Kingdom,Europe
+Northgate,1515,Rochester,ME2 1AB,Canterbury,England,United Kingdom,Europe
+Windmill Street,1616,Gravesend,DA11 1AA,Canterbury,England,United Kingdom,Europe
+Station Road,1717,Sevenoaks,TN14 0AA,Canterbury,England,United Kingdom,Europe
+Bridge Street,1818,Tonbridge,TN9 2AB,Canterbury,England,United Kingdom,Europe
+Mount Pleasant,1919,Tunbridge Wells,TN2 3AB,Canterbury,England,United Kingdom,Europe
+Victoria Street,2020,Greenwich,SE3 4AA,London,England,United Kingdom,Europe
+Strand,2121,Westminster,WC2R 0AA,London,England,United Kingdom,Europe
+Cromwell Road,2222,Kensington,SW7 5AB,London,England,United Kingdom,Europe
+Tottenham Court Road,2323,Camden,W1T 2AB,London,England,United Kingdom,Europe
+Euston Road,2424,Euston,NW1 1AA,London,England,United Kingdom,Europe
+Leicester Square,2525,Westminster,WC2H 0AA,London,England,United Kingdom,Europe
+Liverpool Street,2626,City of London,EC2M 7AB,London,England,United Kingdom,Europe
+Paddington Street,2727,Paddington,W2 6AB,London,England,United Kingdom,Europe
+Holborn Circus,2828,Blackfriars,EC4A 3AB,London,England,United Kingdom,Europe
+Piccadilly,2929,Westminster,W1J 0AA,London,England,United Kingdom,Europe
+Victoria Embankment,3030,Westminster,WC2N 6AB,London,England,United Kingdom,Europe
+Southwark Street,3131,Southwark,SE1 0AA,London,England,United Kingdom,Europe
+Cranbourn Street,3232,Covent Garden,WC2H 7AB,London,England,United Kingdom,Europe
+Sloane Square,3333,Chelsea,SW1W 8AB,London,England,United Kingdom,Europe
+Cheapside,3434,City of London,EC2V 6AB,London,England,United Kingdom,Europe
+Oxford Street,3535,Fitzrovia,W1D 5AB,London,England,United Kingdom,Europe
+Whitechapel Road,3636,Whitechapel,E1 0AA,London,England,United Kingdom,Europe
+Portobello Road,3737,Notting Hill,W10 5AB,London,England,United Kingdom,Europe
+Caledonian Road,3838,Islington,N1 0AA,London,England,United Kingdom,Europe
+Hammersmith Road,3939,Hammersmith,W6 8AB,London,England,United Kingdom,Europe
+Highgate Hill,4040,Highgate,N6 5AB,London,England,United Kingdom,Europe
+Aldgate High Street,4141,Aldgate,EC3N 4AB,London,England,United Kingdom,Europe
+Clerkenwell Road,4242,Clerkenwell,EC1M 5AB,London,England,United Kingdom,Europe
+Holles Street,4343,Marylebone,W1G 0AA,London,England,United Kingdom,Europe
+Brick Lane,4444,Whitechapel,E1 6AB,London,England,United Kingdom,Europe
+Ealing Broadway,4545,Ealing,W5 2AB,London,England,United Kingdom,Europe
+Fulham Palace Road,4646,Fulham,SW6 6AB,London,England,United Kingdom,Europe
+Wimbledon Park Road,4747,Wimbledon,SW19 8AB,London,England,United Kingdom,Europe
+Harlesden High Street,4848,Harlesden,NW10 4AB,London,England,United Kingdom,Europe
+Kingston Road,4949,Kingston upon Thames,KT1 3AB,London,England,United Kingdom,Europe
+Canterbury Road,5050,Herne Bay,CT6 6AB,Canterbury,England,United Kingdom,Europe
+High Street,5151,Faversham,ME13 5AB,Canterbury,England,United Kingdom,Europe
+Church Lane,5252,Ashford,TN24 6AB,Canterbury,England,United Kingdom,Europe
+Whitstable Road,5353,Whitstable,CT5 5AB,Canterbury,England,United Kingdom,Europe
+Chatham Hill,5454,Chatham,ME5 6AB,Canterbury,England,United Kingdom,Europe
+Gillingham Road,5555,Gillingham,ME7 6AB,Canterbury,England,United Kingdom,Europe
+Dartford Road,5656,Dartford,DA1 6AB,Canterbury,England,United Kingdom,Europe
+Rochester Street,5757,Rochester,ME2 6AB,Canterbury,England,United Kingdom,Europe
+Windmill Lane,5858,Gravesend,DA11 6AB,Canterbury,England,United Kingdom,Europe
+Station Approach,5959,Tonbridge,TN9 6AB,Canterbury,England,United Kingdom,Europe
+Calverley Road,6060,Tunbridge Wells,TN1 6AB,Canterbury,England,United Kingdom,Europe
+Hoxton Square,6868,Shoreditch,N1 6AB,London,England,United Kingdom,Europe
+Upper Street,6969,Islington,N1 7AB,London,England,United Kingdom,Europe
+Clerkenwell Green,7070,Clerkenwell,EC1R 8AB,London,England,United Kingdom,Europe
+Fitzjohn's Avenue,7171,Hampstead,NW3 6AB,London,England,United Kingdom,Europe
+Eton Avenue,7272,Primrose Hill,NW3 7AB,London,England,United Kingdom,Europe
+The Broadway,7373,Mill Hill,NW7 8AB,London,England,United Kingdom,Europe
+Finchley Road,7474,Swiss Cottage,NW3 8AB,London,England,United Kingdom,Europe
+High Holborn,7575,Holborn,WC1V 7AB,London,England,United Kingdom,Europe
+Coventry Street,7676,Westminster,W1D 7AB,London,England,United Kingdom,Europe
+Wardour Street,7777,Soho,W1D 8AB,London,England,United Kingdom,Europe
+Dean Street,7878,Soho,W1D 9AB,London,England,United Kingdom,Europe
+Chancery Lane,7979,Holborn,WC2A 1AB,London,England,United Kingdom,Europe
+Hatton Garden,8080,Holborn,EC1N 8AB,London,England,United Kingdom,Europe
+Brompton Road,8181,Knightsbridge,SW3 9AB,London,England,United Kingdom,Europe
+Marylebone Road,8282,Marylebone,NW1 5AB,London,England,United Kingdom,Europe
+Kingsway,8383,Holborn,WC2B 6AB,London,England,United Kingdom,Europe
+Villiers Street,8484,Charing Cross,WC2N 6AB,London,England,United Kingdom,Europe
+New Bridge Street,8585,Blackfriars,EC4V 6AB,London,England,United Kingdom,Europe
+Great Dover Street,8686,Borough,SE1 4AB,London,England,United Kingdom,Europe
+Park Street,8787,Southwark,SE1 5AB,London,England,United Kingdom,Europe
+High Street,8888,Lewisham,SE13 6AB,London,England,United Kingdom,Europe
+West Street,8989,Gravesend,DA11 7AB,Canterbury,England,United Kingdom,Europe
+North Street,9090,Sevenoaks,TN13 8AB,Canterbury,England,United Kingdom,Europe
+Church Road,9191,Tonbridge,TN9 7AB,Canterbury,England,United Kingdom,Europe
+Main Road,9292,Tunbridge Wells,TN1 8AB,Canterbury,England,United Kingdom,Europe
+Haverstock Hill,9393,Hampstead,NW3 9AB,London,England,United Kingdom,Europe
+St. Martin's Lane,9494,Covent Garden,WC2N 9AB,London,England,United Kingdom,Europe
+Haymarket,9595,Westminster,SW1Y 4AB,London,England,United Kingdom,Europe
+Shaftesbury Avenue,9696,Covent Garden,W1D 9AB,London,England,United Kingdom,Europe
+Strand,9797,Westminster,WC2R 1AB,London,England,United Kingdom,Europe
+Berwick Street,9898,Soho,W1F 8AB,London,England,United Kingdom,Europe
+Wardour Street,9999,Soho,W1F 9AB,London,England,United Kingdom,Europe
+
+

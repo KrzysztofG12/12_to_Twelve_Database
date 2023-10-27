@@ -1,0 +1,232 @@
+CREATE OR REPLACE TRIGGER T_AIUD_PRODUCTS_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON PRODUCTS_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+  IF inserting THEN
+    INSERT INTO ARCHIVE_PRODUCTS_TAB
+		(           
+							  prod_event_date	 				
+                            , prod_event_type  			
+                            , prod_user_name	
+							
+                            , old_prod_product_id_pk      
+                            , old_prod_product_name       
+                            , old_prod_company_name       
+                            , old_prod_product_type_fk    
+                            , old_prod_net_price      
+                            , old_prod_purchase_price     
+                            , old_prod_tax_rate_pct       
+                            , old_prod_quantity           
+							, old_prod_unit               
+							, old_prod_packaging          
+							, old_prod_refrigerated_yn    
+							, old_prod_frozen_yn          
+							, old_prod_id_promo_fk        
+							, old_prod_other_details		
+							
+                            , new_prod_product_id_pk      
+                            , new_prod_product_name       
+                            , new_prod_company_name       
+                            , new_prod_product_type_fk    
+                            , new_prod_net_price      
+                            , new_prod_purchase_price     
+                            , new_prod_tax_rate_pct       
+                            , new_prod_quantity           
+							, new_prod_unit               
+							, new_prod_packaging          
+							, new_prod_refrigerated_yn    
+							, new_prod_frozen_yn          
+							, new_prod_id_promo_fk        
+							, new_prod_other_details									
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+                            , NULL		
+                            , NULL
+                            , NULL		
+                            , NULL
+							, NULL
+							, NULL
+							, NULL
+							, NULL
+							, NULL
+							, NULL
+													
+							, :NEW.prod_product_id_pk      
+							, :NEW.prod_product_name       	
+							, :NEW.prod_company_name       	
+							, :NEW.prod_product_type_fk    
+							, :NEW.prod_net_price      	
+							, :NEW.prod_purchase_price     
+							, :NEW.prod_tax_rate_pct       
+							, :NEW.prod_quantity           
+							, :NEW.prod_unit               
+							, :NEW.prod_packaging          
+							, :NEW.prod_refrigerated_yn    
+							, :NEW.prod_frozen_yn          
+							, :NEW.prod_id_promo_fk        
+							, :NEW.prod_other_details			
+		)
+		;
+ ELSIF updating THEN
+ INSERT INTO ARCHIVE_PRODUCTS_TAB
+        (           
+							  prod_event_date					
+                            , prod_event_type 			
+                            , prod_user_name	
+							
+                            , old_prod_product_id_pk    
+							, old_prod_product_name     
+							, old_prod_company_name     
+							, old_prod_product_type_fk  
+							, old_prod_net_price    
+							, old_prod_purchase_price   
+							, old_prod_tax_rate_pct     
+							, old_prod_quantity         
+							, old_prod_unit             
+							, old_prod_packaging        
+							, old_prod_refrigerated_yn  
+							, old_prod_frozen_yn        
+							, old_prod_id_promo_fk      
+							, old_prod_other_details	
+							
+							, new_prod_product_id_pk    
+							, new_prod_product_name     
+							, new_prod_company_name     
+							, new_prod_product_type_fk  
+							, new_prod_net_price    
+							, new_prod_purchase_price   
+							, new_prod_tax_rate_pct     
+							, new_prod_quantity         
+							, new_prod_unit             
+							, new_prod_packaging        
+							, new_prod_refrigerated_yn  
+							, new_prod_frozen_yn        
+							, new_prod_id_promo_fk      
+							, new_prod_other_details	
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.prod_product_id_pk    
+                            , :OLD.prod_product_name     
+                            , :OLD.prod_company_name     
+                            , :OLD.prod_product_type_fk  
+                            , :OLD.prod_net_price    
+                            , :OLD.prod_purchase_price   
+                            , :OLD.prod_tax_rate_pct     
+                            , :OLD.prod_quantity         
+							, :OLD.prod_unit             
+							, :OLD.prod_packaging        
+							, :OLD.prod_refrigerated_yn  
+							, :OLD.prod_frozen_yn        
+							, :OLD.prod_id_promo_fk      
+							, :OLD.prod_other_details	
+							
+							, :NEW.prod_product_id_pk   
+							, :NEW.prod_product_name    
+							, :NEW.prod_company_name    
+							, :NEW.prod_product_type_fk 
+							, :NEW.prod_net_price   
+							, :NEW.prod_purchase_price  
+							, :NEW.prod_tax_rate_pct    
+							, :NEW.prod_quantity        
+							, :NEW.prod_unit            
+							, :NEW.prod_packaging       
+							, :NEW.prod_refrigerated_yn 
+							, :NEW.prod_frozen_yn       
+							, :NEW.prod_id_promo_fk     
+							, :NEW.prod_other_details							
+		)
+		;
+ ELSE
+  INSERT INTO ARCHIVE_PRODUCTS_TAB
+		(           
+							  prod_event_date					
+                            , prod_event_type 			
+                            , prod_user_name	
+							
+                            , old_prod_product_id_pk    
+                            , old_prod_product_name     
+                            , old_prod_company_name     
+                            , old_prod_product_type_fk  
+                            , old_prod_net_price    
+                            , old_prod_purchase_price   
+                            , old_prod_tax_rate_pct     
+                            , old_prod_quantity         
+							, old_prod_unit             
+							, old_prod_packaging        
+							, old_prod_refrigerated_yn  
+							, old_prod_frozen_yn        
+							, old_prod_id_promo_fk      
+							, old_prod_other_details	
+								
+                            , new_prod_product_id_pk    
+							, new_prod_product_name     
+							, new_prod_company_name     
+							, new_prod_product_type_fk  
+							, new_prod_net_price    
+							, new_prod_purchase_price   
+							, new_prod_tax_rate_pct     
+							, new_prod_quantity         
+							, new_prod_unit             
+							, new_prod_packaging        
+							, new_prod_refrigerated_yn  
+							, new_prod_frozen_yn        
+							, new_prod_id_promo_fk      
+							, new_prod_other_details															
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+							, :OLD.prod_product_id_pk     
+							, :OLD.prod_product_name      							
+							, :OLD.prod_company_name      							
+							, :OLD.prod_product_type_fk   							
+							, :OLD.prod_net_price     							
+							, :OLD.prod_purchase_price    							
+							, :OLD.prod_tax_rate_pct      							
+							, :OLD.prod_quantity          									
+							, :OLD.prod_unit              											
+							, :OLD.prod_packaging         									
+							, :OLD.prod_refrigerated_yn   								
+							, :OLD.prod_frozen_yn         									
+							, :OLD.prod_id_promo_fk       							
+							, :OLD.prod_other_details			
+
+							, NULL
+							, NULL
+                            , NULL
+							, NULL
+							, NULL
+							, NULL
+							, NULL
+							, NULL
+							, NULL
+							, NULL
+							, NULL
+							, NULL
+							, NULL
+							, NULL				
+		)
+		;
+ END IF;
+END;

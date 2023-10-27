@@ -1,0 +1,184 @@
+CREATE OR REPLACE TRIGGER T_AIUD_CUSTOMERS_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON CUSTOMERS_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+  IF inserting THEN
+    INSERT INTO ARCHIVE_CUSTOMERS_TAB
+		(           
+							  cust_event_date		 				
+                            , cust_event_type 			
+                            , cust_user_name		
+							
+                            , old_cust_customer_id_pk		  
+                            , old_cust_first_name			  
+                            , old_cust_last_name			  
+                            , old_cust_pesel_code			  
+                            , old_cust_discount_pct		  
+                            , old_cust_customer_club_yn	  
+                            , old_cust_date_joining		  
+                            , old_cust_phone_number		  
+							, old_cust_email
+							, old_cust_company_number			
+							   
+							, new_cust_customer_id_pk		  
+							, new_cust_first_name			  
+							, new_cust_last_name			  
+							, new_cust_pesel_code				
+							, new_cust_discount_pct		
+                            , new_cust_customer_club_yn	  
+                            , new_cust_date_joining		  
+                            , new_cust_phone_number		  
+                            , new_cust_email
+							, new_cust_company_number	
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+                            , NULL		
+                            , NULL
+                            , NULL		
+                            , NULL
+							, NULL
+							, NULL
+													
+							, :NEW.cust_customer_id_pk	   
+							, :NEW.cust_first_name		   	
+							, :NEW.cust_last_name		   	
+							, :NEW.cust_pesel_code		   
+							, :NEW.cust_discount_pct		   	
+							, :NEW.cust_customer_club_yn	   
+							, :NEW.cust_date_joining		   
+							, :NEW.cust_phone_number		   
+							, :NEW.cust_email
+							, :NEW.cust_company_number	
+		)
+		;
+ ELSIF updating THEN
+ INSERT INTO ARCHIVE_CUSTOMERS_TAB
+        (           
+							  cust_event_date		 				
+                            , cust_event_type 			
+                            , cust_user_name		
+							
+                            , old_cust_customer_id_pk		
+							, old_cust_first_name			
+							, old_cust_last_name			
+							, old_cust_pesel_code			
+							, old_cust_discount_pct		  
+							, old_cust_customer_club_yn	  
+							, old_cust_date_joining		  
+							, old_cust_phone_number		  
+							, old_cust_email
+							, old_cust_company_number								
+							   
+							, new_cust_customer_id_pk		
+							, new_cust_first_name			
+							, new_cust_last_name			
+							, new_cust_pesel_code			
+							, new_cust_discount_pct		
+							, new_cust_customer_club_yn	  
+							, new_cust_date_joining		  
+							, new_cust_phone_number		  
+							, new_cust_email
+							, new_cust_company_number	
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.cust_customer_id_pk	
+                            , :OLD.cust_first_name		
+                            , :OLD.cust_last_name		
+                            , :OLD.cust_pesel_code		
+                            , :OLD.cust_discount_pct		
+                            , :OLD.cust_customer_club_yn	
+                            , :OLD.cust_date_joining		
+                            , :OLD.cust_phone_number		
+							, :OLD.cust_email	
+							, :OLD.cust_company_number	
+							
+							, :NEW.cust_customer_id_pk	
+							, :NEW.cust_first_name		
+							, :NEW.cust_last_name		
+							, :NEW.cust_pesel_code		
+							, :NEW.cust_discount_pct		
+							, :NEW.cust_customer_club_yn	
+							, :NEW.cust_date_joining		
+							, :NEW.cust_phone_number		
+							, :NEW.cust_email
+							, :NEW.cust_company_number							
+		)
+		;
+ ELSE
+  INSERT INTO ARCHIVE_CUSTOMERS_TAB
+		(           
+							  cust_event_date		 					
+                            , cust_event_type 			
+                            , cust_user_name		
+							
+                            , old_cust_customer_id_pk		
+                            , old_cust_first_name			
+                            , old_cust_last_name			
+                            , old_cust_pesel_code			
+                            , old_cust_discount_pct		  
+                            , old_cust_customer_club_yn	  
+                            , old_cust_date_joining		  
+                            , old_cust_phone_number		  
+							, old_cust_email
+							, old_cust_company_number	
+							   
+							, new_cust_customer_id_pk		
+							, new_cust_first_name			
+							, new_cust_last_name			
+							, new_cust_pesel_code			
+							, new_cust_discount_pct		
+                            , new_cust_customer_club_yn	  
+							, new_cust_date_joining		  
+							, new_cust_phone_number		  
+							, new_cust_email
+							, new_cust_company_number	
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+							, :OLD.cust_customer_id_pk	  
+							, :OLD.cust_first_name		  							
+							, :OLD.cust_last_name		  							
+							, :OLD.cust_pesel_code		  							
+							, :OLD.cust_discount_pct		  							
+							, :OLD.cust_customer_club_yn	  							
+							, :OLD.cust_date_joining		  							
+							, :OLD.cust_phone_number		  									
+							, :OLD.cust_email
+							, :OLD.cust_company_number	
+
+							, NULL
+							, NULL
+							, NULL
+                            , NULL
+							, NULL
+							, NULL
+							, NULL
+							, NULL
+							, NULL
+							, NULL				
+		)
+		;
+ END IF;
+END;

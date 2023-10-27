@@ -1,0 +1,102 @@
+CREATE OR REPLACE TRIGGER T_AIUD_PURCHASED_ITEMS_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON PURCHASED_ITEMS_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+
+
+  IF inserting THEN
+    INSERT INTO ARCHIVE_PURCHASED_ITEMS_TAB
+		(           
+							  puit_event_date				
+                            , puit_event_type 		
+                            , puit_user_name			
+							  
+                            , old_puit_purchase_id_fk	
+                            , old_puit_product_id_fk	
+                            , old_puit_quantity		
+                             
+                            , new_puit_purchase_id_fk	
+                            , new_puit_product_id_fk	
+                            , new_puit_quantity		                        
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+							
+							, :NEW.puit_purchase_id_fk	
+							, :NEW.puit_product_id_fk	
+							, :NEW.puit_quantity									
+		)
+		;
+ ELSIF updating THEN
+ INSERT INTO ARCHIVE_PURCHASED_ITEMS_TAB
+        (           
+							  puit_event_date				
+                            , puit_event_type 		
+                            , puit_user_name			
+							  
+                            , old_puit_purchase_id_fk	
+                            , old_puit_product_id_fk	
+                            , old_puit_quantity		
+                             
+                            , new_puit_purchase_id_fk	
+                            , new_puit_product_id_fk	
+                            , new_puit_quantity		     
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.puit_purchase_id_fk		
+                            , :OLD.puit_product_id_fk			
+                            , :OLD.puit_quantity			
+							
+							, :NEW.puit_purchase_id_fk	
+							, :NEW.puit_product_id_fk	
+							, :NEW.puit_quantity	
+		)
+		;
+ ELSE
+  INSERT INTO ARCHIVE_PURCHASED_ITEMS_TAB
+		(           
+							  puit_event_date				
+                            , puit_event_type 		
+                            , puit_user_name			
+							  
+                            , old_puit_purchase_id_fk	
+                            , old_puit_product_id_fk	
+                            , old_puit_quantity		
+                             
+                            , new_puit_purchase_id_fk	
+                            , new_puit_product_id_fk	
+                            , new_puit_quantity		     
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+							, :OLD.puit_purchase_id_fk		
+                            , :OLD.puit_product_id_fk			
+                            , :OLD.puit_quantity			
+							
+							, NULL		
+							, NULL				
+							, NULL									
+		)
+		;
+ END IF;
+END;

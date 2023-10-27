@@ -1,0 +1,5 @@
+trty_transport_type_code_pk;trty_full_name;trty_min_length_m;trty_max_length_m;trty_min_weight_t;trty_max_weight_t;trty_load_capacity_t
+VAN;Van;4,5;6,0;1,0;3,0;10,0
+TRK;Truck;6,0;12,0;2,0;6,0;20,0
+PUP;Pick-up;4,0;5,5;0,8;1,5;5,0
+CAR;Car;3,5;4,8;0,5;1,0;4,0

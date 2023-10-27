@@ -1,0 +1,176 @@
+CREATE OR REPLACE TRIGGER T_AIUD_PURCHASES_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON PURCHASES_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+
+
+  IF inserting THEN
+    INSERT INTO ARCHIVE_PURCHASES_TAB
+		(           
+							  purc_event_date			  		
+                            , purc_event_type 				
+                            , purc_user_name			 		
+							  
+                            , old_purc_purchase_id_pk			
+                            , old_purc_customer_id_fk			
+                            , old_purc_invoice_yn				
+                            , old_purc_invoice_id_fk			
+                            , old_purc_date_purchase			
+                            , old_purc_gross_value			
+                            , old_purc_complaint_yn			
+                            , old_purc_complaint_id_fk		
+							, old_purc_department_code_fk		
+                             
+                            , new_purc_purchase_id_pk			
+                            , new_purc_customer_id_fk			
+                            , new_purc_invoice_yn				
+                            , new_purc_invoice_id_fk			
+                            , new_purc_date_purchase			
+                            , new_purc_gross_value			
+                            , new_purc_complaint_yn			
+							, new_purc_complaint_id_fk		
+							, new_purc_department_code_fk		
+							
+							
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+                            , NULL		
+                            , NULL
+                            , NULL		
+                            , NULL
+							, NULL
+							
+							, :NEW.purc_purchase_id_pk			
+							, :NEW.purc_customer_id_fk				
+							, :NEW.purc_invoice_yn					
+							, :NEW.purc_invoice_id_fk			
+							, :NEW.purc_date_purchase				
+							, :NEW.purc_gross_value			
+							, :NEW.purc_complaint_yn			
+							, :NEW.purc_complaint_id_fk		
+							, :NEW.purc_department_code_fk								
+		)
+		;
+ ELSIF updating THEN
+ INSERT INTO ARCHIVE_PURCHASES_TAB
+        (           
+							  purc_event_date			  		
+                            , purc_event_type 				
+                            , purc_user_name			 		
+							  
+                            , old_purc_purchase_id_pk			
+                            , old_purc_customer_id_fk			
+                            , old_purc_invoice_yn				
+                            , old_purc_invoice_id_fk			
+                            , old_purc_date_purchase			
+                            , old_purc_gross_value			
+                            , old_purc_complaint_yn			
+                            , old_purc_complaint_id_fk		
+							, old_purc_department_code_fk		
+                             
+                            , new_purc_purchase_id_pk			
+                            , new_purc_customer_id_fk			
+                            , new_purc_invoice_yn				
+                            , new_purc_invoice_id_fk			
+                            , new_purc_date_purchase			
+                            , new_purc_gross_value			
+                            , new_purc_complaint_yn			
+							, new_purc_complaint_id_fk		
+							, new_purc_department_code_fk		
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.purc_purchase_id_pk			
+                            , :OLD.purc_customer_id_fk				
+                            , :OLD.purc_invoice_yn					
+                            , :OLD.purc_invoice_id_fk			
+                            , :OLD.purc_date_purchase				
+                            , :OLD.purc_gross_value			
+                            , :OLD.purc_complaint_yn			
+                            , :OLD.purc_complaint_id_fk		
+							, :OLD.purc_department_code_fk	
+							
+							, :NEW.purc_purchase_id_pk			
+							, :NEW.purc_customer_id_fk				
+							, :NEW.purc_invoice_yn					
+							, :NEW.purc_invoice_id_fk			
+							, :NEW.purc_date_purchase				
+							, :NEW.purc_gross_value			
+							, :NEW.purc_complaint_yn			
+							, :NEW.purc_complaint_id_fk		
+							, :NEW.purc_department_code_fk	
+		)
+		;
+ ELSE
+  INSERT INTO ARCHIVE_PURCHASES_TAB
+		(           
+							  purc_event_date			  		
+                            , purc_event_type 				
+                            , purc_user_name			 		
+							  
+                            , old_purc_purchase_id_pk			
+                            , old_purc_customer_id_fk			
+                            , old_purc_invoice_yn				
+                            , old_purc_invoice_id_fk			
+                            , old_purc_date_purchase			
+                            , old_purc_gross_value			
+                            , old_purc_complaint_yn			
+                            , old_purc_complaint_id_fk		
+							, old_purc_department_code_fk		
+                             
+                            , new_purc_purchase_id_pk			
+                            , new_purc_customer_id_fk			
+                            , new_purc_invoice_yn				
+                            , new_purc_invoice_id_fk			
+                            , new_purc_date_purchase			
+                            , new_purc_gross_value			
+                            , new_purc_complaint_yn			
+							, new_purc_complaint_id_fk		
+							, new_purc_department_code_fk		
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+                            , :OLD.purc_purchase_id_pk			
+                            , :OLD.purc_customer_id_fk				
+                            , :OLD.purc_invoice_yn					
+                            , :OLD.purc_invoice_id_fk			
+                            , :OLD.purc_date_purchase				
+                            , :OLD.purc_gross_value			
+                            , :OLD.purc_complaint_yn			
+                            , :OLD.purc_complaint_id_fk		
+							, :OLD.purc_department_code_fk	
+							
+							, NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+                            , NULL		
+                            , NULL
+                            , NULL		
+                            , NULL
+							, NULL
+		)
+		;
+ END IF;
+END;

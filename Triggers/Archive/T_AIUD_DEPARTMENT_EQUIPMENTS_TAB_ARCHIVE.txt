@@ -1,0 +1,150 @@
+CREATE OR REPLACE TRIGGER T_AIUD_DEPARTMENT_EQUIPMENTS_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON DEPARTMENT_EQUIPMENTS_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+
+
+  IF inserting THEN
+    INSERT INTO ARCHIVE_DEPARTMENT_EQUIPMENTS_TAB
+		(           
+							  deeq_event_date			 				
+                            , deeq_event_type 		 			
+                            , deeq_user_name			
+							
+                            , old_deeq_equipment_id_pk		
+                            , old_deeq_department_code_fk		
+                            , old_deeq_name					
+                            , old_deeq_type					
+                            , old_deeq_quantity				
+                            , old_deeq_date_purchase			
+                            , old_deeq_description	
+							
+                            , new_deeq_equipment_id_pk		
+                            , new_deeq_department_code_fk		
+                            , new_deeq_name					
+                            , new_deeq_type					
+                            , new_deeq_quantity				
+                            , new_deeq_date_purchase			
+                            , new_deeq_description			
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+                            , NULL		
+                            , NULL
+                            , NULL		
+							
+							, :NEW.deeq_equipment_id_pk		
+							, :NEW.deeq_department_code_fk		
+							, :NEW.deeq_name						
+							, :NEW.deeq_type					
+							, :NEW.deeq_quantity					
+							, :NEW.deeq_date_purchase		
+							, :NEW.deeq_description			
+		)
+		;
+ ELSIF updating THEN
+ INSERT INTO ARCHIVE_DEPARTMENT_EQUIPMENTS_TAB
+        (           
+							  deeq_event_date			 		
+                            , deeq_event_type 		 			
+                            , deeq_user_name			
+							
+                            , old_deeq_equipment_id_pk		
+                            , old_deeq_department_code_fk		
+                            , old_deeq_name					
+                            , old_deeq_type					
+                            , old_deeq_quantity				
+                            , old_deeq_date_purchase			
+                            , old_deeq_description	
+                            
+							, new_deeq_equipment_id_pk		
+                            , new_deeq_department_code_fk		
+                            , new_deeq_name					
+                            , new_deeq_type					
+                            , new_deeq_quantity				
+                            , new_deeq_date_purchase			
+                            , new_deeq_description			                         
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.deeq_equipment_id_pk		
+                            , :OLD.deeq_department_code_fk		
+                            , :OLD.deeq_name					
+                            , :OLD.deeq_type				
+                            , :OLD.deeq_quantity				
+                            , :OLD.deeq_date_purchase		
+                            , :OLD.deeq_description				
+							
+							, :NEW.deeq_equipment_id_pk		
+							, :NEW.deeq_department_code_fk		
+							, :NEW.deeq_name					
+							, :NEW.deeq_type				
+							, :NEW.deeq_quantity				
+							, :NEW.deeq_date_purchase		
+							, :NEW.deeq_description										
+		)
+		;
+ ELSE
+  INSERT INTO ARCHIVE_DEPARTMENT_EQUIPMENTS_TAB
+		(           
+							  deeq_event_date			 			
+                            , deeq_event_type 		 			
+                            , deeq_user_name			
+							
+                            , old_deeq_equipment_id_pk		
+                            , old_deeq_department_code_fk		
+                            , old_deeq_name					
+                            , old_deeq_type					
+                            , old_deeq_quantity				
+                            , old_deeq_date_purchase				
+                            , old_deeq_description	
+                            
+							, new_deeq_equipment_id_pk		
+                            , new_deeq_department_code_fk		
+                            , new_deeq_name					
+                            , new_deeq_type					
+                            , new_deeq_quantity				
+                            , new_deeq_date_purchase			
+                            , new_deeq_description				                              	
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+                           , :OLD.deeq_equipment_id_pk		
+                           , :OLD.deeq_department_code_fk		
+                           , :OLD.deeq_name					
+                           , :OLD.deeq_type				
+                           , :OLD.deeq_quantity				
+                           , :OLD.deeq_date_purchase		
+                           , :OLD.deeq_description				
+								
+							, NULL				
+							, NULL		
+							, NULL	
+							, NULL		
+							, NULL
+							, NULL		
+							, NULL
+		)
+		;
+ END IF;
+END;

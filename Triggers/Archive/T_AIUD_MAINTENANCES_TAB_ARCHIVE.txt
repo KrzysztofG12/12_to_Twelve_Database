@@ -1,0 +1,162 @@
+CREATE OR REPLACE TRIGGER T_AIUD_MAINTENANCES_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON MAINTENANCES_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+
+
+  IF inserting THEN
+    INSERT INTO ARCHIVE_MAINTENANCES_TAB
+		(
+							  main_event_date			  			
+                            , main_event_type 				
+                            , main_user_name			 		
+							  
+                            , old_main_maintenance_id_pk		
+                            , old_main_title					
+                            , old_main_department_code_fk		
+                            , old_main_contractor				
+                            , old_main_date_begin				
+                            , old_main_date_finish			
+                            , old_main_status_enum			
+                            , old_main_description			
+							  
+                            , new_main_maintenance_id_pk		
+                            , new_main_title					
+                            , new_main_department_code_fk		
+                            , new_main_contractor				
+                            , new_main_date_begin				
+                            , new_main_date_finish			
+                            , new_main_status_enum			
+                            , new_main_description			
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+                            , NULL		
+                            , NULL
+                            , NULL		
+                            , NULL
+							
+							, :NEW.main_maintenance_id_pk	
+							, :NEW.main_title					
+							, :NEW.main_department_code_fk		
+							, :NEW.main_contractor			
+							, :NEW.main_date_begin				
+							, :NEW.main_date_finish			
+							, :NEW.main_status_enum			
+							, :NEW.main_description			
+		)
+		;
+ ELSIF updating THEN
+ INSERT INTO ARCHIVE_MAINTENANCES_TAB
+        (           
+							  main_event_date			  			
+                            , main_event_type 				
+                            , main_user_name			 		
+							  
+                            , old_main_maintenance_id_pk		
+                            , old_main_title					
+                            , old_main_department_code_fk		
+                            , old_main_contractor				
+                            , old_main_date_begin				
+                            , old_main_date_finish			
+                            , old_main_status_enum			
+                            , old_main_description			
+							  
+                            , new_main_maintenance_id_pk		
+                            , new_main_title					
+                            , new_main_department_code_fk		
+                            , new_main_contractor				
+                            , new_main_date_begin				
+                            , new_main_date_finish			
+                            , new_main_status_enum			
+                            , new_main_description		
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.main_maintenance_id_pk	
+                            , :OLD.main_title				
+                            , :OLD.main_department_code_fk	
+                            , :OLD.main_contractor			
+                            , :OLD.main_date_begin			
+                            , :OLD.main_date_finish			
+                            , :OLD.main_status_enum			
+                            , :OLD.main_description			
+							
+							, :NEW.main_maintenance_id_pk	
+							, :NEW.main_title				
+							, :NEW.main_department_code_fk	
+							, :NEW.main_contractor			
+							, :NEW.main_date_begin			
+							, :NEW.main_date_finish			
+							, :NEW.main_status_enum			
+							, :NEW.main_description			
+		)
+		;
+ ELSE
+  INSERT INTO ARCHIVE_MAINTENANCES_TAB
+		(           
+							  main_event_date			  			
+                            , main_event_type 				
+                            , main_user_name			 		
+							  
+                            , old_main_maintenance_id_pk		
+                            , old_main_title					
+                            , old_main_department_code_fk		
+                            , old_main_contractor				
+                            , old_main_date_begin				
+                            , old_main_date_finish			
+                            , old_main_status_enum			
+                            , old_main_description			
+							  
+                            , new_main_maintenance_id_pk		
+                            , new_main_title					
+                            , new_main_department_code_fk		
+                            , new_main_contractor				
+                            , new_main_date_begin				
+                            , new_main_date_finish			
+                            , new_main_status_enum			
+                            , new_main_description		
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+                            , :OLD.main_maintenance_id_pk	
+                            , :OLD.main_title				
+                            , :OLD.main_department_code_fk	
+                            , :OLD.main_contractor			
+                            , :OLD.main_date_begin			
+                            , :OLD.main_date_finish			
+                            , :OLD.main_status_enum			
+                            , :OLD.main_description			
+							
+							, NULL		
+							, NULL				
+							, NULL		
+							, NULL	
+							, NULL		
+							, NULL
+							, NULL		
+							, NULL
+		)
+		;
+ END IF;
+END;

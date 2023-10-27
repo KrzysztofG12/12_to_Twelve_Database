@@ -1,0 +1,56 @@
+empl_first_name,empl_last_name,empl_pesel_code,empl_gender_enum,empl_birth_date,empl_phone_number,empl_job_title,empl_departament_code_fk,empl_salary,empl_privilege_level_enum,empl_bonus_pct,empl_status_enum
+Oliver,Smith,67042712345,Male,1995-03-18,7891234567,Cashier,CS001,25000,3,5,Active
+Emily,Johnson,85092023456,Female,1988-07-12,7123456789,Store Manager,SM001,45000,4,8,Active
+William,Williams,76053134567,Male,1990-11-25,6234567890,Sales Associate,SA002,22000,2,4,Active
+Charlotte,Jones,93071545678,Female,1985-02-09,5345678901,Cashier,CS001,26000,3,6,Active
+James,Brown,81112656789,Male,1992-06-21,4567890123,Stock Clerk,SC003,20000,2,3,Active
+Sophia,Davis,69080167890,Female,1997-09-15,3456789012,Sales Associate,SA002,23000,2,5,Active
+Benjamin,Miller,74040678901,Male,1993-01-29,2345678903,Cashier,CS001,27000,3,7,Active
+Olivia,Moore,88020289012,Female,1989-04-02,1234567894,Store Manager,SM001,46000,4,9,Active
+Noah,Johnson,92062490123,Male,1987-08-14,7890123456,Sales Associate,SA002,24000,2,4,Active
+Ava,Wilson,83020801234,Female,1996-12-06,6789012345,Stock Clerk,SC003,21000,2,6,Active
+Liam,Anderson,78121612345,Male,1991-02-28,5678901234,Cashier,CS001,28000,3,8,Active
+Mia,Clark,96040823456,Female,1984-06-03,4567890123,Sales Associate,SA002,25000,2,7,Active
+Henry,Thomas,90080134567,Male,1998-10-17,3456789012,Store Manager,SM001,47000,4,10,Active
+Ella,Hall,73041745678,Female,1986-03-25,2345678903,Cashier,CS001,29000,3,9,Active
+Alexander,White,82062556789,Male,1994-07-30,1234567894,Sales Associate,SA002,26000,2,5,Active
+Grace,Adams,94080867890,Female,1983-11-12,7890123456,Stock Clerk,SC003,22000,2,4,Active
+Michael,Harris,89070478901,Male,1999-01-04,6789012345,Cashier,CS001,30000,3,7,Active
+Lily,Wright,77021389012,Female,1988-05-22,5678901234,Store Manager,SM001,48000,4,8,Active
+Daniel,Turner,88071490123,Male,1997-09-09,4567890123,Sales Associate,SA002,27000,2,6,Active
+Chloe,Scott,92022601234,Female,1982-01-31,3456789012,Stock Clerk,SC003,23000,2,5,Active
+Matthew,King,74082312345,Male,1995-04-20,2345678903,Cashier,CS001,31000,3,4,Active
+Evelyn,Walker,80060223456,Female,1987-10-07,1234567894,Sales Associate,SA002,28000,2,9,Active
+David,Hill,93052234567,Male,1992-02-11,7890123456,Store Manager,SM001,49000,4,7,Active
+Abigail,Turner,86030945678,Female,1981-06-14,6789012345,Cashier,CS001,32000,3,8,Active
+Joseph,Green,75021856789,Male,1996-11-06,5678901234,Sales Associate,SA002,29000,2,6,Active
+Emma,Phillips,91062567890,Female,1989-03-23,4567890123,Stock Clerk,SC003,24000,2,5,Active
+Samuel,Clark,80080178901,Male,1993-07-27,3456789012,Cashier,CS001,33000,3,4,Active
+Avery,Roberts,97092689012,Female,1980-09-19,2345678903,Store Manager,SM001,50000,4,9,Active
+Sophie,Hughes,85051590123,Female,1984-12-04,1234567894,Cashier,CS001,34000,3,7,Active
+Emily,Smith,92041512345,Female,1992-04-15,447712345678,Office Manager,OF001,45000,3,5,Active
+Oliver,Johnson,86062023456,Male,1986-06-20,447798765432,Office Administrator,OF001,35000,2,3,Active
+Sophia,Williams,76112234567,Female,1976-11-22,447712345611,HR Specialist,OF001,25000,1,2,Active
+James,Brown,88070345678,Male,1988-07-03,447712345622,Accountant,OF001,22000,1,2,Active
+Olivia,Jones,95052556789,Female,1995-05-25,447712345633,Office Assistant,OF001,28000,2,4,Active
+William,Davis,90121467890,Male,1990-12-14,447712345644,Office Manager,OF002,48000,4,6,Active
+Ava,Miller,83030578901,Female,1983-03-05,447712345655,Office Administrator,OF002,30000,1,2,Active
+Benjamin,Smith,89123189012,Male,1989-12-31,447712345666,HR Specialist,OF002,25000,1,2,Active
+Mia,Johnson,78122490123,Female,1978-12-24,447712345677,Accountant,OF002,36000,2,3,Active
+Henry,Williams,94050701234,Male,1994-05-07,447712345688,Office Assistant,OF002,23000,1,2,Active
+Ella,Brown,82071012345,Female,1982-07-10,447712345699,Office Manager,OF001,38000,3,5,Active
+Alexander,Jones,91020323456,Male,1991-02-03,447712345700,Office Administrator,OF001,50000,5,7,Active
+Liam,Davis,80111534567,Male,1980-11-15,447712345711,HR Specialist,OF001,31000,2,3,Active
+Charlotte,Miller,93032245678,Female,1993-03-22,447712345722,Accountant,OF001,24000,1,2,Active
+Daniel,Smith,75012356789,Male,1975-01-23,447712345733,Office Assistant,OF001,34000,2,3,Active
+Amelia,Johnson,89061167890,Female,1989-06-11,447712345744,Office Manager,OF002,26000,1,2,Active
+Michael,Williams,86071878901,Male,1986-07-18,447712345755,Office Administrator,OF002,29000,2,4,Active
+Harper,Brown,95022389012,Female,1995-02-23,447712345766,HR Specialist,OF002,52000,5,7,Active
+Sophia,Jones,78053090123,Female,1978-05-30,447712345777,Accountant,OF002,32000,2,3,Active
+Matthew,Davis,90040601234,Male,1990-04-06,447712345788,Office Assistant,OF002,27000,1,2,Active
+David,Smith,12345678901,Male,1985-03-15,5551234567,Driver,CS001,45000,3,5,Active
+Emily,Johnson,23456789012,Female,1990-08-22,5552345678,Driver,SM001,46000,2,6,Active
+Michael,Williams,34567890123,Male,1988-05-10,5553456789,Driver,SA002,47000,3,7,Active
+Sophia,Brown,45678901234,Female,1987-12-03,5554567890,Driver,SC003,48000,2,8,Active
+Oliver,Miller,56789012345,Male,1992-11-28,5555678901,Driver,CS001,49000,4,9,Active
+

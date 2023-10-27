@@ -1,0 +1,114 @@
+CREATE OR REPLACE TRIGGER T_AIUD_CUSTOMER_ADDRESSES_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON CUSTOMER_ADDRESSES_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+
+
+  IF inserting THEN
+    INSERT INTO ARCHIVE_CUSTOMER_ADDRESSES_TAB
+		(           
+							  cuad_event_date			  	
+                            , cuad_event_type 			
+                            , cuad_user_name			 	
+							  
+                            , old_cuad_CUSTOMER_id_fk	
+                            , old_cuad_address_id_fk		
+                            , old_cuad_date_address_from	
+                            , old_cuad_date_address_to	
+                             
+                            , new_cuad_CUSTOMER_id_fk	
+                            , new_cuad_address_id_fk		
+                            , new_cuad_date_address_from	
+							, new_cuad_date_address_to	                        
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+							
+							, :NEW.cuad_CUSTOMER_id_fk	
+							, :NEW.cuad_address_id_fk		
+							, :NEW.cuad_date_address_from	
+							, :NEW.cuad_date_address_to	
+		)
+		;
+ ELSIF updating THEN
+ INSERT INTO ARCHIVE_CUSTOMER_ADDRESSES_TAB
+        (           
+							  cuad_event_date			  	
+                            , cuad_event_type 			
+                            , cuad_user_name			 	
+							  
+                            , old_cuad_CUSTOMER_id_fk	
+                            , old_cuad_address_id_fk		
+                            , old_cuad_date_address_from	
+                            , old_cuad_date_address_to	
+                             
+                            , new_cuad_CUSTOMER_id_fk	
+                            , new_cuad_address_id_fk		
+                            , new_cuad_date_address_from	
+							, new_cuad_date_address_to	 
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.cuad_CUSTOMER_id_fk	
+                            , :OLD.cuad_address_id_fk			
+                            , :OLD.cuad_date_address_from		
+                            , :OLD.cuad_date_address_to	
+							
+							, :NEW.cuad_CUSTOMER_id_fk	
+							, :NEW.cuad_address_id_fk		
+							, :NEW.cuad_date_address_from	
+							, :NEW.cuad_date_address_to	
+		)
+		;
+ ELSE
+  INSERT INTO ARCHIVE_CUSTOMER_ADDRESSES_TAB
+		(           
+							  cuad_event_date			  	
+                            , cuad_event_type 			
+                            , cuad_user_name			 	
+							  
+                            , old_cuad_CUSTOMER_id_fk	
+                            , old_cuad_address_id_fk		
+                            , old_cuad_date_address_from	
+                            , old_cuad_date_address_to	
+                             
+                            , new_cuad_CUSTOMER_id_fk	
+                            , new_cuad_address_id_fk		
+                            , new_cuad_date_address_from	
+							, new_cuad_date_address_to	 
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+                            , :OLD.cuad_CUSTOMER_id_fk	
+                            , :OLD.cuad_address_id_fk			
+                            , :OLD.cuad_date_address_from		
+                            , :OLD.cuad_date_address_to	
+												
+							, NULL		
+							, NULL
+							, NULL		
+							, NULL
+		)
+		;
+ END IF;
+END;

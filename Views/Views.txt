@@ -1,0 +1,82 @@
+CREATE VIEW view_more_than_100_short_life_products_desc AS 
+    SELECT 		prod.prod_product_name as "Product Name", prty.prty_shelf_life as "Shelf Life", prst.prst_number as "Stock", depa.depa_department_name as "Department Name"
+	FROM 		PRODUCTS_TAB prod
+	JOIN 		PRODUCT_TYPES_TAB prty
+	ON 			prod.prod_PRODUCT_TYPE_fk = prty.prty_PRODUCT_TYPE_pk
+    JOIN 		PRODUCT_STOCK_TAB prst
+	ON 			prst.prst_product_id_fk = prod.prod_PRODUCT_id_pk
+    JOIN 		PRODUCT_STOCK_TAB prst
+	ON 			prst.prst_product_id_fk = prod.prod_PRODUCT_id_pk
+    JOIN 		DEPARTMENTS_TAB depa
+	ON 			prst.prst_department_code_fk = depa.depa_DEPARTMENT_CODE_pk
+    WHERE 		prst.prst_number > 100
+    AND 		prty.PRTY_SHELF_LIFE = 'Short'
+    ORDER BY 	prst.prst_number DESC
+    ;
+	
+	
+CREATE VIEW view_less_than_20_products_desc_number AS 
+    SELECT 		prod.prod_product_name as "Product Name", prty.prty_shelf_life as "Shelf Life", prst.prst_number as "Stock", depa.depa_department_name as "Department Name"
+	FROM 		PRODUCTS_TAB prod
+	JOIN 		PRODUCT_TYPES_TAB prty
+	ON 			prod.prod_PRODUCT_TYPE_fk = prty.prty_PRODUCT_TYPE_pk
+    JOIN 		PRODUCT_STOCK_TAB prst
+	ON 			prst.prst_product_id_fk = prod.prod_PRODUCT_id_pk
+    JOIN 		PRODUCT_STOCK_TAB prst
+	ON 			prst.prst_product_id_fk = prod.prod_PRODUCT_id_pk
+    JOIN 		DEPARTMENTS_TAB depa
+	ON 			prst.prst_department_code_fk = depa.depa_DEPARTMENT_CODE_pk
+    WHERE 		prst.prst_number < 20
+    ORDER BY 	prst.prst_number DESC
+    ;	
+	
+	
+CREATE VIEW view_average_sell_price_by_prod_type_asc_price AS 	
+	SELECT 		prty.prty_FULL_NAME as "Product Type", ROUND(AVG(prod.prod_net_PRICE), 2) as "Average Sell Price"
+	FROM 		Product_Types_tab prty
+	JOIN 		Products_tab prod
+	ON 			prty.prty_PRODUCT_TYPE_pk = prod.prod_PRODUCT_TYPE_fk
+	GROUP BY 	prty.prty_FULL_NAME
+	ORDER BY 	"Average Sell Price" ASC
+	;
+	
+	
+CREATE VIEW view_most_online_sold_products_over_LY_top_10_DESC_number AS 		
+	SELECT  	prod.prod_product_name as "Product Name", SUM(opit.opit_quantity) as "Sold in the Last Year"       
+	FROM 		products_tab prod
+	JOIN 		online_purchased_items_tab opit
+	ON 			prod.prod_PRODUCT_id_pk = opit.opit_product_id_fk
+    JOIN 		online_purchases_tab onpu
+	ON 			opit.opit_online_purchase_id_fk = onpu.onpu_online_PURCHASE_ID_pk
+    WHERE 		onpu.onpu_date_purchase >= sysdate - interval '1' year 
+	GROUP BY 	prod.prod_product_name
+    ORDER BY 	"Sold in the Last Year"  DESC
+    FETCH FIRST 10 ROWS ONLY
+	;
+
+
+CREATE VIEW view_gender_age_salary_differences_departments AS 		
+	SELECT 
+	"Department Name", "Average Male Salary with Bonus", "Average Female Salary with Bonus", ABS("Average Male Salary with Bonus" - "Average Female Salary with Bonus") as "Salary Difference",
+    "Average Male Age", "Average Female Age",  ABS("Average Male Age" - "Average Female Age") as "Age Difference"
+	FROM
+		(
+		SELECT 
+		depa.depa_DEPARTMENT_NAME as "Department Name", ROUND(AVG((empl.EMPL_SALARY * empl.EMPL_BONUS_PCT /100) + empl.EMPL_SALARY )) as "Average Male Salary with Bonus", 
+		ROUND(AVG(SYSDATE - empl_BIRTH_DATE)/365) as "Average Male Age"
+		FROM employees_tab empl
+		JOIN departments_tab depa
+		ON empl.empl_DEPARTMENT_CODE_fk = depa.depa_DEPARTMENT_CODE_pk
+		WHERE empl.EMPL_GENDER_ENUM = 'Male'
+		GROUP BY depa.depa_DEPARTMENT_NAME) Ma
+    JOIN
+		(
+		SELECT 
+		depa.depa_DEPARTMENT_NAME as "Department Name2", ROUND(AVG((empl.EMPL_SALARY * empl.EMPL_BONUS_PCT /100) + empl.EMPL_SALARY )) as "Average Female Salary with Bonus", 
+		ROUND(AVG(SYSDATE - empl_BIRTH_DATE)/365) as "Average Female Age"
+		FROM employees_tab empl
+		JOIN departments_tab depa
+		ON empl.empl_DEPARTMENT_CODE_fk = depa.depa_DEPARTMENT_CODE_pk
+		WHERE empl.EMPL_GENDER_ENUM = 'Female'
+		GROUP BY depa.depa_DEPARTMENT_NAME) Fe
+		ON Ma."Department Name" = Fe."Department Name2";

@@ -1,0 +1,63 @@
+prod_product_name;prod_company_name;prod_product_type_fk;prod_net_price;prod_purchase_price;prod_tax_rate_pct;prod_quantity;prod_unit;prod_packaging;prod_refrigerated_yn;prod_frozen_yn
+Beef Sirloin 700g;Local Butcher Shop;MEAT;18,99;14,99;8;0,7;kilograms;vacuum pack;1;0
+Pork Ribs 1,5kg;Tender Meats;MEAT;13,99;10,99;8;1,5;kilograms;foam tray;0;1
+Lamb Shoulder Roast;Farm Fresh Meats;MEAT;21,99;17,99;8;1;kilograms;wrapper;1;0
+Ground Beef 500g;Local Market;MEAT;9,49;7,49;8;0,5;kilograms;plastic bag;0;0
+Duck Leg 4-Pack;Gourmet Poultry;MEAT;25,99;21,49;8;0,8;kilograms;vacuum pack;1;1
+Turkey Breast Slices 300g;Healthy Choices;MEAT;7,99;5,49;8;0,3;kilograms;plastic tray;1;0
+Pork Sausages 400g;Local Deli;MEAT;6,99;4,99;8;0,4;kilograms;foam tray;0;0
+Chicken Thighs 800g;Family Farms;MEAT;10,99;8,49;8;0,8;kilograms;plastic bag;1;0
+Bison Steak 400g;Wild Game Market;MEAT;24,99;20,99;8;0,4;kilograms;vacuum pack;0;1
+Lobster Tails 2-Pack;Seafood Paradise;SEAFO;29,99;25,99;8;0,4;kilograms;plastic tray;1;1
+Spaghetti;Pasta House;PASTA;1,99;1,29;8;500;grams;box;0;0
+Macaroni;Pasta World;PASTA;1,79;1,09;8;500;grams;bag;0;0
+Orange Juice;Citrus Farms;JUICE;2,49;1,99;8;1;liters;carton;1;0
+Apple Juice;Fruit Delights;JUICE;2,29;1,79;8;1;liters;bottle;1;0
+Grape Juice;Vineyard Visions;JUICE;2,69;2,09;8;1;liters;carton;1;0
+Apple;Orchard Fresh;FRUIT;0,99;0,79;8;1;pieces;bag;0;0
+Banana;Tropical Farms;FRUIT;1,29;0,99;8;1;pieces;bunch;0;0
+Strawberry;Berry Haven;FRUIT;2,49;1,99;8;250;grams;punnet;0;0
+Tomato;Farmers Market;VEGGE;1,19;0,89;8;1;kilograms;basket;0;0
+Cucumber;Fresh Greens;VEGGE;0,89;0,69;8;1;pieces;bag;0;0
+Carrot;Roots & More;VEGGE;0,79;0,59;8;1;kilograms;bag;0;0
+Milk 2%;Farm Fresh Dairy;DAIRY;1,25;0,89;8;1;liters;carton;1;0
+Yogurt;Dairy Delights;DAIRY;1,49;0,99;8;200;grams;cup;1;0
+Cheese;Creamy Creations;DAIRY;3,99;2,79;8;250;grams;wrapper;0;0
+Beer;Local Brewery;ALK;4,99;3,29;23;500;milliliters;bottle;0;0
+Wine;Vineyard Select;ALK;9,99;6,99;23;750;milliliters;bottle;0;0
+Vodka 40%;Distillery Ltd,;ALK;19,99;14,99;23;700;milliliters;bottle;0;0
+Whole Wheat Bread;Bakers Delight;BAKED;2,99;1,89;8;500;grams;paper;0;0
+Baguette;French Bakery;BAKED;1,79;1,29;8;250;grams;paper;0;0
+Croissant;Pastry Paradise;BAKED;1,99;1,49;8;100;grams;bag;0;0
+Frozen Pizza;Pizza Palace;FRZEN;6,99;4,99;8;400;grams;box;1;1
+Frozen Vegetables;Green Garden;FRZEN;2,49;1,99;8;500;grams;bag;0;1
+Ice Cream;Scoops Delight;FRZEN;3,99;2,49;8;1;liters;tub;1;1
+Frozen Fries;Golden Crisps;FRZEN;1,99;1,29;8;750;grams;bag;0;1
+Frozen Chicken Nuggets;Poultry Delights;FRZEN;4,49;3,49;8;400;grams;box;1;1
+Soda;Fizz Drinks;DRINK;1,29;0,89;8;500;milliliters;bottle;0;0
+Energy Drink;Power Boost;DRINK;2,49;1,99;8;250;milliliters;can;0;0
+Lemonade;Citrus Quench;DRINK;1,79;1,29;8;1;liters;bottle;1;0
+Iced Tea;Cool Brews;DRINK;1,99;1,49;8;500;milliliters;carton;0;0
+Soft Drink;Refresh Co,;DRINK;1,19;0,89;8;355;milliliters;can;0;0
+Chocolate Bar;Sweet Temptations;SWEET;0,99;0,69;8;50;grams;wrapper;0;0
+Candy Assortment;Candy Heaven;SWEET;4,99;3,49;8;250;grams;box;0;0
+Gummy Bears;Sugar Rush;SWEET;1,49;0,99;8;200;grams;bag;0;0
+Chocolate Chip Cookies;Cookie Delights;SWEET;2,29;1,79;8;200;grams;box;0;0
+BBQ Sauce;Grill Master;SAUCE;2,99;1,99;8;500;milliliters;bottle;0;0
+Tomato Ketchup;Red Gold;SAUCE;1,49;0,99;8;350;milliliters;bottle;0;0
+Honey Mustard;Sweet & Tangy;SAUCE;2,49;1,79;8;250;milliliters;bottle;0;0
+Soy Sauce;Oriental Flavors;SAUCE;1,79;1,29;8;500;milliliters;bottle;0;0
+Mayonnaise;Creamy Classics;SAUCE;2,29;1,49;8;350;milliliters;jar;0;0
+Salmon Fillet;Seafood Sensation;SEAFO;14,99;11,99;8;250;grams;vacuum pack;1;0
+Shrimp;Ocean Harvest;SEAFO;12,99;9,99;8;300;grams;bag;0;1
+Tuna Steak;Tropical Tastes;SEAFO;9,99;7,99;8;200;grams;vacuum pack;1;0
+Clam Chowder;Seafood Delights;SEAFO;6,99;4,99;8;400;milliliters;can;1;0
+Pasta Carbonara;Italian Flavors;PASTA;5,99;3,99;8;350;grams;box;0;0
+Lasagna;Pasta Palace;PASTA;7,49;5,49;8;400;grams;tray;1;0
+Spaghetti Bolognese;Homestyle Recipes;PASTA;4,99;3,49;8;350;grams;box;0;0
+Ravioli;Italian Tradition;PASTA;6,29;4,29;8;250;grams;box;0;1
+Seafood Linguine;Seafood Elegance;SEAFO;15,99;12,99;8;350;grams;box;0;0
+Penne Alfredo;Creamy Classics;PASTA;5,49;3,99;8;350;grams;box;0;0
+Calamari Rings;Seafood Delights;SEAFO;8,99;6,99;8;300;grams;bag;0;1
+Fettuccine Carbonara;Italian Flavors;PASTA;6,99;4,99;8;350;grams;box;0;0
+

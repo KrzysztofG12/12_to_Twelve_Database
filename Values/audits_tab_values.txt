@@ -1,0 +1,13 @@
+audt_title,audt_department_code_fk,audt_date_begin,audt_date_finish,audt_status_enum,audt_description,audt_inspector_code
+Store Cleanliness Audit,CS001,2023-07-10,2023-07-11,Finished,Conducted a thorough cleanliness audit of the store,INSP-001
+Inventory Check,SM001,2023-06-20,2023-06-23,Finished,Verified inventory levels and accuracy,INSP-002
+Safety Compliance Inspection,SA002,2023-09-05,2023-09-06,Finished,Ensured compliance with safety regulations,INSP-003
+Cash Handling Review,SC003,2023-08-15,2023-08-16,Finished,Reviewed cash handling procedures,INSP-004
+Store Layout Evaluation,CS001,2023-04-25,2023-04-26,Finished,Evaluated the store layout for customer convenience,INSP-005
+Employee Training Audit,SM001,2023-07-30,2023-07-30,Finished,Assessed employee training programs,INSP-006
+Product Quality Assessment,SA002,2023-10-10,2023-10-11,Finished,Checked product quality and freshness,INSP-007
+Security and Surveillance Audit,SC003,2023-09-25,2023-09-26,Finished,Reviewed security and surveillance systems,INSP-008
+Merchandise Display Review,CS001,2023-05-15,2023-05-16,Finished,Analyzed merchandise displays and product placement,INSP-009
+Customer Service Evaluation,SM001,2023-08-05,2023-08-08,Finished,Evaluated the quality of customer service,INSP-010
+Promotional Campaign Audit,SA002,2023-11-20,2023-11-22,,Finished,Reviewed promotional campaign execution,INSP-011
+Inventory Accuracy Check,SC003,2023-10-05,2023-10-06,Finished,Ensured inventory accuracy and record-keeping,INSP-012

@@ -1,0 +1,112 @@
+CREATE OR REPLACE TRIGGER T_AIUD_SUPPLIERS_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON SUPPLIERS_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+  IF inserting THEN
+    INSERT INTO ARCHIVE_SUPPLIERS_TAB
+		(           
+							  supr_event_date			  				
+                            , supr_event_type 					
+                            , supr_user_name			 			
+							  
+                            , old_supr_supplier_id_pk				
+                            , old_supr_supplier_name				
+                            , old_supr_transport_type_code_fk		
+                            , old_supr_phone_number				
+                             
+                            , new_supr_supplier_id_pk				
+                            , new_supr_supplier_name				
+                            , new_supr_transport_type_code_fk		
+							, new_supr_phone_number				
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	                         
+							
+							, :NEW.supr_supplier_id_pk				
+							, :NEW.supr_supplier_name					
+							, :NEW.supr_transport_type_code_fk			
+							, :NEW.supr_phone_number				
+		)
+		;
+ ELSIF updating THEN
+ INSERT INTO ARCHIVE_SUPPLIERS_TAB
+        (           
+							  supr_event_date			  				
+                            , supr_event_type 					
+                            , supr_user_name			 			
+							  
+                            , old_supr_supplier_id_pk				
+                            , old_supr_supplier_name				
+                            , old_supr_transport_type_code_fk		
+                            , old_supr_phone_number				
+                             
+                            , new_supr_supplier_id_pk				
+                            , new_supr_supplier_name				
+                            , new_supr_transport_type_code_fk		
+							, new_supr_phone_number				
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.supr_supplier_id_pk				
+                            , :OLD.supr_supplier_name					
+                            , :OLD.supr_transport_type_code_fk			
+                            , :OLD.supr_phone_number				
+							
+							, :NEW.supr_supplier_id_pk				
+							, :NEW.supr_supplier_name					
+							, :NEW.supr_transport_type_code_fk			
+							, :NEW.supr_phone_number				
+		)
+		;
+ ELSE
+  INSERT INTO ARCHIVE_SUPPLIERS_TAB
+		(           
+							  supr_event_date			  				
+                            , supr_event_type 					
+                            , supr_user_name			 			
+							  
+                            , old_supr_supplier_id_pk				
+                            , old_supr_supplier_name				
+                            , old_supr_transport_type_code_fk		
+                            , old_supr_phone_number				
+                             
+                            , new_supr_supplier_id_pk				
+                            , new_supr_supplier_name				
+                            , new_supr_transport_type_code_fk		
+							, new_supr_phone_number				
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+                            , :OLD.supr_supplier_id_pk				
+                            , :OLD.supr_supplier_name					
+                            , :OLD.supr_transport_type_code_fk			
+                            , :OLD.supr_phone_number				
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+		)
+		;
+ END IF;
+END;

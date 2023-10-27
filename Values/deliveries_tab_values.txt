@@ -1,0 +1,25 @@
+deli_online_purchase_id_fk,deli_employee_id_fk,deli_transport_type_code_fk,deli_date,deli_time_window,deli_status_enum,deli_other_details
+1,101,CAR,2023-09-01,09:00 AM - 11:00 AM,Planned,Please deliver to the front door.
+2,102,PUP,2023-09-02,10:00 AM - 12:00 PM,Planned,Delivery instructions: Leave package at the porch.
+3,103,VAN,2023-09-03,01:00 PM - 03:00 PM,Pending,Delivery to the office lobby.
+4,104,CAR,2023-09-04,09:30 AM - 11:30 AM,Delivered,Delivered to the customer's doorstep.
+5,105,PUP,2023-09-05,11:30 AM - 01:30 PM,Pending,Please handle with care; fragile items inside.
+6,101,VAN,2023-09-06,02:00 PM - 04:00 PM,Delivered,Recipient requested signature confirmation.
+7,102,CAR,2023-09-07,10:30 AM - 12:30 PM,Cancelled,Delivery address updated; please verify.
+8,103,PUP,2023-09-08,12:00 PM - 02:00 PM,Planned,Contact recipient for specific delivery instructions.
+9,104,VAN,2023-09-09,03:00 PM - 05:00 PM,Delivered,Leave package with neighbor if recipient not available.
+10,105,CAR,2023-09-10,11:00 AM - 01:00 PM,Delivered,Deliver to the side entrance.
+11,101,PUP,2023-09-11,01:30 PM - 03:30 PM,Planned,Notify recipient of the estimated delivery time.
+12,102,VAN,2023-09-12,04:00 PM - 06:00 PM,Pending,Delivery to the back door.
+13,103,CAR,2023-09-13,10:00 AM - 12:00 PM,Pending,Delivery to the reception area.
+14,104,PUP,2023-09-14,12:30 PM - 02:30 PM,Delivered,Recipient requested a redelivery.
+15,105,VAN,2023-09-15,03:30 PM - 05:30 PM,Delivered,Recipient provided gate access code.
+16,101,CAR,2023-09-16,11:30 AM - 01:30 PM,Planned,Delivery to the specified apartment number.
+17,102,PUP,2023-09-17,01:00 PM - 03:00 PM,Cancelled,Delivery address not found; contact recipient.
+18,103,VAN,2023-09-18,02:30 PM - 04:30 PM,Pending,Call recipient before arriving.
+19,104,CAR,2023-09-19,10:30 AM - 12:30 PM,Delivered,Recipient's preferred delivery time.
+20,105,PUP,2023-09-20,12:00 PM - 02:00 PM,Delivered,Recipient asked for a package drop-off.
+21,101,VAN,2023-09-21,03:00 PM - 05:00 PM,Pending,Package contains perishables; handle promptly.
+22,102,CAR,2023-09-22,11:00 AM - 01:00 PM,Planned,Contact recipient to confirm delivery location.
+23,103,PUP,2023-09-23,01:30 PM - 03:30 PM,Planned,Deliver to the office reception desk.
+24,104,VAN,2023-09-24,02:00 PM - 04:00 PM,Pending,Recipient requested a morning delivery.

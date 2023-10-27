@@ -1,0 +1,41 @@
+BEGIN
+    DBMS_SCHEDULER.create_schedule(
+       schedule_name  	=> 'schedule_1_day_of_month'
+,      start_date    	=> TO_DATE('2023-09-01', 'YYYY-MM-DD')
+,      repeat_interval 	=> 'FREQ=MONTHLY; BYHOUR=0; BYMINUTE=0; BYSECOND=0;'
+,      end_date       	=> NULL
+,      comments       	=> 'Schedule that activates on the first day of each month, from 01-09-2023.'
+    );
+END;
+
+
+BEGIN
+    DBMS_SCHEDULER.create_program(
+	
+		program_name =>'program_empl_update_bonus_on_employment_date'	   
+	,	program_type => 'PLSQL_BLOCK'
+	,	program_action => 'BEGIN 
+
+			UPDATE EMPLOYEES_TAB 
+			SET empl_bonus_pct = empl_bonus_pct + TRUNC(MONTHS_BETWEEN(SYSDATE, empl_employment_date) / 12)
+			WHERE MONTHS_BETWEEN(SYSDATE, empl_employment_date) / 12 >= 1; 
+
+		END;'
+
+	,	enabled => TRUE
+	,	comments => 'Program testowy joba'
+
+	);
+END;
+
+BEGIN
+    DBMS_SCHEDULER.create_job(
+	
+		job_name		 	=> 'job_empl_update_bonus_on_employment_date_monthly'
+,   	program_name	 	=> 'program_empl_update_bonus_on_employment_date'
+,       schedule_name		=> 'schedule_1_day_of_month'
+,       enabled				=> TRUE
+,       comments			=> 'Job, that updates empl_bonus_pct values based on empl_employment_date, 1 percent point for each year of employment'
+
+);
+END;

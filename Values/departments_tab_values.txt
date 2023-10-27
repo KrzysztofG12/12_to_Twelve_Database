@@ -1,0 +1,7 @@
+depa_departament_code_pk;depa_departament_name;depa_departament_type_enum;depa_manager_id_fk;depa_area_m2
+CS001;First Stationary Store;Store;1;1500,5
+SM001;Store Manchester;Store;2;1200,75
+SA002;Super Store Aldenshot;Store;3;1800,25
+SC003;Small Store Canderbury;Store;4;600,0
+OF001;Main Office;Office;5;550,5
+OF002;Downtown Office;Office;5;150,0

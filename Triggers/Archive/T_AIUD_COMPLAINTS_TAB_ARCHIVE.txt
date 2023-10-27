@@ -1,0 +1,126 @@
+CREATE OR REPLACE TRIGGER T_AIUD_COMPLAINTS_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON COMPLAINTS_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+
+
+  IF inserting THEN
+    INSERT INTO ARCHIVE_COMPLAINTS_TAB
+		(           
+							  comp_event_date			  		
+                            , comp_event_type 			
+                            , comp_user_name			 	
+							  
+                            , old_comp_complaint_id_pk	
+                            , old_comp_type				
+                            , old_comp_description		
+                            , old_comp_status_enum		
+                            , old_comp_decision			
+                             
+                            , new_comp_complaint_id_pk	
+                            , new_comp_type				
+							, new_comp_description		
+                            , new_comp_status_enum		
+                            , new_comp_decision			                            
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+                            , NULL		
+
+							, :NEW.comp_complaint_id_pk	
+							, :NEW.comp_type				
+							, :NEW.comp_description		
+							, :NEW.comp_status_enum		
+							, :NEW.comp_decision			
+		)
+		;
+ ELSIF updating THEN
+ INSERT INTO ARCHIVE_COMPLAINTS_TAB
+        (           
+							  comp_event_date			  		
+                            , comp_event_type 			
+                            , comp_user_name			 	
+							  
+                            , old_comp_complaint_id_pk	
+                            , old_comp_type				
+                            , old_comp_description		
+                            , old_comp_status_enum		
+                            , old_comp_decision			
+                             
+                            , new_comp_complaint_id_pk	
+                            , new_comp_type				
+							, new_comp_description		
+                            , new_comp_status_enum		
+                            , new_comp_decision			  
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.comp_complaint_id_pk	
+                            , :OLD.comp_type				
+                            , :OLD.comp_description		
+                            , :OLD.comp_status_enum		
+                            , :OLD.comp_decision			
+							
+							, :NEW.comp_complaint_id_pk	
+							, :NEW.comp_type					
+							, :NEW.comp_description			
+							, :NEW.comp_status_enum		
+							, :NEW.comp_decision				
+		)
+		;
+ ELSE
+  INSERT INTO ARCHIVE_COMPLAINTS_TAB
+		(           
+							  comp_event_date			  		
+                            , comp_event_type 			
+                            , comp_user_name			 	
+							  
+                            , old_comp_complaint_id_pk	
+                            , old_comp_type				
+                            , old_comp_description		
+                            , old_comp_status_enum		
+                            , old_comp_decision			
+                             
+                            , new_comp_complaint_id_pk	
+                            , new_comp_type				
+							, new_comp_description		
+                            , new_comp_status_enum		
+                            , new_comp_decision			  
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+                            , :OLD.comp_complaint_id_pk	
+                            , :OLD.comp_type				
+                            , :OLD.comp_description		
+                            , :OLD.comp_status_enum		
+                            , :OLD.comp_decision			
+															
+							, NULL	
+							, NULL		
+							, NULL
+							, NULL		
+							, NULL
+		)
+		;
+ END IF;
+END;

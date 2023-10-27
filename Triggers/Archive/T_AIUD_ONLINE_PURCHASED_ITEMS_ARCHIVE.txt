@@ -1,0 +1,104 @@
+CREATE OR REPLACE TRIGGER T_AIUD_ONLINE_PURCHASED_ITEMS_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON ONLINE_PURCHASED_ITEMS_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+
+
+	IF inserting THEN
+		INSERT INTO ARCHIVE_ONLINE_PURCHASED_ITEMS_TAB
+		(           
+							  opit_event_date			  			
+                            , opit_event_type 					
+                            , opit_user_name			 			
+							  
+                            , old_opit_online_purchase_id_fk		
+                            , old_opit_product_id_fk				
+                            , old_opit_quantity					
+                             
+                            , new_opit_online_purchase_id_fk		
+                            , new_opit_product_id_fk				
+                            , new_opit_quantity					
+
+		)
+		VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+							
+							, :NEW.opit_online_purchase_id_fk	
+							, :NEW.opit_product_id_fk			
+							, :NEW.opit_quantity					
+
+		)
+		;
+	ELSIF updating THEN
+		INSERT INTO ARCHIVE_ONLINE_PURCHASED_ITEMS_TAB
+        (           
+							  opit_event_date			  			
+                            , opit_event_type 					
+                            , opit_user_name			 			
+							  
+                            , old_opit_online_purchase_id_fk		
+                            , old_opit_product_id_fk				
+                            , old_opit_quantity					
+                             
+                            , new_opit_online_purchase_id_fk		
+                            , new_opit_product_id_fk				
+                            , new_opit_quantity				
+		)
+		VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.opit_online_purchase_id_fk	
+                            , :OLD.opit_product_id_fk				
+                            , :OLD.opit_quantity					
+							
+							, :NEW.opit_online_purchase_id_fk	
+							, :NEW.opit_product_id_fk			
+							, :NEW.opit_quantity	
+		)
+		;
+	ELSE
+		INSERT INTO ARCHIVE_ONLINE_PURCHASED_ITEMS_TAB
+		(           
+							  opit_event_date			  			
+                            , opit_event_type 					
+                            , opit_user_name			 			
+							  
+                            , old_opit_online_purchase_id_fk		
+                            , old_opit_product_id_fk				
+                            , old_opit_quantity					
+                             
+                            , new_opit_online_purchase_id_fk		
+                            , new_opit_product_id_fk				
+                            , new_opit_quantity				
+		)
+		VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+                            , :OLD.opit_online_purchase_id_fk	
+                            , :OLD.opit_product_id_fk				
+                            , :OLD.opit_quantity	
+							
+							, NULL		
+							, NULL				
+							, NULL		
+		)
+		;
+	END IF;
+END;

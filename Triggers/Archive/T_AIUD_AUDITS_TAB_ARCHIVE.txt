@@ -1,0 +1,162 @@
+CREATE OR REPLACE TRIGGER T_AIUD_AUDITS_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON AUDITS_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+
+
+  IF inserting THEN
+    INSERT INTO ARCHIVE_AUDITS_TAB
+		(           
+							  audt_event_date			  			
+                            , audt_event_type 				
+                            , audt_user_name			 		
+							  
+                            , old_audt_audit_id_pk			
+                            , old_audt_title					
+                            , old_audt_department_code_fk		
+                            , old_audt_date_begin				
+                            , old_audt_status_enum			
+                            , old_audt_description			
+                            , old_audt_inspector_code			
+                            , old_audt_date_finish			
+							  
+                            , new_audt_audit_id_pk			
+                            , new_audt_title					
+                            , new_audt_department_code_fk		
+                            , new_audt_date_begin				
+                            , new_audt_status_enum			
+                            , new_audt_description			
+                            , new_audt_inspector_code			
+                            , new_audt_date_finish			
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+                            , NULL		
+                            , NULL
+                            , NULL		
+                            , NULL
+							
+							, :NEW.audt_audit_id_pk			
+							, :NEW.audt_title				
+							, :NEW.audt_department_code_fk	
+							, :NEW.audt_date_begin			
+							, :NEW.audt_status_enum			
+							, :NEW.audt_description			
+							, :NEW.audt_inspector_code		
+							, :NEW.audt_date_finish			
+		)
+		;
+ ELSIF updating THEN
+ INSERT INTO ARCHIVE_AUDITS_TAB
+        (           
+							  audt_event_date			  		
+                            , audt_event_type 				
+                            , audt_user_name			 	
+							  
+                            , old_audt_audit_id_pk			
+                            , old_audt_title				
+                            , old_audt_department_code_fk	
+                            , old_audt_date_begin			
+                            , old_audt_status_enum			
+                            , old_audt_description			
+                            , old_audt_inspector_code		
+                            , old_audt_date_finish			
+							  
+                            , new_audt_audit_id_pk			
+                            , new_audt_title				
+                            , new_audt_department_code_fk	
+                            , new_audt_date_begin			
+                            , new_audt_status_enum			
+                            , new_audt_description			
+                            , new_audt_inspector_code		
+                            , new_audt_date_finish			
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.audt_audit_id_pk			
+                            , :OLD.audt_title					
+                            , :OLD.audt_department_code_fk		
+                            , :OLD.audt_date_begin			
+                            , :OLD.audt_status_enum				
+                            , :OLD.audt_description			
+                            , :OLD.audt_inspector_code		
+                            , :OLD.audt_date_finish			
+							
+							, :NEW.audt_audit_id_pk			
+							, :NEW.audt_title					
+							, :NEW.audt_department_code_fk		
+							, :NEW.audt_date_begin			
+							, :NEW.audt_status_enum				
+							, :NEW.audt_description			
+							, :NEW.audt_inspector_code		
+							, :NEW.audt_date_finish			
+		)
+		;
+ ELSE
+  INSERT INTO ARCHIVE_AUDITS_TAB
+		(           
+							  audt_event_date			  			
+                            , audt_event_type 				
+                            , audt_user_name			 		
+							  
+                            , old_audt_audit_id_pk			
+                            , old_audt_title					
+                            , old_audt_department_code_fk		
+                            , old_audt_date_begin				
+                            , old_audt_status_enum			
+                            , old_audt_description			
+                            , old_audt_inspector_code			
+                            , old_audt_date_finish			
+							  
+                            , new_audt_audit_id_pk			
+                            , new_audt_title					
+                            , new_audt_department_code_fk		
+                            , new_audt_date_begin				
+                            , new_audt_status_enum			
+                            , new_audt_description			
+                            , new_audt_inspector_code			
+                            , new_audt_date_finish			
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+                            , :OLD.audt_audit_id_pk			
+                            , :OLD.audt_title				
+                            , :OLD.audt_department_code_fk	
+                            , :OLD.audt_date_begin			
+                            , :OLD.audt_status_enum			
+                            , :OLD.audt_description			
+                            , :OLD.audt_inspector_code		
+                            , :OLD.audt_date_finish			
+							
+							, NULL		
+							, NULL				
+							, NULL		
+							, NULL	
+							, NULL		
+							, NULL
+							, NULL		
+							, NULL
+		)
+		;
+ END IF;
+END;

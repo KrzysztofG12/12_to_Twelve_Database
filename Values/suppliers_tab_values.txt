@@ -1,0 +1,16 @@
+supr_supplier_name,supr_transport_type_code_fk,supr_phone_number
+FreshGroceries,TRK,447712345678
+GreenHarvest,PUP,447798765432
+HealthyBites,VAN,447712345611
+OrganicEats,CAR,447712345622
+FarmToTable,TRK,447712345633
+NaturesPick,PUP,447712345644
+LocalHarvest,CAR,447712345655
+GardenFresh,VAN,447712345666
+EcoFarms,TRK,447712345677
+SunriseProduce,PUP,447712345688
+FarmFresh,CAR,447712345699
+OrganicGarden,VAN,447712345700
+GreenFields,TRK,447712345711
+HappyHarvest,PUP,447712345722
+PureProduce,CAR,447712345733

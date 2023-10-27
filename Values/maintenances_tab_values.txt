@@ -1,0 +1,16 @@
+main_title,main_department_code_fk,main_contractor,main_date_begin,main_date_finish,main_status_enum,main_description
+Store HVAC Maintenance,CS001,AC Solutions,2023-05-15,2023-05-17,Finished,Performed routine maintenance on the store's HVAC system.
+Shelf Installation,SM001,StoreFix,2023-06-20,2023-06-25,Finished,Installed new shelves to accommodate increased inventory.
+Exterior Painting,SA002,ProPainters,2023-07-10,2023-07-14,Finished,Repainted the store's exterior to maintain a fresh appearance.
+Security System Upgrade,SC003,SecureTech,2023-08-05,2023-08-10,Finished,Upgraded the security system with advanced features.
+Office Space Renovation,OF001,RemodelPro,2023-09-15,2023-09-25,Finished,Renovated office spaces to create a more productive environment.
+Roof Repairs,CS001,RoofMaster,2023-10-05,2023-10-07,Finished,Repaired roof leaks and ensured structural integrity.
+Store Lighting Maintenance,SM001,LightingSolutions,2023-11-10,2023-11-12,Finished,Conducted maintenance on store lighting fixtures.
+Parking Lot Resurfacing,SA002,PaveItUp,2023-12-01,2023-12-05,Finished,Resurfaced the parking lot for safety and aesthetics.
+Surveillance Camera Installation,SC003,SecureTech,2024-01-15,2024-01-20,Finished,Installed additional surveillance cameras for enhanced security.
+Office Furniture Upgrade,OF001,OfficeElegance,2024-02-10,2024-02-15,Finished,Upgraded office furniture for comfort and functionality.
+Store Signage Replacement,CS001,SignCraft,2024-03-05,2024-03-07,Finished,Replaced outdated store signage for better visibility.
+Cooling System Maintenance,SM001,CoolTech,2024-04-10,2024-04-12,Finished,Performed maintenance on cooling systems to prevent downtime.
+Energy-Efficient Lighting Installation,SA002,EcoLight,2024-05-20,2024-05-22,Finished,Installed energy-efficient lighting for cost savings.
+Data Center Expansion,SC003,DataTech,2024-06-15,2024-06-20,Finished,Expanded the data center infrastructure to accommodate growth.
+Office Space Remodeling,OF001,OfficeRevive,2024-07-05,2024-07-15,Finished,Remodeled office spaces to improve functionality and aesthetics.

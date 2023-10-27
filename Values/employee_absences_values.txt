@@ -1,0 +1,32 @@
+emab_employee_id_fk,emab_date,emab_reason,emab_description
+54,2022-01-05,Vacation,Annual leave for a much-needed break
+55,2022-02-12,Medical,Flu recovery
+58,2022-03-20,Vacation,Family trip
+59,2022-04-08,Medical,Sick leave due to fever
+62,2022-05-15,Personal,Attending a wedding
+64,2022-06-22,Vacation,Summer vacation
+66,2022-07-10,Medical,Doctor's appointment
+68,2022-08-18,Personal,Family event
+70,2022-09-25,Medical,Recovery from surgery
+73,2022-10-30,Vacation,Holiday travel
+75,2022-11-08,Personal,Attending a conference
+77,2022-12-15,Medical,Sick leave due to a cold
+80,2023-01-10,Vacation,Annual leave for rest and relaxation
+82,2023-02-17,Personal,Parent-teacher meeting
+84,2023-03-25,Medical,Injured ankle
+87,2023-04-05,Personal,Family vacation
+89,2023-05-12,Medical,Stomach flu
+91,2023-06-20,Vacation,Summer break
+94,2023-07-08,Medical,Allergy symptoms
+96,2023-08-15,Personal,Moving to a new home
+98,2023-09-22,Vacation,Weekend getaway
+100,2023-10-30,Medical,Back pain
+54,2023-11-05,Vacation,Exploring a new city
+55,2023-12-12,Personal,Attending a friend's wedding
+58,2024-01-20,Medical,Sick leave due to the flu
+59,2024-02-28,Vacation,Annual leave for a vacation
+62,2024-03-05,Personal,Family gathering
+64,2024-04-12,Medical,Recovery from surgery
+66,2024-05-20,Vacation,Beach holiday
+68,2024-06-28,Personal,Attending a graduation ceremony
+70,2024-07-06,Medical,Injured wrist

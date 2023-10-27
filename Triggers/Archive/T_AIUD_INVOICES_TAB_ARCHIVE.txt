@@ -1,0 +1,162 @@
+CREATE OR REPLACE TRIGGER T_AIUD_INVOICES_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON INVOICES_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+
+
+  IF inserting THEN
+    INSERT INTO ARCHIVE_INVOICES_TAB
+		(           
+							  invo_event_date			  		
+                            , invo_event_type 			
+                            , invo_user_name			 	
+							  
+                            , old_invo_invoice_id_pk		
+                            , old_invo_customer_id_fk		
+                            , old_invo_date				
+                            , old_invo_net_value			
+                            , old_invo_gross_value		
+                            , old_invo_tax_rate_pct		
+                            , old_invo_currency_code		
+                            , old_invo_details			
+							  
+                            , new_invo_invoice_id_pk		
+                            , new_invo_customer_id_fk		
+                            , new_invo_date				
+                            , new_invo_net_value			
+                            , new_invo_gross_value		
+                            , new_invo_tax_rate_pct		
+                            , new_invo_currency_code		
+                            , new_invo_details			
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+                            , NULL		
+                            , NULL
+                            , NULL		
+                            , NULL
+							
+							, :NEW.invo_invoice_id_pk		
+							, :NEW.invo_customer_id_fk			
+							, :NEW.invo_date					
+							, :NEW.invo_net_value			
+							, :NEW.invo_gross_value			
+							, :NEW.invo_tax_rate_pct		
+							, :NEW.invo_currency_code		
+							, :NEW.invo_details			
+		)
+		;
+ ELSIF updating THEN
+ INSERT INTO ARCHIVE_INVOICES_TAB
+        (           
+							  invo_event_date			  		
+                            , invo_event_type 			
+                            , invo_user_name			 	
+							  
+                            , old_invo_invoice_id_pk		
+                            , old_invo_customer_id_fk		
+                            , old_invo_date				
+                            , old_invo_net_value			
+                            , old_invo_gross_value		
+                            , old_invo_tax_rate_pct		
+                            , old_invo_currency_code		
+                            , old_invo_details			
+							  
+                            , new_invo_invoice_id_pk		
+                            , new_invo_customer_id_fk		
+                            , new_invo_date				
+                            , new_invo_net_value			
+                            , new_invo_gross_value		
+                            , new_invo_tax_rate_pct		
+                            , new_invo_currency_code		
+                            , new_invo_details			
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.invo_invoice_id_pk		
+                            , :OLD.invo_customer_id_fk		
+                            , :OLD.invo_date				
+                            , :OLD.invo_net_value			
+                            , :OLD.invo_gross_value		
+                            , :OLD.invo_tax_rate_pct		
+                            , :OLD.invo_currency_code		
+                            , :OLD.invo_details			
+							
+							, :NEW.invo_invoice_id_pk		
+							, :NEW.invo_customer_id_fk		
+							, :NEW.invo_date				
+							, :NEW.invo_net_value			
+							, :NEW.invo_gross_value		
+							, :NEW.invo_tax_rate_pct		
+							, :NEW.invo_currency_code		
+							, :NEW.invo_details			
+		)
+		;
+ ELSE
+  INSERT INTO ARCHIVE_INVOICES_TAB
+		(           
+							  invo_event_date			  		
+                            , invo_event_type 			
+                            , invo_user_name			 	
+							  
+                            , old_invo_invoice_id_pk		
+                            , old_invo_customer_id_fk		
+                            , old_invo_date				
+                            , old_invo_net_value			
+                            , old_invo_gross_value		
+                            , old_invo_tax_rate_pct		
+                            , old_invo_currency_code		
+                            , old_invo_details			
+							  
+                            , new_invo_invoice_id_pk		
+                            , new_invo_customer_id_fk		
+                            , new_invo_date				
+                            , new_invo_net_value			
+                            , new_invo_gross_value		
+                            , new_invo_tax_rate_pct		
+                            , new_invo_currency_code		
+                            , new_invo_details			
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+                            , :OLD.invo_invoice_id_pk		
+                            , :OLD.invo_customer_id_fk			
+                            , :OLD.invo_date					
+                            , :OLD.invo_net_value			
+                            , :OLD.invo_gross_value			
+                            , :OLD.invo_tax_rate_pct		
+                            , :OLD.invo_currency_code		
+                            , :OLD.invo_details			
+							
+							, NULL		
+							, NULL				
+							, NULL		
+							, NULL	
+							, NULL		
+							, NULL
+							, NULL		
+							, NULL
+		)
+		;
+ END IF;
+END;

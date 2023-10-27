@@ -1,0 +1,138 @@
+CREATE OR REPLACE TRIGGER T_AIUD_EMPLOYEE_ABSENCES_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON EMPLOYEE_ABSENCES_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+
+
+  IF inserting THEN
+    INSERT INTO ARCHIVE_EMPLOYEE_ABSENCES_TAB
+		(           
+							  emab_event_date					
+                            , emab_event_type 			
+                            , emab_user_name	
+							
+                            , old_emab_absence_id_pk		
+                            , old_emab_employee_id_fk		
+                            , old_emab_date_from			
+                            , old_emab_date_to			
+                            , old_emab_reason				
+                            , old_emab_description	
+							
+                            , new_emab_absence_id_pk		
+							, new_emab_employee_id_fk		
+                            , new_emab_date_from			
+                            , new_emab_date_to			
+                            , new_emab_reason				
+                            , new_emab_description		                          
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+                            , NULL		
+                            , NULL
+							
+							, :NEW.emab_absence_id_pk		
+							, :NEW.emab_employee_id_fk		
+							, :NEW.emab_date_from			
+							, :NEW.emab_date_to			
+							, :NEW.emab_reason				
+							, :NEW.emab_description		  
+		)
+		;
+ ELSIF updating THEN
+ INSERT INTO ARCHIVE_EMPLOYEE_ABSENCES_TAB
+        (           
+							  emab_event_date			
+                            , emab_event_type 			
+                            , emab_user_name	
+							
+                            , old_emab_absence_id_pk	
+                            , old_emab_employee_id_fk	
+                            , old_emab_date_from		
+                            , old_emab_date_to			
+                            , old_emab_reason			
+                            , old_emab_description	
+                            
+                            , new_emab_absence_id_pk	
+							, new_emab_employee_id_fk	
+							, new_emab_date_from		
+							, new_emab_date_to			
+							, new_emab_reason			
+							, new_emab_description		 							                         
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.emab_absence_id_pk	
+                            , :OLD.emab_employee_id_fk	
+                            , :OLD.emab_date_from		
+                            , :OLD.emab_date_to			
+                            , :OLD.emab_reason			
+                            , :OLD.emab_description		 
+							
+							, :NEW.emab_absence_id_pk	
+							, :NEW.emab_employee_id_fk	
+							, :NEW.emab_date_from		
+							, :NEW.emab_date_to			
+							, :NEW.emab_reason			
+							, :NEW.emab_description		 							
+		)
+		;
+ ELSE
+  INSERT INTO ARCHIVE_EMPLOYEE_ABSENCES_TAB
+		(           
+							  emab_event_date			
+                            , emab_event_type 			
+                            , emab_user_name	
+							
+                            , old_emab_absence_id_pk	
+                            , old_emab_employee_id_fk	
+                            , old_emab_date_from		
+                            , old_emab_date_to			
+                            , old_emab_reason			
+                            , old_emab_description	
+                            
+                            , new_emab_absence_id_pk	
+							, new_emab_employee_id_fk	
+                            , new_emab_date_from		
+                            , new_emab_date_to			
+                            , new_emab_reason			
+                            , new_emab_description		                            
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+                            , :OLD.emab_absence_id_pk	
+                            , :OLD.emab_employee_id_fk	
+                            , :OLD.emab_date_from		
+                            , :OLD.emab_date_to			
+                            , :OLD.emab_reason			
+                            , :OLD.emab_description		 
+                            			
+							, NULL		
+							, NULL	
+							, NULL		
+							, NULL
+							, NULL		
+							, NULL
+		)
+		;
+ END IF;
+END;

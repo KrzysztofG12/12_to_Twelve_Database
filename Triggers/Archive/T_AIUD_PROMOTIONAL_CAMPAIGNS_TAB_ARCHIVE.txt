@@ -1,0 +1,157 @@
+CREATE OR REPLACE TRIGGER T_AIUD_PROMOTIONAL_CAMPAIGNS_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON PROMOTIONAL_CAMPAIGNS_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+
+
+  IF inserting THEN
+    INSERT INTO ARCHIVE_PROMOTIONAL_CAMPAIGNS_TAB
+		(           
+							  prmo_event_date			  			
+                            , prmo_event_type 				
+                            , prmo_user_name			 		
+							  
+                            , old_prmo_promo_id_pk			
+                            , old_prmo_title						
+                            , old_prmo_department_code_fk			
+                            , old_prmo_begin_date				
+                            , old_prmo_finish_date				
+                            , old_prmo_status_enum			
+                            , old_prmo_description			
+                            	
+							, new_prmo_promo_id_pk			
+                            , new_prmo_title					
+                            , new_prmo_department_code_fk			
+                            , new_prmo_begin_date					
+                            , new_prmo_finish_date			
+                            , new_prmo_status_enum				
+                            , new_prmo_description			
+                             
+                            	
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+                            , NULL		
+                            , NULL
+                            , NULL		
+							
+							, :NEW.prmo_promo_id_pk			
+							, :NEW.prmo_title					
+							, :NEW.prmo_department_code_fk		
+							, :NEW.prmo_begin_date				
+							, :NEW.prmo_finish_date			
+							, :NEW.prmo_status_enum				
+							, :NEW.prmo_description			
+		)
+		;
+ ELSIF updating THEN
+ INSERT INTO ARCHIVE_PROMOTIONAL_CAMPAIGNS_TAB
+        (           
+							  prmo_event_date			  		
+                            , prmo_event_type 				
+                            , prmo_user_name			 		
+							  
+                            , old_prmo_promo_id_pk			
+                            , old_prmo_title					
+                            , old_prmo_department_code_fk		
+                            , old_prmo_begin_date				
+                            , old_prmo_finish_date				
+                            , old_prmo_status_enum			
+                            , old_prmo_description			
+                            	
+							, new_prmo_promo_id_pk			
+                            , new_prmo_title					
+                            , new_prmo_department_code_fk		
+                            , new_prmo_begin_date				
+                            , new_prmo_finish_date			
+                            , new_prmo_status_enum				
+                            , new_prmo_description			
+                            
+                            
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.prmo_promo_id_pk			
+                            , :OLD.prmo_title						
+                            , :OLD.prmo_department_code_fk			
+                            , :OLD.prmo_begin_date				
+                            , :OLD.prmo_finish_date					
+                            , :OLD.prmo_status_enum				
+                            , :OLD.prmo_description			
+							
+							, :NEW.prmo_promo_id_pk			
+							, :NEW.prmo_title						
+							, :NEW.prmo_department_code_fk			
+							, :NEW.prmo_begin_date				
+							, :NEW.prmo_finish_date				
+							, :NEW.prmo_status_enum				
+							, :NEW.prmo_description			
+							
+		)
+		;
+ ELSE
+  INSERT INTO ARCHIVE_PROMOTIONAL_CAMPAIGNS_TAB
+		(           
+							  prmo_event_date			  			
+                            , prmo_event_type 				
+                            , prmo_user_name			 		
+							  
+                            , old_prmo_promo_id_pk			
+                            , old_prmo_title					
+                            , old_prmo_department_code_fk		
+                            , old_prmo_begin_date				
+                            , old_prmo_finish_date				
+                            , old_prmo_status_enum			
+                            , old_prmo_description			
+                            	
+							, new_prmo_promo_id_pk			
+                            , new_prmo_title					
+                            , new_prmo_department_code_fk		
+                            , new_prmo_begin_date				
+                            , new_prmo_finish_date			
+                            , new_prmo_status_enum				
+                            , new_prmo_description			
+                            
+                            
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+                            , :OLD.prmo_promo_id_pk			
+                            , :OLD.prmo_title					
+                            , :OLD.prmo_department_code_fk		
+                            , :OLD.prmo_begin_date				
+                            , :OLD.prmo_finish_date				
+                            , :OLD.prmo_status_enum				
+                            , :OLD.prmo_description			
+	
+							, NULL				
+							, NULL		
+							, NULL	
+							, NULL		
+							, NULL
+							, NULL		
+							, NULL
+		)
+		;
+ END IF;
+END;

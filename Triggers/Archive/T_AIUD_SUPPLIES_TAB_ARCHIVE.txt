@@ -1,0 +1,175 @@
+CREATE OR REPLACE TRIGGER T_AIUD_SUPPLIES_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON SUPPLIES_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+
+
+  IF inserting THEN
+    INSERT INTO ARCHIVE_SUPPLIES_TAB
+		(           
+							  supl_event_date			  			
+                            , supl_event_type 				
+                            , supl_user_name			 		
+							  
+                            , old_supl_supply_id_pk			
+                            , old_supl_supplier_id_fk			
+                            , old_supl_product_id_fk			
+                            , old_supl_required_concession	
+                            , old_supl_weight_sum_kg			
+                            , old_supl_product_quantity		
+                            , old_supl_date					
+                            , old_supl_department_code_fk		
+							, old_supl_status_enum			
+                             
+                            , new_supl_supply_id_pk			
+                            , new_supl_supplier_id_fk			
+                            , new_supl_product_id_fk			
+                            , new_supl_required_concession	
+                            , new_supl_weight_sum_kg			
+                            , new_supl_product_quantity		
+                            , new_supl_date					
+							, new_supl_department_code_fk		
+							, new_supl_status_enum										
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+                            , NULL		
+                            , NULL
+                            , NULL		
+                            , NULL
+							, NULL
+							
+							, :NEW.supl_supply_id_pk			
+							, :NEW.supl_supplier_id_fk			
+							, :NEW.supl_product_id_fk			
+							, :NEW.supl_required_concession	
+							, :NEW.supl_weight_sum_kg			
+							, :NEW.supl_product_quantity		
+							, :NEW.supl_date					
+							, :NEW.supl_department_code_fk		
+							, :NEW.supl_status_enum										
+		)
+		;
+ ELSIF updating THEN
+ INSERT INTO ARCHIVE_SUPPLIES_TAB
+        (           
+							  supl_event_date			  			
+                            , supl_event_type 				
+                            , supl_user_name			 		
+							  
+                            , old_supl_supply_id_pk			
+                            , old_supl_supplier_id_fk			
+                            , old_supl_product_id_fk			
+                            , old_supl_required_concession	
+                            , old_supl_weight_sum_kg			
+                            , old_supl_product_quantity		
+                            , old_supl_date					
+                            , old_supl_department_code_fk		
+							, old_supl_status_enum			
+                             
+                            , new_supl_supply_id_pk			
+                            , new_supl_supplier_id_fk			
+                            , new_supl_product_id_fk			
+                            , new_supl_required_concession	
+                            , new_supl_weight_sum_kg			
+                            , new_supl_product_quantity		
+                            , new_supl_date					
+							, new_supl_department_code_fk		
+							, new_supl_status_enum			
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.supl_supply_id_pk			
+                            , :OLD.supl_supplier_id_fk				
+                            , :OLD.supl_product_id_fk				
+                            , :OLD.supl_required_concession	
+                            , :OLD.supl_weight_sum_kg				
+                            , :OLD.supl_product_quantity		
+                            , :OLD.supl_date					
+                            , :OLD.supl_department_code_fk		
+							, :OLD.supl_status_enum			
+							
+							
+							, :NEW.supl_supply_id_pk			
+							, :NEW.supl_supplier_id_fk			
+							, :NEW.supl_product_id_fk			
+							, :NEW.supl_required_concession	
+							, :NEW.supl_weight_sum_kg			
+							, :NEW.supl_product_quantity		
+							, :NEW.supl_date					
+							, :NEW.supl_department_code_fk		
+							, :NEW.supl_status_enum			
+		)
+		;
+ ELSE
+  INSERT INTO ARCHIVE_SUPPLIES_TAB
+		(           
+							  supl_event_date			  			
+                            , supl_event_type 				
+                            , supl_user_name			 		
+							  
+                            , old_supl_supply_id_pk			
+                            , old_supl_supplier_id_fk			
+                            , old_supl_product_id_fk			
+                            , old_supl_required_concession	
+                            , old_supl_weight_sum_kg			
+                            , old_supl_product_quantity		
+                            , old_supl_date					
+                            , old_supl_department_code_fk		
+							, old_supl_status_enum			
+                             
+                            , new_supl_supply_id_pk			
+                            , new_supl_supplier_id_fk			
+                            , new_supl_product_id_fk			
+                            , new_supl_required_concession	
+                            , new_supl_weight_sum_kg			
+                            , new_supl_product_quantity		
+                            , new_supl_date					
+							, new_supl_department_code_fk		
+							, new_supl_status_enum			
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+							, :OLD.supl_supply_id_pk			
+                            , :OLD.supl_supplier_id_fk				
+                            , :OLD.supl_product_id_fk				
+                            , :OLD.supl_required_concession	
+                            , :OLD.supl_weight_sum_kg				
+                            , :OLD.supl_product_quantity		
+                            , :OLD.supl_date					
+                            , :OLD.supl_department_code_fk		
+							, :OLD.supl_status_enum		
+							
+							, NULL		
+							, NULL				
+							, NULL		
+							, NULL	
+							, NULL		
+							, NULL
+							, NULL		
+							, NULL
+							, NULL
+		)
+		;
+ END IF;
+END;

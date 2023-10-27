@@ -1,0 +1,62 @@
+deeq_department_code_fk,deeq_name,deeq_type,deeq_quantity,deeq_date_purchase,deeq_description
+OF001,Laptop,Computer,20,2022-01-15,A set of Dell laptops for office use
+OF001,Desk,Office Furniture,15,2022-02-10,Wooden desks for employees
+OF001,Chair,Office Furniture,30,2022-02-10,Ergonomic office chairs
+OF001,Printer,Peripheral,5,2022-03-05,HP LaserJet printers for office printing
+OF001,Scanner,Peripheral,3,2022-03-10,Epson document scanners
+OF002,Laptop,Computer,18,2022-01-20,Lenovo laptops for office work
+OF002,Desk,Office Furniture,12,2022-02-15,Steelcase office desks
+OF002,Chair,Office Furniture,25,2022-02-15,Mesh-back office chairs
+OF002,Printer,Peripheral,6,2022-03-08,Canon color printers for office tasks
+OF002,Scanner,Peripheral,4,2022-03-12,Fujitsu high-speed scanners
+CS001,Cash Register,Point of Sale,10,2021-12-20,NCR cash registers for the checkout counter
+CS001,Shopping Cart,Store Equipment,50,2021-11-15,Shopping carts for customers
+CS001,Shelf,Store Equipment,100,2022-01-05,Display shelves for merchandise
+CS001,Barcode Scanner,Point of Sale,8,2022-02-01,Honeywell barcode scanners
+CS001,Security Camera,Security,16,2022-02-10,Security cameras for surveillance
+SM001,Cash Register,Point of Sale,8,2021-12-15,POS cash registers for smooth transactions
+SM001,Shopping Cart,Store Equipment,40,2021-11-10,Durable shopping carts for customers
+SM001,Shelf,Store Equipment,80,2022-01-02,Adjustable display shelves for products
+SM001,Barcode Scanner,Point of Sale,6,2022-02-05,Zebra handheld barcode scanners
+SM001,Security Camera,Security,12,2022-02-12,High-resolution security cameras
+SA002,Cash Register,Point of Sale,6,2021-12-10,Electronic cash registers for efficient checkout
+SA002,Shopping Cart,Store Equipment,35,2021-11-05,Heavy-duty shopping carts for shoppers
+SA002,Shelf,Store Equipment,70,2022-01-01,Steel store shelves for organized displays
+SA002,Barcode Scanner,Point of Sale,7,2022-02-08,Datalogic barcode scanners
+SA002,Security Camera,Security,14,2022-02-15,Outdoor security cameras for safety
+SC003,Cash Register,Point of Sale,7,2021-12-05,Cash registers with touch screen displays
+SC003,Shopping Cart,Store Equipment,45,2021-11-01,Shopping carts with child seats
+SC003,Shelf,Store Equipment,90,2022-01-10,Adjustable metal store shelves
+SC003,Barcode Scanner,Point of Sale,5,2022-02-03,Symbol handheld barcode scanners
+SC003,Security Camera,Security,10,2022-02-18,Indoor and outdoor security cameras
+OF001,Monitor,Computer,25,2022-03-20,Dell computer monitors for office workstations
+OF001,Keyboard,Computer Accessories,35,2022-04-10,Logitech wireless keyboards
+OF001,Mouse,Computer Accessories,40,2022-04-15,Microsoft optical mice
+OF001,Telephone,Communication,10,2022-05-05,Polycom conference phones
+OF001,Whiteboard,Office Supplies,8,2022-05-15,Wall-mounted whiteboards for meetings
+OF002,Monitor,Computer,20,2022-03-25,HP computer monitors for office use
+OF002,Keyboard,Computer Accessories,30,2022-04-15,Corsair mechanical keyboards
+OF002,Mouse,Computer Accessories,35,2022-04-20,Logitech wireless mice
+OF002,Telephone,Communication,12,2022-05-10,Avaya desk phones
+OF002,Whiteboard,Office Supplies,10,2022-05-20,Interactive whiteboards for presentations
+CS001,Cart,Store Equipment,60,2022-04-01,Shopping carts with cup holders
+CS001,Cash Counter,Point of Sale,3,2022-05-02,Checkout counters with cash drawers
+CS001,Signage,Store Supplies,30,2022-05-20,Store signage for promotions
+CS001,CCTV System,Security,8,2022-06-05,Advanced CCTV surveillance system
+CS001,Cash Safe,Security,5,2022-06-10,Heavy-duty cash safes for storing money
+SM001,Cart,Store Equipment,50,2022-04-05,Durable store carts for customers
+SM001,Cash Counter,Point of Sale,4,2022-05-07,Point of sale counters with registers
+SM001,Signage,Store Supplies,25,2022-05-25,Colorful store signs for advertisements
+SM001,CCTV System,Security,10,2022-06-08,HD CCTV cameras for store security
+SM001,Cash Safe,Security,6,2022-06-15,Secure safes for storing cash
+SA002,Cart,Store Equipment,45,2022-04-10,Store carts with ergonomic handles
+SA002,Cash Counter,Point of Sale,5,2022-05-12,Point of sale counters with touch screens
+SA002,Signage,Store Supplies,20,2022-05-30,Custom store signs for branding
+SA002,CCTV System,Security,12,2022-06-12,IP CCTV cameras for surveillance
+SA002,Cash Safe,Security,7,2022-06-20,Fireproof safes for cash storage
+SC003,Cart,Store Equipment,40,2022-04-15,Lightweight store carts with swivel wheels
+SC003,Cash Counter,Point of Sale,6,2022-05-20,Checkout counters with LED displays
+SC003,Signage,Store Supplies,15,2022-06-02,Acrylic store signs for visibility
+SC003,CCTV System,Security,14,2022-06-15,Wireless CCTV cameras for remote monitoring
+SC003,Cash Safe,Security,8,2022-06-25,High-security cash safes
+

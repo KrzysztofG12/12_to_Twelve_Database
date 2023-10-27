@@ -1,0 +1,102 @@
+CREATE OR REPLACE TRIGGER T_AIUD_PRODUCT_STOCK_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON PRODUCT_STOCK_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+
+
+	IF inserting THEN
+		INSERT INTO ARCHIVE_PRODUCT_STOCK_TAB
+		(           
+							  prst_event_date			  	
+                            , prst_event_type 			
+                            , prst_user_name			 	
+							  
+                            , old_prst_product_id_fk		
+                            , old_prst_department_code_fk	
+                            , old_prst_number				
+                             
+                            , new_prst_product_id_fk		
+                            , new_prst_department_code_fk	
+                            , new_prst_number				
+		)
+		VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+							
+							, :NEW.prst_product_id_fk		
+							, :NEW.prst_department_code_fk	
+							, :NEW.prst_number				
+		)
+		;
+	ELSIF updating THEN
+		INSERT INTO ARCHIVE_PRODUCT_STOCK_TAB
+        (           
+							  prst_event_date			  	
+                            , prst_event_type 			
+                            , prst_user_name			 	
+							  
+                            , old_prst_product_id_fk		
+                            , old_prst_department_code_fk	
+                            , old_prst_number				
+                             
+                            , new_prst_product_id_fk		
+                            , new_prst_department_code_fk	
+                            , new_prst_number	
+		)
+		VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.prst_product_id_fk		
+                            , :OLD.prst_department_code_fk	
+                            , :OLD.prst_number				
+							
+							, :NEW.prst_product_id_fk		
+							, :NEW.prst_department_code_fk	
+							, :NEW.prst_number				
+		)
+		;
+	ELSE
+		INSERT INTO ARCHIVE_PRODUCT_STOCK_TAB
+		(           
+							  prst_event_date			  	
+                            , prst_event_type 			
+                            , prst_user_name			 	
+							  
+                            , old_prst_product_id_fk		
+                            , old_prst_department_code_fk	
+                            , old_prst_number				
+                             
+                            , new_prst_product_id_fk		
+                            , new_prst_department_code_fk	
+                            , new_prst_number	
+		)
+		VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+                            , :OLD.prst_product_id_fk		
+                            , :OLD.prst_department_code_fk	
+                            , :OLD.prst_number	
+							
+							, NULL		
+							, NULL				
+							, NULL		
+		)
+		;
+	END IF;
+END;

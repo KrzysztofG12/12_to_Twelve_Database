@@ -1,0 +1,114 @@
+CREATE OR REPLACE TRIGGER T_AIUD_DEPARTMENT_ADDRESSES_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON DEPARTMENT_ADDRESSES_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+
+
+  IF inserting THEN
+    INSERT INTO ARCHIVE_DEPARTMENT_ADDRESSES_TAB
+		(           
+							  dead_event_date			  	
+                            , dead_event_type 			
+                            , dead_user_name			 	
+							  
+                            , old_dead_department_code_fk	
+                            , old_dead_address_id_fk		
+                            , old_dead_date_address_from	
+                            , old_dead_date_address_to	
+                             
+                            , new_dead_department_code_fk	
+                            , new_dead_address_id_fk		
+                            , new_dead_date_address_from	
+							, new_dead_date_address_to	                        
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+							
+							, :NEW.dead_department_code_fk	
+							, :NEW.dead_address_id_fk		
+							, :NEW.dead_date_address_from	
+							, :NEW.dead_date_address_to	
+		)
+		;
+ ELSIF updating THEN
+ INSERT INTO ARCHIVE_DEPARTMENT_ADDRESSES_TAB
+        (           
+							  dead_event_date			  	
+                            , dead_event_type 			
+                            , dead_user_name			 	
+							  
+                            , old_dead_department_code_fk	
+                            , old_dead_address_id_fk		
+                            , old_dead_date_address_from	
+                            , old_dead_date_address_to	
+                             
+                            , new_dead_department_code_fk	
+                            , new_dead_address_id_fk		
+                            , new_dead_date_address_from	
+							, new_dead_date_address_to	 
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.dead_department_code_fk	
+                            , :OLD.dead_address_id_fk			
+                            , :OLD.dead_date_address_from		
+                            , :OLD.dead_date_address_to	
+							
+							, :NEW.dead_department_code_fk	
+							, :NEW.dead_address_id_fk		
+							, :NEW.dead_date_address_from	
+							, :NEW.dead_date_address_to	
+		)
+		;
+ ELSE
+  INSERT INTO ARCHIVE_DEPARTMENT_ADDRESSES_TAB
+		(           
+							  dead_event_date			  	
+                            , dead_event_type 			
+                            , dead_user_name			 	
+							  
+                            , old_dead_department_code_fk	
+                            , old_dead_address_id_fk		
+                            , old_dead_date_address_from	
+                            , old_dead_date_address_to	
+                             
+                            , new_dead_department_code_fk	
+                            , new_dead_address_id_fk		
+                            , new_dead_date_address_from	
+							, new_dead_date_address_to	 
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+                            , :OLD.dead_department_code_fk	
+                            , :OLD.dead_address_id_fk			
+                            , :OLD.dead_date_address_from		
+                            , :OLD.dead_date_address_to	
+												
+							, NULL		
+							, NULL
+							, NULL		
+							, NULL
+		)
+		;
+ END IF;
+END;

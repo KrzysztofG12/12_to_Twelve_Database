@@ -1,0 +1,126 @@
+CREATE OR REPLACE TRIGGER T_AIUD_DEPARTMENTS_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON DEPARTMENTS_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+
+
+  IF inserting THEN
+    INSERT INTO ARCHIVE_DEPARTMENTS_TAB
+		(           
+							  depa_event_date						
+                            , depa_event_type 				
+                            , depa_user_name		
+							
+                            , old_depa_department_code_pk		
+                            , old_depa_department_name		
+                            , old_depa_department_type_enum	
+                            , old_depa_manager_id_fk			
+                            , old_depa_area_m2				
+                             
+                            , new_depa_department_code_pk		
+                            , new_depa_department_name		
+							, new_depa_department_type_enum	
+                            , new_depa_manager_id_fk			
+                            , new_depa_area_m2				
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+                            , NULL		
+							
+							, :NEW.depa_department_code_pk		
+							, :NEW.depa_department_name			
+							, :NEW.depa_department_type_enum		
+							, :NEW.depa_manager_id_fk			
+							, :NEW.depa_area_m2					
+		)
+		;
+ ELSIF updating THEN
+ INSERT INTO ARCHIVE_DEPARTMENTS_TAB
+        (           
+							  depa_event_date						
+                            , depa_event_type 				
+                            , depa_user_name		
+							
+                            , old_depa_department_code_pk		
+                            , old_depa_department_name		
+                            , old_depa_department_type_enum	
+                            , old_depa_manager_id_fk			
+                            , old_depa_area_m2				
+                             
+                            , new_depa_department_code_pk		
+                            , new_depa_department_name		
+							, new_depa_department_type_enum	
+                            , new_depa_manager_id_fk			
+                            , new_depa_area_m2				                          
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.depa_department_code_pk		
+                            , :OLD.depa_department_name				
+                            , :OLD.depa_department_type_enum			
+                            , :OLD.depa_manager_id_fk			
+                            , :OLD.depa_area_m2								
+							
+							, :NEW.depa_department_code_pk		
+							, :NEW.depa_department_name			
+							, :NEW.depa_department_type_enum		
+							, :NEW.depa_manager_id_fk			
+							, :NEW.depa_area_m2												
+		)
+		;
+ ELSE
+  INSERT INTO ARCHIVE_DEPARTMENTS_TAB
+		(           
+							  depa_event_date						
+                            , depa_event_type 				
+                            , depa_user_name		
+							
+                            , old_depa_department_code_pk		
+                            , old_depa_department_name		
+                            , old_depa_department_type_enum	
+                            , old_depa_manager_id_fk			
+                            , old_depa_area_m2				
+                             
+                            , new_depa_department_code_pk		
+                            , new_depa_department_name		
+							, new_depa_department_type_enum	
+                            , new_depa_manager_id_fk			
+                            , new_depa_area_m2				                          
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+							, :OLD.depa_department_code_pk		
+                            , :OLD.depa_department_name			
+                            , :OLD.depa_department_type_enum	
+                            , :OLD.depa_manager_id_fk			
+                            , :OLD.depa_area_m2					
+
+							, NULL		
+							, NULL				
+							, NULL		
+							, NULL	
+							, NULL		
+		)
+		;
+ END IF;
+END;

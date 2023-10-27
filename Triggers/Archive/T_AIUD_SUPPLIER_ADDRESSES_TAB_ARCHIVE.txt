@@ -1,0 +1,114 @@
+CREATE OR REPLACE TRIGGER T_AIUD_SUPPLIER_ADDRESSES_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON SUPPLIER_ADDRESSES_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+
+
+  IF inserting THEN
+    INSERT INTO ARCHIVE_SUPPLIER_ADDRESSES_TAB
+		(           
+							  suad_event_date			  	
+                            , suad_event_type 			
+                            , suad_user_name			 	
+							  
+                            , old_suad_SUPPLIER_id_fk	
+                            , old_suad_address_id_fk		
+                            , old_suad_date_address_from	
+                            , old_suad_date_address_to	
+                             
+                            , new_suad_SUPPLIER_id_fk	
+                            , new_suad_address_id_fk		
+                            , new_suad_date_address_from	
+							, new_suad_date_address_to	                        
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+							
+							, :NEW.suad_SUPPLIER_id_fk	
+							, :NEW.suad_address_id_fk		
+							, :NEW.suad_date_address_from	
+							, :NEW.suad_date_address_to	
+		)
+		;
+ ELSIF updating THEN
+ INSERT INTO ARCHIVE_SUPPLIER_ADDRESSES_TAB
+        (           
+							  suad_event_date			  	
+                            , suad_event_type 			
+                            , suad_user_name			 	
+							  
+                            , old_suad_SUPPLIER_id_fk	
+                            , old_suad_address_id_fk		
+                            , old_suad_date_address_from	
+                            , old_suad_date_address_to	
+                             
+                            , new_suad_SUPPLIER_id_fk	
+                            , new_suad_address_id_fk		
+                            , new_suad_date_address_from	
+							, new_suad_date_address_to	 
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.suad_SUPPLIER_id_fk	
+                            , :OLD.suad_address_id_fk			
+                            , :OLD.suad_date_address_from		
+                            , :OLD.suad_date_address_to	
+							
+							, :NEW.suad_SUPPLIER_id_fk	
+							, :NEW.suad_address_id_fk		
+							, :NEW.suad_date_address_from	
+							, :NEW.suad_date_address_to	
+		)
+		;
+ ELSE
+  INSERT INTO ARCHIVE_SUPPLIER_ADDRESSES_TAB
+		(           
+							  suad_event_date			  	
+                            , suad_event_type 			
+                            , suad_user_name			 	
+							  
+                            , old_suad_SUPPLIER_id_fk	
+                            , old_suad_address_id_fk		
+                            , old_suad_date_address_from	
+                            , old_suad_date_address_to	
+                             
+                            , new_suad_SUPPLIER_id_fk	
+                            , new_suad_address_id_fk		
+                            , new_suad_date_address_from	
+							, new_suad_date_address_to	 
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+                            , :OLD.suad_SUPPLIER_id_fk	
+                            , :OLD.suad_address_id_fk			
+                            , :OLD.suad_date_address_from		
+                            , :OLD.suad_date_address_to	
+												
+							, NULL		
+							, NULL
+							, NULL		
+							, NULL
+		)
+		;
+ END IF;
+END;

@@ -1,0 +1,35 @@
+comp_type,comp_description,comp_status_enum,comp_decision
+Late Delivery,Order arrived after the promised delivery time,Active,
+Billing Discrepancy,Incorrect charges on the invoice,Active,
+Customer Service Concern,Experienced rude customer service,Active,
+Missing Items in Order,Some items were missing from the order,Active,
+Package Damage,Received damaged package,Active,
+Refund Request,Requesting a refund for a returned item,Active,
+Order Mix-Up,Received the wrong order,Active,
+Product Out of Stock,Ordered item was out of stock,Active,
+Shipping Delay,Order delayed due to unforeseen circumstances,Active,
+Website Error,Encountered errors on the website while placing an order,Active,
+Return Authorization Issue,Issues with obtaining return authorization,Active,
+Product Recall Notice,Received a product recall notice,Active,
+Payment Processing Problem,Payment was not processed correctly,Active,
+Promotion Code Error,Promotion code not applied correctly,Active,
+Late Delivery,Order arrived after the promised delivery time,Active,
+Billing Discrepancy,Incorrect charges on the invoice,Active,
+Customer Service Concern,Experienced rude customer service,Active,
+Missing Items in Order,Some items were missing from the order,Active,
+Package Damage,Received damaged package,Active,
+Refund Request,Requesting a refund for a returned item,Active,
+Order Mix-Up,Received the wrong order,Active,
+Product Out of Stock,Ordered item was out of stock,Active,
+Shipping Delay,Order delayed due to unforeseen circumstances,Active,
+Website Error,Encountered errors on the website while placing an order,Active,
+Return Authorization Issue,Issues with obtaining return authorization,Active,
+Product Recall Notice,Received a product recall notice,Active,
+Late Delivery,Order arrived after the promised delivery time,Finished,Compensation offered to customer.
+Billing Discrepancy,Incorrect charges on the invoice,Finished,Refund processed for overcharged amount.
+Customer Service Concern,Experienced rude customer service,Finished,Managerial intervention and apology issued.
+Missing Items in Order,Some items were missing from the order,Finished,Missing items were shipped separately.
+Package Damage,Received damaged package,Finished,Replacement product sent to customer.
+Return Authorization Issue,Issues with obtaining return authorization,Finished,Return authorized, and refund issued.
+Late Delivery,Order arrived after the promised delivery time,Finished,Partial refund and discount coupon provided.
+

@@ -1,0 +1,100 @@
+CREATE OR REPLACE TRIGGER T_AIUD_PRODUCT_TYPES_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON PRODUCT_TYPES_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+  IF inserting THEN
+    INSERT INTO ARCHIVE_PRODUCT_TYPES_TAB
+		(           
+							  prty_event_date			  			
+                            , prty_event_type 			
+                            , prty_user_name			 	
+							  
+                            , old_prty_product_type_pk	  
+                            , old_prty_full_name			  
+                            , old_prty_shelf_life			  
+                               
+                            , new_prty_product_type_pk	  
+                            , new_prty_full_name			  
+                            , new_prty_shelf_life			                             							
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+						
+							, :NEW.prty_product_type_pk	   
+							, :NEW.prty_full_name		   	
+							, :NEW.prty_shelf_life		   							 		
+		)
+		;
+ ELSIF updating THEN
+ INSERT INTO ARCHIVE_PRODUCT_TYPES_TAB
+        (           
+							  prty_event_date			  			
+                            , prty_event_type 			
+                            , prty_user_name	
+							
+                            , old_prty_product_type_pk	
+							, old_prty_full_name		
+							, old_prty_shelf_life		
+							   
+							, new_prty_product_type_pk	
+							, new_prty_full_name		
+							, new_prty_shelf_life											
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.prty_product_type_pk	 
+                            , :OLD.prty_full_name		 
+                            , :OLD.prty_shelf_life		                         
+							       
+							, :NEW.prty_product_type_pk	
+							, :NEW.prty_full_name		
+							, :NEW.prty_shelf_life								
+		)
+		;
+ ELSE
+  INSERT INTO ARCHIVE_PRODUCT_TYPES_TAB
+		(           
+							  prty_event_date				
+                            , prty_event_type 			
+                            , prty_user_name	
+							
+                            , old_prty_product_type_pk	
+                            , old_prty_full_name		
+                            , old_prty_shelf_life		
+                               
+                            , new_prty_product_type_pk	
+                            , new_prty_full_name		
+                            , new_prty_shelf_life		                           														
+		)
+    VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+							, :OLD.prty_product_type_pk	 
+                            , :OLD.prty_full_name		 
+                            , :OLD.prty_shelf_life			
+
+							, NULL
+							, NULL
+                            , NULL										
+		)
+		;
+ END IF;
+END;

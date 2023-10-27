@@ -1,0 +1,150 @@
+CREATE OR REPLACE TRIGGER T_AIUD_ONLINE_PURCHASES_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON ONLINE_PURCHASES_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+
+
+	IF inserting THEN
+		INSERT INTO ARCHIVE_ONLINE_PURCHASES_TAB
+		(           
+							  onpu_event_date			  			
+                            , onpu_event_type 					
+                            , onpu_user_name			 			
+							  
+                            , old_onpu_online_purchase_id_pk		
+                            , old_onpu_customer_id_fk             
+                            , old_onpu_invoice_id_fk              
+                            , old_onpu_date_purchase				
+                            , old_onpu_status_enum				
+                            , old_onpu_complaint_yn				
+                            , old_onpu_complaint_id_fk			
+                            
+							, new_onpu_online_purchase_id_pk		
+                            , new_onpu_customer_id_fk             
+                            , new_onpu_invoice_id_fk              
+                            , new_onpu_date_purchase				
+                            , new_onpu_status_enum				
+                            , new_onpu_complaint_yn				
+                            , new_onpu_complaint_id_fk			
+		)
+		VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+                            , NULL		
+                            , NULL
+                            , NULL		
+							
+							, :NEW.onpu_online_purchase_id_pk		
+							, :NEW.onpu_customer_id_fk             
+							, :NEW.onpu_invoice_id_fk              
+							, :NEW.onpu_date_purchase				
+							, :NEW.onpu_status_enum				
+							, :NEW.onpu_complaint_yn				
+							, :NEW.onpu_complaint_id_fk			
+		)
+		;
+	ELSIF updating THEN
+		INSERT INTO ARCHIVE_ONLINE_PURCHASES_TAB
+        (           
+							  onpu_event_date			  			
+                            , onpu_event_type 					
+                            , onpu_user_name			 			
+							  
+                            , old_onpu_online_purchase_id_pk		
+                            , old_onpu_customer_id_fk             
+                            , old_onpu_invoice_id_fk              
+                            , old_onpu_date_purchase				
+                            , old_onpu_status_enum				
+                            , old_onpu_complaint_yn				
+                            , old_onpu_complaint_id_fk			
+                            
+							, new_onpu_online_purchase_id_pk		
+                            , new_onpu_customer_id_fk             
+                            , new_onpu_invoice_id_fk              
+                            , new_onpu_date_purchase				
+                            , new_onpu_status_enum				
+                            , new_onpu_complaint_yn				
+                            , new_onpu_complaint_id_fk			
+		)
+		VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.onpu_online_purchase_id_pk		
+                            , :OLD.onpu_customer_id_fk             
+                            , :OLD.onpu_invoice_id_fk              
+                            , :OLD.onpu_date_purchase				
+                            , :OLD.onpu_status_enum				
+                            , :OLD.onpu_complaint_yn				
+                            , :OLD.onpu_complaint_id_fk			
+							
+							, :NEW.onpu_online_purchase_id_pk		
+							, :NEW.onpu_customer_id_fk             
+							, :NEW.onpu_invoice_id_fk              
+							, :NEW.onpu_date_purchase				
+							, :NEW.onpu_status_enum				
+							, :NEW.onpu_complaint_yn				
+							, :NEW.onpu_complaint_id_fk		
+		)
+		;
+	ELSE
+		INSERT INTO ARCHIVE_ONLINE_PURCHASES_TAB
+		(           
+							  onpu_event_date			  			
+                            , onpu_event_type 					
+                            , onpu_user_name			 			
+							  
+                            , old_onpu_online_purchase_id_pk		
+                            , old_onpu_customer_id_fk             
+                            , old_onpu_invoice_id_fk              
+                            , old_onpu_date_purchase				
+                            , old_onpu_status_enum				
+                            , old_onpu_complaint_yn				
+                            , old_onpu_complaint_id_fk			
+                            
+							, new_onpu_online_purchase_id_pk		
+                            , new_onpu_customer_id_fk             
+                            , new_onpu_invoice_id_fk              
+                            , new_onpu_date_purchase				
+                            , new_onpu_status_enum				
+                            , new_onpu_complaint_yn				
+                            , new_onpu_complaint_id_fk			
+		)
+		VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+                            , :OLD.onpu_online_purchase_id_pk		
+                            , :OLD.onpu_customer_id_fk             
+                            , :OLD.onpu_invoice_id_fk              
+                            , :OLD.onpu_date_purchase				
+                            , :OLD.onpu_status_enum				
+                            , :OLD.onpu_complaint_yn				
+                            , :OLD.onpu_complaint_id_fk			
+									
+							, NULL				
+							, NULL		
+							, NULL	
+							, NULL		
+							, NULL
+							, NULL		
+							, NULL
+		)
+		;
+	END IF;
+END;

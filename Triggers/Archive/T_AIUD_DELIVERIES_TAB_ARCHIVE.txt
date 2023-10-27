@@ -1,0 +1,162 @@
+CREATE OR REPLACE TRIGGER T_AIUD_DELIVERIES_TAB_ARCHIVE
+AFTER INSERT OR UPDATE OR DELETE
+ON DELIVERIES_TAB
+FOR EACH ROW
+DECLARE
+ 
+BEGIN
+
+
+
+	IF inserting THEN
+		INSERT INTO ARCHIVE_DELIVERIES_TAB
+		(           
+							  deli_event_date			  			
+                            , deli_event_type 					
+                            , deli_user_name			 			
+							  
+                            , old_deli_delivery_id_pk				
+                            , old_deli_online_purchase_id_fk		
+                            , old_deli_employee_id_fk				
+                            , old_deli_transport_type_code_fk		
+                            , old_deli_date						
+                            , old_deli_time_window				
+                            , old_deli_status_enum				
+                            , old_deli_other_details				
+							  
+                            , new_deli_delivery_id_pk				
+                            , new_deli_online_purchase_id_fk		
+                            , new_deli_employee_id_fk				
+                            , new_deli_transport_type_code_fk		
+                            , new_deli_date						
+                            , new_deli_time_window				
+                            , new_deli_status_enum				
+                            , new_deli_other_details				
+		)
+		VALUES
+		(
+							  SYSDATE
+							, 'INSERT'
+							, USER
+							
+                            , NULL				
+                            , NULL		
+                            , NULL		
+                            , NULL	
+                            , NULL		
+                            , NULL
+                            , NULL		
+                            , NULL
+							
+							, :NEW.deli_delivery_id_pk			
+							, :NEW.deli_online_purchase_id_fk	
+							, :NEW.deli_employee_id_fk			
+							, :NEW.deli_transport_type_code_fk	
+							, :NEW.deli_date						
+							, :NEW.deli_time_window				
+							, :NEW.deli_status_enum				
+							, :NEW.deli_other_details			
+		)
+		;
+	ELSIF updating THEN
+		INSERT INTO ARCHIVE_DELIVERIES_TAB
+        (           
+							  deli_event_date			  			
+                            , deli_event_type 					
+                            , deli_user_name			 			
+							  
+                            , old_deli_delivery_id_pk				
+                            , old_deli_online_purchase_id_fk		
+                            , old_deli_employee_id_fk				
+                            , old_deli_transport_type_code_fk		
+                            , old_deli_date						
+                            , old_deli_time_window				
+                            , old_deli_status_enum				
+                            , old_deli_other_details				
+							  
+                            , new_deli_delivery_id_pk				
+                            , new_deli_online_purchase_id_fk		
+                            , new_deli_employee_id_fk				
+                            , new_deli_transport_type_code_fk		
+                            , new_deli_date						
+                            , new_deli_time_window				
+                            , new_deli_status_enum				
+                            , new_deli_other_details		
+		)
+		VALUES
+		(
+							  SYSDATE
+							, 'UPDATE'
+							, USER
+							
+                            , :OLD.deli_delivery_id_pk			
+                            , :OLD.deli_online_purchase_id_fk	
+                            , :OLD.deli_employee_id_fk			
+                            , :OLD.deli_transport_type_code_fk	
+                            , :OLD.deli_date						
+                            , :OLD.deli_time_window				
+                            , :OLD.deli_status_enum				
+                            , :OLD.deli_other_details			
+							
+							, :NEW.deli_delivery_id_pk			
+							, :NEW.deli_online_purchase_id_fk	
+							, :NEW.deli_employee_id_fk			
+							, :NEW.deli_transport_type_code_fk	
+							, :NEW.deli_date						
+							, :NEW.deli_time_window				
+							, :NEW.deli_status_enum				
+							, :NEW.deli_other_details		
+		)
+		;
+	ELSE
+		INSERT INTO ARCHIVE_DELIVERIES_TAB
+		(           
+							  deli_event_date			  			
+                            , deli_event_type 					
+                            , deli_user_name			 			
+							  
+                            , old_deli_delivery_id_pk				
+                            , old_deli_online_purchase_id_fk		
+                            , old_deli_employee_id_fk				
+                            , old_deli_transport_type_code_fk		
+                            , old_deli_date						
+                            , old_deli_time_window				
+                            , old_deli_status_enum				
+                            , old_deli_other_details				
+							  
+                            , new_deli_delivery_id_pk				
+                            , new_deli_online_purchase_id_fk		
+                            , new_deli_employee_id_fk				
+                            , new_deli_transport_type_code_fk		
+                            , new_deli_date						
+                            , new_deli_time_window				
+                            , new_deli_status_enum				
+                            , new_deli_other_details		
+		)
+		VALUES
+		(
+							  SYSDATE
+							, 'DELETE'
+							, USER
+							
+                            , :OLD.deli_delivery_id_pk			
+                            , :OLD.deli_online_purchase_id_fk	
+                            , :OLD.deli_employee_id_fk			
+                            , :OLD.deli_transport_type_code_fk	
+                            , :OLD.deli_date						
+                            , :OLD.deli_time_window				
+                            , :OLD.deli_status_enum				
+                            , :OLD.deli_other_details	
+							
+							, NULL		
+							, NULL				
+							, NULL		
+							, NULL	
+							, NULL		
+							, NULL
+							, NULL		
+							, NULL
+		)
+		;
+	END IF;
+END;

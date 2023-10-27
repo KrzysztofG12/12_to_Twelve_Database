@@ -1,0 +1,7 @@
+dead_department_code_fk,dead_address_id_fk,dead_date_address_from,dead_date_address_to
+CS001,116,2022-03-15,
+SM001,117,2021-11-22,
+SA002,118,2022-06-10,
+SC003,119,2023-02-28,
+OF001,120,2022-09-07,
+OF002,121,2021-12-19,
