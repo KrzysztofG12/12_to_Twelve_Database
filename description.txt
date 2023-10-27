@@ -1,4 +1,4 @@
-This example database was designed and created for fictional store chain - 12 To Twelve. 12 To Twelve is a chain of grocery stores designed for businesses, located in the UK and it is divided into stationery and online form. 
+This example database was designed and created for fictional store chain - 12 To Twelve. 12 To Twelve is a chain of grocery stores designed for businesses, located in the UK and it is divided into stationery and online form. Database version is Oracle 18c.
 It contains 52 tables, 26 normal and 26 archive-log tables. All of data is fictional or randomly generated.
 
 						TRIGGERS 
