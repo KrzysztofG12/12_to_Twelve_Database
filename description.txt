@@ -1,0 +1,424 @@
+This example database was designed and created for fictional store chain - 12 To Twelve. 12 To Twelve is a chain of grocery stores designed for businesses, located in the UK and it is divided into stationery and online form. 
+It contains 52 tables, 26 normal and 26 archive-log tables. All of data is fictional or randomly generated.
+
+						TRIGGERS 
+
+There are 26 triggers that store information into archive tables, whenever somebody use Insert, Update or Delete on any row.
+
+T_BIU_INVOICES_TAB_CALCULATE_GROSS_VALUE calculates gross values in INVOICES_TAB table with formula: invo_gross_value = invo_net_value + (invo_net_value * invo_tax_rate_pct / 100), trigger activates before inserting or updating invo_net_value.
+
+
+						JOB
+						
+One Job has been created that automatically checks the empl_employment_date in EMPLOYEES_TAB and updates the empl_bonus_pct values so the employees receive 1 percent of bonus for each year of employment.
+
+
+						VIEWS	
+						
+"view_more_than_100_short_life_products_desc" displays the names, shelf lives, stock and departments of products with a short shelf life and stock level over 100, descending by stock. This can help to decide which products in which departments should be discounted to sell faster.
+
+"view_less_than_20_products_desc_number" displays the names, shelf lives, stocks and departments of products with stock levels below 20, descending by stock. This can help deciding which products should be replenished in which departments.
+
+"view_average_sell_price_by_prod_type_asc_price" displays full product types names and the average prices by products types, in ascending order.
+
+"view_most_online_sold_products_over_LY_top_10_DESC_number" displays the top 10 of online most sold product names and numbers over the past year, in descending order.
+
+"view_gender_age_salary_differences_departments" displays average salaries and age, along with gender differences by department.
+
+___________________________________________________________________________________________________________________________________________________________________________________________________________	
+
+
+NAMING CONVENTION
+
+Names:
+	Table names: 		sufix 	_TAB		Example: DELIVERIES_TAB
+	Column names: 		prefix	[4 charcters abbreviation of table name]_ Example: 	deli_description	 
+	Views:				sufix	_VIEW		Example:
+	Primary Keys:		sufix	_pk			Example: deli_delivery_id_pk
+	Foreign Keys:		sufix	_fk			Example: deli_purchase_id_fk
+	Boolean:			sufix	_yn			Example: purc_invoice_yn	
+	List of values:		sufix	_enum		Example: deli_status_enum						
+	Constraints:		prefix 	fk_[4 characters abbreviation of table name]_	Example: fk_cust_customer_id_pk
+
+Units:	
+	for %:				sufix	_pct		Example: prod_tax_rate_pct    
+	for kilograms:		sufix	_kg			Example: supl_weight_sum_kg		
+	for tonnes:			sufix	_t			Example: trty_min_weight_t	
+	for meters:			sufix	_m			Example: trty_min_length_m	
+	for square meters:	sufix	_m2			Example: depa_area_m2	
+	
+Archive:
+	Table names: 		prefix 	archive_ 	Example: ARCHIVE_DELIVERIES_TAB
+						sufix 	_tab
+	Column names:	
+						prefix	old_		Example: old_prod_product_id_pk
+						prefix  new_		Example: new_prod_product_id_pk
+
+Triggers:
+	Name:				prefix	T_			Example: T_AIUD_ADDRESSES_TAB_ARCHIVE	
+	Function:			prefix  AIUD_		Meaning: After Instert Update Delete
+
+___________________________________________________________________________________________________________________________________________________________________________________________________________	
+
+
+Tables:
+
+	PRODUCT_TAB
+		
+	prod_product_id_pk            NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	prod_product_name             VARCHAR2(50) NOT NULL,
+	prod_company_name             VARCHAR2(40) NOT NULL,
+	prod_product_type_fk          VARCHAR2(5) NOT NULL,
+	prod_net_price				  FLOAT NOT NULL,
+	prod_purchase_price           FLOAT NOT NULL,
+	prod_tax_rate_pct             INT NOT NULL,
+	prod_quantity                 FLOAT NOT NULL,
+	prod_unit                     VARCHAR2(15),
+	prod_packaging                VARCHAR2(20) NOT NULL,
+	prod_refrigerated_yn          NUMBER(1, 0) NOT NULL,
+	prod_frozen_yn                NUMBER(1, 0) NOT NULL,
+	prod_id_promo_fk              INT,
+	prod_other_details			  VARCHAR2(500)
+		
+	PRODUCT_TAB contains the names of products and their manufacturers, abbreviations of product types that are related to PRODUCT_TYPES_TAB, sales and purchase prices, tax rate in percent, quantity of the product in the package, units in which the quantity is measured, type of package, whether the product is refrigerated or frozen, identifier of the current promotion in which the product is located, related to PROMOTIONAL_CAMPAIGN_TAB, and other details about the product.  		 	
+		
+___________________________________________________________________________________________________________________________________________________________________________________________________________	
+	
+	PRODUCT_TYPES_TAB
+
+	prty_product_type_pk		VARCHAR2(5) PRIMARY KEY,	
+	prty_full_name				VARCHAR2(50) NOT NULL,	
+	prty_shelf_life				VARCHAR2(10) NOT NULL	
+		
+	PRODUCT_TYPES_TAB contains the abbreviations of the product types that are associated with PRODUCTS_TAB, the full names of the product types and the shelf life, which determines how long a product can wait to be sold.	 
+		
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+	CUSTOMERS_TAB
+
+	cust_customer_id_pk			NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	cust_first_name				VARCHAR2(50) NOT NULL,
+	cust_last_name				VARCHAR2(50) NOT NULL,
+	cust_nin_code				NUMBER CHECK (LENGTH(cust_pesel_code) = 11),
+	cust_discount_pct			INT NOT NULL,
+	cust_customer_club_yn		NUMBER(1, 0) NOT NULL,
+	cust_date_joining			DATE
+	cust_phone_number			INT,
+	cust_email					VARCHAR2(40) NOT NULL,
+	cust_company_number			NUMBER CHECK (LENGTH(cust_company_number) = 10)
+	
+	CUSTOMERS_TAB contains customer names, nin codes, discount percentages for customers in the customer club, whether the customer is in the customer club, the date the customer joined the club, phone number, email address and company number.
+		
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+	
+	EMPLOYEES_TAB
+	
+	empl_employee_id_pk			NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	empl_first_name				VARCHAR2(50)  NOT NULL,
+	empl_last_name				VARCHAR2(50)  NOT NULL,
+	empl_nin_code				number CHECK (LENGTH(empl_nin_code) = 11),
+	empl_gender_enum			VARCHAR2(6) CHECK( empl_gender IN  ('Male', 'Female', 'Other')),
+	empl_birth_date				DATE NOT NULL,
+	empl_phone_number			INT NOT NULL,
+	empl_job_title				VARCHAR2(30) NOT NULL,
+	empl_department_code_fk		VARCHAR2(5),
+	empl_salary					FLOAT NOT NULL,
+	empl_privilege_level_enum	VARCHAR2(2) CHECK( empl_privilege_level IN  ('1', '2', '3', '4', '5')),
+	empl_bonus_pct				INT NOT NULL,
+	empl_status_enum			VARCHAR2(8) CHECK( empl_status IN ('Active', 'Inactive')),
+	empl_employment_date		DATE
+	
+	EMPLOYEES_TAB contains employees names, nin codes, genders, birth dates, phone numbers, job titles, codes of departments which are related to DEPARTMENTS_TAB, salaries, privilege levels, with states the access of employees in computer system, bonuses and statuses whether the employee still works or is inactive, and date of employment, which takes part in updating bonus.   
+	
+	
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+	
+	DEPARTMENTS_TAB
+	
+	depa_department_code_pk		VARCHAR2(5) PRIMARY KEY,
+	depa_department_name		VARCHAR2(50)  NOT NULL,
+	depa_department_type_enum	VARCHAR2(6) CHECK( depa_departMENT_TYPE_enum IN ('Store', 'Office')),
+	depa_manager_id_fk			INT NOT NULL,
+	depa_area_m2				FLOAT NOT NULL
+	
+	DEPARTMENTS_TAB contains department codes, full names and types. It also contains manager IDs which are linked to EMPLOYEES_TAB and areas in square meters. 
+	
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+	
+	DEPARTMENT_EQUIPMENTS_TAB
+	
+	deeq_equipment_id_pk		NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	deeq_department_code_fk		VARCHAR2(5),
+	deeq_name					VARCHAR2(50)  NOT NULL,
+	deeq_type					VARCHAR2(50),
+	deeq_quantity				INT NOT NULL,
+	deeq_date_purchase			DATE NOT NULL,
+	deeq_description			VARCHAR2(500)
+	
+	DEPARTMENT_EQUIPMENTS_TAB contains the codes of the departments in which the equipment is located, names, types, quantities, purchase dates and descriptions of the equipment.	
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+	
+	EMPLOYEE_ABSENCES_TAB
+	
+	emab_absence_id_pk		NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	emab_employee_id_fk		INT NOT NULL,
+	emab_date_from			DATE NOT NULL,
+	emab_date_to			DATE NOT NULL,
+	emab_reason				VARCHAR2(50) NOT NULL,
+	emab_description		VARCHAR2(500)
+	
+	EMPLOYEE_ABSENCES_TAB contains IDs of absent employees related to EMPLOYEES_TAB, dates from and to, reason and description of absences. 
+	
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+
+	ADDRESSES_TAB
+	
+	addr_address_id_pk		NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	addr_street				VARCHAR2(50),
+	addr_number				VARCHAR2(10),
+	addr_area_locality		VARCHAR2(100),
+	addr_postal_code		VARCHAR2(10) NOT NULL,
+	addr_town_city			VARCHAR2(50) NOT NULL,
+	addr_state_province		VARCHAR2(50) NOT NULL,
+	addr_country			VARCHAR2(50) NOT NULL,
+	addr_continent			VARCHAR2(20) NOT NULL
+
+	ADDRESSES_TAB contains street names, building/apartment numbers, local area names, postal codes, town or city names, state or province names, country and continent names.
+
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+	
+	TRANSPORT_TYPES_TAB
+
+	trty_transport_type_code_pk	VARCHAR2(3) PRIMARY KEY,
+	trty_full_name				VARCHAR2(30)  NOT NULL,
+	trty_min_length_m			FLOAT NOT NULL,
+	trty_max_length_m			FLOAT NOT NULL,
+	trty_min_weight_t			FLOAT NOT NULL,
+	trty_max_weight_t			FLOAT NOT NULL,
+	trty_load_capacity_t		FLOAT NOT NULL
+	
+	TRANSPORT_TYPES_TAB contains transport types codes and their full names, min and max lengths, min and max weights, and load capacities. These values are used to help employees with planning deliveries. 
+	
+_________________________________________________________________________________________________________________________________________________________________________________________
+___________________
+
+	SUPPLIERS_TAB
+
+	supr_supplier_id_pk				NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	supr_supplier_name				VARCHAR2(50) NOT NULL,
+	supr_transport_type_code_fk		VARCHAR2(3) NOT NULL,
+	supr_phone_number				INT NOT NULL
+	
+	SUPPLIERS_TAB contains suppliers names, transport types used by them and their phone numbers. 
+	
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+
+	PROMOTIONAL_CAMPAIGNS_TAB
+	
+	prmo_promo_id_pk				NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	prmo_title						VARCHAR2(50)  NOT NULL,
+	prmo_department_code_fk			VARCHAR2(5),
+	prmo_begin_date					DATE, 
+	prmo_finish_date				DATE,
+	prmo_status_enum				VARCHAR2(8) CHECK (prmo_status_enum IN ('Planned', 'Pending' ,'Canceled', 'Finished')) NOT NULL,
+	prmo_description				VARCHAR2(500)
+	
+	PROMOTIONAL_CAMPAIGNS_TAB contains the titles of the promotional campaigns, the codes of the departments that organize the campaigns related to DEPARTMENTS_TAB, the start and end dates, one of four statuses "Planned," "Pending," "Canceled" or "Finished," and campaign descriptions.
+	
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+
+	AUDITS_TAB
+	
+	audt_audit_id_pk				NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	audt_title						VARCHAR2(50) NOT NULL,
+	audt_department_code_fk			VARCHAR2(5),
+	audt_date_begin					DATE NOT NULL,
+	audt_date_finish				DATE,
+	audt_status_enum				VARCHAR2(8) CHECK( audt_status_enum IN ('Planned', 'Pending' ,'Canceled', 'Finished')),
+	audt_description				VARCHAR2(500),
+	audt_inspector_code				VARCHAR2(10)
+	
+	
+	AUDITS_TAB contains titles of audits, codes of departments where audits are performed, start and end dates, one of four audit statuses: "Planned," "Pending," "Canceled" or "Finished," audit descriptions and inspector codes.
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+
+	MAINTENANCES_TAB
+	
+	main_maintenance_id_pk			NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	main_title						VARCHAR2(50) NOT NULL,
+	main_department_code_fk			VARCHAR2(5),
+	main_contractor					VARCHAR2(50),
+	main_date_begin					DATE, 
+	main_date_finish				DATE,
+	main_status_enum				VARCHAR2(8) CHECK( main_status_enum IN ('Planned', 'Pending' ,'Canceled', 'Finished')),
+	main_description				VARCHAR2(500)
+	
+	MAINTENANCES_TAB contains titles of maintenances, codes of departments where they are performed, contractor names, start and end dates, one of four audit statuses: "Planned," "Pending," "Canceled" or "Finished," and maintenances descriptions.
+	
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+
+	INVOICES_TAB
+	
+	invo_invoice_id_pk					NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	invo_customer_id_fk					INT,
+	invo_date							DATE NOT NULL,
+	invo_net_value						FLOAT NOT NULL,
+	invo_gross_value					FLOAT NOT NULL,
+	invo_tax_rate_pct					INT NOT NULL,
+	invo_currency_code					VARCHAR2(5),
+	invo_details						VARCHAR2(500)
+	
+	INVOICES_TAB contains customers IDs that are related to CUSTOMERS_TAB, invoice dates, net and gross values, tax rates, currency codes and other details. 
+	
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+
+	COMPLAINTS_TAB
+	
+	comp_complaint_id_pk				NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	comp_type							VARCHAR2(50),
+	comp_description					VARCHAR2(500),
+	comp_status_enum					VARCHAR2(8) CHECK( comp_status_enum IN ( 'Active' , 'Finished')),
+	comp_decision						VARCHAR2(500)
+	
+	COMPLAINTS_TAB contains complaints types, descriptions, statuses 'Active' or 'Finished' and descision, how complaint was resolved.
+	
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+
+	PURCHASES_TAB
+	
+	purc_purchase_id_pk					NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	purc_customer_id_fk					INT,
+	purc_invoice_yn						NUMBER (1, 0) NOT NULL,
+	purc_invoice_id_fk					INT,
+	purc_date_purchase					DATE NOT NULL,
+	purc_gross_value					FLOAT NOT NULL,
+	purc_complaint_yn					NUMBER(1, 0) NOT NULL,
+	purc_complaint_id_fk				INT,
+	purc_department_code_fk				VARCHAR2(5)
+	
+	PURCHASES_TAB contains customers IDs that are related to CUSTOMERS_TAB, whether the customer requested an invoice, and if so, ID of issued invoice related to INVOICES_TAB, gross values, whether the customer made a complaint and, if so, the IDs of the complaint, and department codes, related to DEPARTMENTS_TAB, that identify which store the customer purchased from. 
+	
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+
+	SUPPLIES_TAB
+	
+	supl_supply_id_pk						NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	supl_supplier_id_fk						INT,
+	supl_product_id_fk						INT,
+	supl_required_concession				VARCHAR2(50),
+	supl_weight_sum_kg						FLOAT NOT NULL,
+	supl_product_quantity					FLOAT NOT NULL,
+	supl_date								DATE NOT NULL,
+	supl_department_code_fk					VARCHAR2(5),
+	supl_status_enum						VARCHAR2(8) CHECK( supl_status_enum IN ('Planned', 'Canceled', 'Finished'))
+	
+	SUPPLIES_TAB contains IDs of suppliers responsible for the delivery, related to SUPPLIERS_TAB, products IDs that are being delivered, related to PRODUCTS_TAB, the required concessions, the total weight of the load in kilograms, the number of packages of the product, the dates, the department codes, identify which store the delivery was made to, related to DEPARTMENTS_TAB, and the delivery statuses:  'Planned', 'Canceled' or 'Finished'.
+	
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+
+	PURCHASED_ITEMS_TAB
+	
+	puit_purchase_id_fk						INT,
+	puit_product_id_fk						INT,
+	puit_quantity							INT NOT NULL
+	
+	PURCHASED_ITEMS_TAB contains products IDs, related to PRODUCTS_TAB, and quantities, which specify the number of products purchased.
+	
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+
+	EMPLOYEE_ADDRESSES_TAB
+	
+	emad_employee_id_fk				INT,
+	emad_address_id_fk				INT,
+	emad_date_address_from			DATE NOT NULL,
+	emad_date_address_to			DATE
+	
+	EMPLOYEE_ADDRESSES_TAB contains employees IDs, related to EMPLOYEES_TAB, address identifiers, related to ADDRESSES_TAB, dates from when, to when the address was current. 
+	
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+
+	DEPARTMENT_ADDRESSES_TAB
+	
+	dead_department_code_fk			VARCHAR2(5),
+	dead_address_id_fk				INT,
+	dead_date_address_from			DATE NOT NULL,
+	dead_date_address_to			DATE
+	
+	DEPARTMENT_ADDRESSES_TAB contains departments codes, related to DEPARTMENTS_TAB, address identifiers, related to ADDRESSES_TAB, dates from when, to when the address was current. 
+	
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+
+	CUSTOMER_ADDRESSES_TAB
+	
+	cuad_customer_id_fk			INT,
+	cuad_address_id_fk			INT,
+	cuad_date_address_from		DATE NOT NULL,
+	cuad_date_address_to		DATE
+	
+	CUSTOMER_ADDRESSES_TAB contains customers IDs, related to CUSTOMERS_TAB, address identifiers, related to ADDRESSES_TAB, dates from when, to when the address was current. 
+	
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+
+	SUPPLIER_ADDRESSES_TAB
+	
+	suad_supplier_id_fk			INT,
+	suad_address_id_fk			INT,
+	suad_date_address_from		DATE NOT NULL,
+	suad_date_address_to		DATE
+	
+	SUPPLIER_ADDRESSES_TAB contains suppliers IDs, related to SUPPLIERS_TAB, address identifiers, related to ADDRESSES_TAB, dates from when, to when the address was current. 
+	
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+
+	PRODUCT_STOCK_TAB
+	
+	prst_product_id_fk			INT NOT NULL,
+	prst_department_code_fk		VARCHAR2(5) NOT NULL,
+	prst_number					INT NOT NULL
+	
+	PRODUCT_STOCK_TAB contains data on the number of products in each department. Product IDs are related to the PRODUCTS_TAB, and department codes are related to the DEPARTMENTS_TAB.
+	
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+	
+	ONLINE_PURCHASES_TAB
+	
+	onpu_online_purchase_id_pk				NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+    onpu_customer_id_fk                		INT NOT NULL,
+    onpu_invoice_id_fk                 		INT NOT NULL,
+	onpu_date_purchase						DATE NOT NULL,
+	onpu_status_enum						VARCHAR2(9) CHECK( onpu_status_enum IN ('Unpaid', 'Paid', 'Cancelled')),
+	onpu_complaint_yn						NUMBER(1, 0) NOT NULL,
+	onpu_complaint_id_fk					INT
+	
+	ONLINE_PURCHASES_TAB contains customers IDs, that are related to CUSTOMERS_TAB that identify who made the online purchase, invoices IDs since invoices are mandatory for online purchases, purchase dates, statuses: 'Unpaid', 'Paid' or 'Cancelled', and whether the customer has filed a complaint, and if so, IDs of complaints, related to COMPLAINTS_TAB.
+	
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+
+	DELIVERIES_TAB
+	
+	deli_delivery_id_pk									NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1) PRIMARY KEY,
+	deli_online_purchase_id_fk							INT NOT NULL,
+	deli_employee_id_fk									INT NOT NULL,
+	deli_transport_type_code_fk							VARCHAR2(5) NOT NULL,
+	deli_date											DATE NOT NULL,
+	deli_time_window									VARCHAR2(20) NOT NULL,
+	deli_status_enum									VARCHAR2(9) CHECK( deli_status_enum IN ('Planned', 'Pending', 'Delivered', 'Cancelled')),
+	deli_other_details									VARCHAR2(500)
+	
+	DELIVERIES_TAB contains	IDs of purchases, related to ONLINE_PURCHASED_ITEMS_TAB, employees IDs related to EMPLOYEES_TAB that identify the driver responsible for the delivery, transport types codes related to TRANSPORT_TYPES_TAB that identify which deparment is responible for delivery, dates and time windows, statuses: 'Planned', 'Pending', 'Delivered' or 'Cancelled', and other details, and other details such as driver information.
+	
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+
+	ONLINE_PURCHASED_ITEMS_TAB
+	
+	opit_online_purchase_id_fk							INT NOT NULL,
+	opit_product_id_fk									INT NOT NULL,
+	opit_quantity										INT NOT NULL
+	
+	PURCHASED_ITEMS_TAB contains products IDs, related to PRODUCTS_TAB, and quantities, which specify the number of online purchased products.
+	
+___________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Krzysztof Graboń, 2023
+
